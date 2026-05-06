@@ -38,7 +38,7 @@
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.32); /* Sombra elegante para profundidad visual. */
       --radius: 24px; /* Redondeo general de tarjetas grandes. */
       --radius-sm: 14px; /* Redondeo general de botones y tarjetas chicas. */
-      --max: 1180px; /* Ancho máximo del contenido central. */
+      --max: 980px; /* Ancho máximo del contenido central. */
     }
 
     * { /* Aplica una regla general a todos los elementos. */
@@ -84,13 +84,13 @@
 
     .nav-wrap { /* Contenedor interno del menú. */
       width: min(var(--max), calc(100% - 44px)); /* Limita el ancho y deja margen lateral. */
-      min-height: 128px; /* Replica la altura grande del header de la captura. */
+      min-height: 92px; /* Replica la altura grande del header de la captura. */
       margin: 0 auto; /* Centra el contenido. */
       display: grid; /* Permite ordenar marca y navegación en columnas. */
-      grid-template-columns: 430px 1fr; /* Primera columna para logo, segunda para links. */
+      grid-template-columns: 340px 1fr; /* Primera columna para logo, segunda para links. */
       align-items: start; /* Alinea elementos arriba. */
       gap: 24px; /* Separa las columnas. */
-      padding: 28px 0 18px; /* Da aire arriba y abajo. */
+      padding: 18px 0 14px; /* Da aire arriba y abajo. */
     }
 
     .brand { /* Bloque de marca con logo y textos. */
@@ -114,7 +114,7 @@
     .brand-title { /* Título Performance Labs. */
       display: block; /* Hace que el título ocupe su línea. */
       font-weight: 900; /* Grosor fuerte. */
-      font-size: 16px; /* Tamaño similar al screenshot. */
+      font-size: 15px; /* Tamaño similar al screenshot. */
       line-height: 1.1; /* Altura ajustada. */
       margin-bottom: 8px; /* Separación con subtítulo. */
     }
@@ -122,8 +122,8 @@
     .brand-subtitle { /* Bajada de la marca. */
       display: block; /* Ocupa su propia línea. */
       color: var(--muted); /* Color azul claro. */
-      font-size: 15px; /* Tamaño de lectura cómodo. */
-      line-height: 1.6; /* Altura de línea amplia como la captura. */
+      font-size: 14px; /* Tamaño de lectura cómodo. */
+      line-height: 1.55; /* Altura de línea amplia como la captura. */
       max-width: 390px; /* Evita que el texto se estire demasiado. */
     }
 
@@ -137,10 +137,10 @@
     .nav-links { /* Lista de navegación principal. */
       display: flex; /* Pone links en fila. */
       align-items: center; /* Centra verticalmente los links. */
-      gap: 34px; /* Espacio entre links. */
+      gap: 28px; /* Espacio entre links. */
       color: var(--muted); /* Color base de links. */
       font-weight: 800; /* Peso fuerte como captura. */
-      font-size: 15px; /* Tamaño de links. */
+      font-size: 14px; /* Tamaño de links. */
     }
 
     .nav-links a { /* Cada link de navegación. */
@@ -157,7 +157,7 @@
     .top-cta { /* Botón de diagnóstico del menú. */
       border: 1px solid var(--line-strong); /* Borde claro suave. */
       border-radius: 13px; /* Redondeo del botón. */
-      padding: 14px 20px; /* Tamaño interno del botón. */
+      padding: 12px 18px; /* Tamaño interno del botón. */
       font-weight: 850; /* Texto fuerte. */
       color: var(--text); /* Texto claro. */
       background: rgba(255, 255, 255, 0.025); /* Fondo transparente oscuro. */
@@ -173,13 +173,13 @@
     }
 
     .hero { /* Primera sección principal. */
-      padding: 86px 0 82px; /* Espacio vertical superior e inferior. */
+      padding: 62px 0 72px; /* Espacio vertical superior e inferior. */
     }
 
     .hero-grid { /* Grilla del hero con texto y tarjeta. */
       display: grid; /* Activa layout de columnas. */
-      grid-template-columns: 1.06fr 0.85fr; /* Texto más ancho que la tarjeta. */
-      gap: 74px; /* Separación grande entre columnas. */
+      grid-template-columns: 1.08fr 0.86fr; /* Texto más ancho que la tarjeta. */
+      gap: 52px; /* Separación grande entre columnas. */
       align-items: start; /* Alinea ambas columnas arriba. */
     }
 
@@ -197,19 +197,19 @@
     }
 
     .hero h1 { /* Título gigante del hero. */
-      font-size: clamp(42px, 5.05vw, 72px); /* Tamaño adaptable, grande en escritorio. */
-      line-height: 1.09; /* Altura compacta como captura. */
-      letter-spacing: -0.055em; /* Ajusta letras para look premium. */
+      font-size: clamp(42px, 4.2vw, 58px); /* Tamaño adaptable, grande en escritorio. */
+      line-height: 1.08; /* Altura compacta como captura. */
+      letter-spacing: -0.052em; /* Ajusta letras para look premium. */
       margin: 0 0 24px; /* Quita margen superior y deja aire abajo. */
-      max-width: 710px; /* Controla el ancho del título. */
-      font-weight: 930; /* Grosor muy fuerte. */
+      max-width: 600px; /* Controla el ancho del título. */
+      font-weight: 900; /* Grosor fuerte como en la referencia. */
     }
 
     .hero p { /* Párrafo inicial. */
       color: var(--muted); /* Color secundario. */
       font-size: 17px; /* Tamaño cómodo. */
       line-height: 1.7; /* Espaciado como captura. */
-      max-width: 735px; /* Ancho máximo del texto. */
+      max-width: 600px; /* Ancho máximo del texto. */
       margin: 0 0 34px; /* Separación inferior. */
     }
 
@@ -219,8 +219,8 @@
       border-radius: 25px; /* Redondeo grande. */
       background: rgba(17, 26, 43, 0.72); /* Fondo de tarjeta. */
       box-shadow: var(--shadow); /* Sombra para profundidad. */
-      padding: 30px 28px 32px; /* Aire interno. */
-      max-width: 520px; /* Ancho controlado. */
+      padding: 24px 24px 26px; /* Aire interno. */
+      max-width: 430px; /* Ancho controlado. */
     }
 
     .card-kicker { /* Texto chico arriba de la tarjeta. */
@@ -234,10 +234,10 @@
 
     .hero-card h2 { /* Título de la tarjeta derecha. */
       margin: 0 0 18px; /* Margen inferior. */
-      font-size: clamp(26px, 2.6vw, 40px); /* Tamaño adaptable. */
+      font-size: clamp(25px, 2.25vw, 34px); /* Tamaño adaptable. */
       line-height: 1.18; /* Altura compacta. */
       letter-spacing: -0.04em; /* Ajuste visual. */
-      font-weight: 930; /* Peso alto. */
+      font-weight: 900; /* Peso alto. */
     }
 
     .hero-card ul { /* Lista de beneficios de la tarjeta. */
@@ -245,20 +245,20 @@
       margin: 0 0 20px; /* Separación inferior. */
       color: var(--muted); /* Texto azul claro. */
       line-height: 1.9; /* Espacio entre ítems. */
-      font-size: 15.5px; /* Tamaño de lista. */
+      font-size: 14.5px; /* Tamaño de lista. */
     }
 
     .hero-card p { /* Texto final dentro de tarjeta. */
       margin: 0; /* Quita márgenes heredados. */
-      font-size: 15.5px; /* Tamaño similar a lista. */
+      font-size: 14.5px; /* Tamaño similar a lista. */
       line-height: 1.65; /* Altura cómoda. */
     }
 
     .pill-stack { /* Grupo de pills bajo el hero. */
       display: grid; /* Organiza las pills en filas. */
       gap: 14px; /* Separación entre pills. */
-      max-width: 650px; /* Ancho parecido a captura. */
-      margin-left: 40px; /* Desplazamiento para replicar composición. */
+      max-width: 520px; /* Ancho parecido a captura. */
+      margin-left: 0; /* Alinea las pills con el título principal. */
     }
 
     .pill { /* Cada pill de valor. */
@@ -268,7 +268,7 @@
       color: var(--text); /* Texto claro. */
       font-weight: 900; /* Texto fuerte. */
       padding: 14px 16px; /* Tamaño interno. */
-      max-width: 650px; /* Mantiene el ancho. */
+      max-width: 520px; /* Mantiene el ancho. */
     }
 
     .primary-button { /* Botón principal celeste. */
@@ -308,12 +308,12 @@
     }
 
     .wide-title { /* Títulos anchos grandes. */
-      font-size: clamp(34px, 4vw, 52px); /* Tamaño adaptable. */
+      font-size: clamp(32px, 3.2vw, 44px); /* Tamaño adaptable. */
       line-height: 1.16; /* Alto compacto. */
       letter-spacing: -0.045em; /* Look editorial. */
       margin: 0 0 28px; /* Margen inferior. */
-      font-weight: 930; /* Peso alto. */
-      max-width: 940px; /* Ancho del título. */
+      font-weight: 900; /* Peso alto. */
+      max-width: 820px; /* Ancho del título. */
     }
 
     .problem-cards { /* Grilla de tres tarjetas de dolor. */
@@ -638,6 +638,38 @@
       font-weight: 850; /* Peso. */
     }
 
+
+    @media (min-width: 981px) { /* Ajuste fino para que la composición desktop calce con la referencia visual. */
+      .hero h1 { /* Fuerza el tamaño del título principal en escritorio. */
+        font-size: 56px; /* Replica el tamaño visual del titular de la captura. */
+        font-weight: 900; /* Mantiene una negrita intensa, pero sin verse inflada. */
+        max-width: 610px; /* Controla los saltos de línea del hero. */
+      }
+
+      .hero p { /* Ajusta el párrafo bajo el título. */
+        font-size: 16px; /* Baja levemente el tamaño para igualar proporción. */
+        max-width: 590px; /* Mantiene la misma sangría visual del título. */
+      }
+
+      .hero-card { /* Ajusta la tarjeta superior derecha. */
+        width: 430px; /* Replica el ancho compacto de la tarjeta del screenshot. */
+      }
+
+      .hero-card h2 { /* Ajusta el título de la tarjeta derecha. */
+        font-size: 32px; /* Deja el título grande, pero no sobredimensionado. */
+        font-weight: 900; /* Igual intensidad de negrita que la imagen. */
+      }
+
+      .pill-stack { /* Ajusta el bloque de mensajes bajo el hero. */
+        max-width: 520px; /* Mantiene las cajas alineadas con el texto superior. */
+      }
+
+      .wide-title { /* Ajusta títulos de secciones largas. */
+        font-weight: 900; /* Mantiene grosor visual consistente. */
+        letter-spacing: -0.04em; /* Evita que el texto se vea demasiado expandido. */
+      }
+    }
+
     @media (max-width: 980px) { /* Ajustes para tablet y pantallas medianas. */
       .nav-wrap, .hero-grid, .two-col, .diagnosis-grid { /* Grillas que pasan a una columna. */
         grid-template-columns: 1fr; /* Usa una sola columna. */
@@ -728,7 +760,7 @@
         </aside>
       </div>
 
-      <div class="container" style="margin-top: 78px;"> <!-- Bloque inferior del hero con señales de valor. -->
+      <div class="container" style="margin-top: 54px;"> <!-- Bloque inferior del hero con señales de valor. -->
         <div class="pill-stack"> <!-- Pila de tres mensajes. -->
           <div class="pill">Seguimiento deportivo profesional individual y grupal</div> <!-- Mensaje 1. -->
           <div class="pill">Detección temprana de riesgo de abandono</div> <!-- Mensaje 2. -->
