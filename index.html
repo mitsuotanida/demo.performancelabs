@@ -1,311 +1,964 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Performance Labs | Diagnóstico sin costo para centros deportivos</title>
-  <meta name="description" content="Profesionaliza el seguimiento de tus alumnos con reportes claros, indicadores accionables y decisiones basadas en datos. Solicita un diagnóstico inicial sin costo para tu centro deportivo." />
-  <meta name="theme-color" content="#0B1220" />
-  <meta property="og:title" content="Performance Labs | Diagnóstico sin costo para centros deportivos" />
-  <meta property="og:description" content="Convierte datos dispersos en seguimiento profesional, decisiones más claras y mayor valor percibido para tu centro deportivo." />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_CL" />
-  <link rel="stylesheet" href="./styles.css" />
-</head>
-<body>
-  <a class="skip" href="#main">Saltar al contenido</a>
+<!DOCTYPE html>
+<html lang="es"> <!-- Define que el sitio está en español, para que el navegador y Google lo entiendan bien. -->
+<head> <!-- Guarda la configuración invisible de la página: título, estilos, medición y datos técnicos. -->
+  <meta charset="UTF-8"> <!-- Permite usar tildes, ñ y caracteres especiales sin romper el texto. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace que la página se adapte a computador, tablet y celular. -->
+  <meta name="description" content="Performance Labs ayuda a centros deportivos a profesionalizar el seguimiento de alumnos mediante diagnóstico, reportería e indicadores accionables."> <!-- Resume la página para buscadores y vistas previas. -->
+  <title>Performance Labs | Diagnóstico deportivo</title> <!-- Texto que aparece en la pestaña del navegador. -->
 
-  <header class="topbar topbar--landing">
-    <div class="container topbar__inner">
-      <a href="#" class="brand brand--link" aria-label="Ir al inicio">
-        <div class="brand__mark">PL</div>
-        <div class="brand__text">
-          <div class="brand__name">Performance Labs</div>
-          <div class="brand__tag">Diagnóstico, reportería y seguimiento para centros deportivos</div>
-        </div>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[]; // Crea una “mochila” donde Google guarda eventos del sitio.
+      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'}); // Marca el momento exacto en que GTM empieza a funcionar.
+      var f=d.getElementsByTagName(s)[0], // Busca el primer script de la página para insertar GTM antes.
+          j=d.createElement(s), // Crea una nueva etiqueta script para cargar GTM.
+          dl=l!='dataLayer'?'&l='+l:''; // Agrega el nombre del dataLayer si usás uno distinto al normal.
+      j.async=true; // Hace que GTM cargue sin frenar la página.
+      j.src='https://www.googletagmanager.com/gtm.js?id=GTM-KS28BPPV'+dl; // Carga tu contenedor real de Google Tag Manager.
+      f.parentNode.insertBefore(j,f); // Inserta GTM en la página antes del primer script encontrado.
+    })(window,document,'script','dataLayer','GTM-KS28BPPV'); // Ejecuta todo usando la ventana, documento, tipo script, dataLayer y tu ID de GTM.
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <style>
+    :root { /* Guarda colores, medidas y sombras para reutilizarlos en toda la página. */
+      --bg: #07101f; /* Color principal del fondo oscuro. */
+      --bg-2: #0b1424; /* Color secundario para secciones separadas. */
+      --panel: #111a2b; /* Color de tarjetas y bloques. */
+      --panel-soft: #0d1728; /* Color de tarjetas más suaves. */
+      --line: rgba(174, 194, 226, 0.16); /* Línea gris azulada muy suave. */
+      --line-strong: rgba(174, 194, 226, 0.26); /* Línea un poco más visible para bordes. */
+      --text: #f4f7ff; /* Texto principal casi blanco. */
+      --muted: #b8cae9; /* Texto secundario azul claro. */
+      --muted-2: #94a8ca; /* Texto más apagado para descripciones. */
+      --cyan: #31c8ee; /* Color celeste principal de botones y detalles. */
+      --cyan-2: #5aaeff; /* Segundo celeste para degradados. */
+      --cyan-dark: rgba(49, 200, 238, 0.12); /* Fondo celeste transparente para pills. */
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.32); /* Sombra elegante para profundidad visual. */
+      --radius: 24px; /* Redondeo general de tarjetas grandes. */
+      --radius-sm: 14px; /* Redondeo general de botones y tarjetas chicas. */
+      --max: 1180px; /* Ancho máximo del contenido central. */
+    }
+
+    * { /* Aplica una regla general a todos los elementos. */
+      box-sizing: border-box; /* Hace que padding y borde no rompan los tamaños. */
+    }
+
+    html { /* Configura el comportamiento general del documento. */
+      scroll-behavior: smooth; /* Permite que los saltos internos bajen suave. */
+    }
+
+    body { /* Define el estilo base visible de toda la página. */
+      margin: 0; /* Elimina el margen blanco que trae el navegador por defecto. */
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; /* Usa una fuente moderna parecida a la captura. */
+      background: var(--bg); /* Aplica el fondo oscuro principal. */
+      color: var(--text); /* Aplica el color principal del texto. */
+      letter-spacing: 0.01em; /* Da una separación leve para que se vea más premium. */
+    }
+
+    body::before { /* Agrega una luz suave decorativa al fondo. */
+      content: ""; /* Crea el elemento visual sin texto. */
+      position: fixed; /* Mantiene el brillo fijo aunque se haga scroll. */
+      inset: 0; /* Hace que cubra toda la pantalla. */
+      pointer-events: none; /* Evita que bloquee clics. */
+      background:
+        radial-gradient(circle at 22% 4%, rgba(49, 200, 238, 0.055), transparent 30%),
+        radial-gradient(circle at 70% 12%, rgba(90, 174, 255, 0.045), transparent 32%);
+      z-index: -1; /* Manda el brillo detrás del contenido. */
+    }
+
+    a { /* Define el estilo general de los enlaces. */
+      color: inherit; /* Hace que los enlaces hereden el color del texto. */
+      text-decoration: none; /* Quita el subrayado por defecto. */
+    }
+
+    .site-header { /* Barra superior fija visualmente parecida a la captura. */
+      border-bottom: 1px solid var(--line); /* Línea separadora inferior. */
+      background: rgba(7, 16, 31, 0.92); /* Fondo oscuro semi sólido. */
+      backdrop-filter: blur(14px); /* Da efecto vidrio suave. */
+      position: sticky; /* Mantiene el menú arriba al hacer scroll. */
+      top: 0; /* Pega el menú a la parte superior. */
+      z-index: 20; /* Lo deja por encima del contenido. */
+    }
+
+    .nav-wrap { /* Contenedor interno del menú. */
+      width: min(var(--max), calc(100% - 44px)); /* Limita el ancho y deja margen lateral. */
+      min-height: 128px; /* Replica la altura grande del header de la captura. */
+      margin: 0 auto; /* Centra el contenido. */
+      display: grid; /* Permite ordenar marca y navegación en columnas. */
+      grid-template-columns: 430px 1fr; /* Primera columna para logo, segunda para links. */
+      align-items: start; /* Alinea elementos arriba. */
+      gap: 24px; /* Separa las columnas. */
+      padding: 28px 0 18px; /* Da aire arriba y abajo. */
+    }
+
+    .brand { /* Bloque de marca con logo y textos. */
+      display: flex; /* Pone logo y texto en fila. */
+      align-items: flex-start; /* Alinea el logo con el comienzo del texto. */
+      gap: 14px; /* Separa el logo del texto. */
+    }
+
+    .logo { /* Cuadrado celeste con PL. */
+      width: 44px; /* Ancho del logo. */
+      height: 44px; /* Alto del logo. */
+      border-radius: 13px; /* Bordes redondeados como app moderna. */
+      display: grid; /* Centra el texto del logo. */
+      place-items: center; /* Centra vertical y horizontalmente. */
+      color: #06101c; /* Texto oscuro sobre celeste. */
+      font-weight: 900; /* Texto fuerte para PL. */
+      background: linear-gradient(135deg, var(--cyan), var(--cyan-2)); /* Degradado celeste. */
+      box-shadow: 0 16px 42px rgba(49, 200, 238, 0.2); /* Brillo suave. */
+    }
+
+    .brand-title { /* Título Performance Labs. */
+      display: block; /* Hace que el título ocupe su línea. */
+      font-weight: 900; /* Grosor fuerte. */
+      font-size: 16px; /* Tamaño similar al screenshot. */
+      line-height: 1.1; /* Altura ajustada. */
+      margin-bottom: 8px; /* Separación con subtítulo. */
+    }
+
+    .brand-subtitle { /* Bajada de la marca. */
+      display: block; /* Ocupa su propia línea. */
+      color: var(--muted); /* Color azul claro. */
+      font-size: 15px; /* Tamaño de lectura cómodo. */
+      line-height: 1.6; /* Altura de línea amplia como la captura. */
+      max-width: 390px; /* Evita que el texto se estire demasiado. */
+    }
+
+    .nav-side { /* Bloque derecho del menú. */
+      display: flex; /* Ordena links y CTA. */
+      flex-direction: column; /* Deja links arriba y botón abajo. */
+      align-items: flex-start; /* Alinea a la izquierda dentro de su columna. */
+      gap: 28px; /* Separa links del botón. */
+    }
+
+    .nav-links { /* Lista de navegación principal. */
+      display: flex; /* Pone links en fila. */
+      align-items: center; /* Centra verticalmente los links. */
+      gap: 34px; /* Espacio entre links. */
+      color: var(--muted); /* Color base de links. */
+      font-weight: 800; /* Peso fuerte como captura. */
+      font-size: 15px; /* Tamaño de links. */
+    }
+
+    .nav-links a { /* Cada link de navegación. */
+      padding: 10px 12px; /* Área clickeable cómoda. */
+      border-radius: 10px; /* Bordes suaves en hover y activo. */
+      transition: 0.2s ease; /* Anima cambios de color y fondo. */
+    }
+
+    .nav-links a:hover, .nav-links a.active { /* Estado activo o al pasar el mouse. */
+      color: var(--text); /* Vuelve el texto más blanco. */
+      background: rgba(255, 255, 255, 0.055); /* Fondo sutil. */
+    }
+
+    .top-cta { /* Botón de diagnóstico del menú. */
+      border: 1px solid var(--line-strong); /* Borde claro suave. */
+      border-radius: 13px; /* Redondeo del botón. */
+      padding: 14px 20px; /* Tamaño interno del botón. */
+      font-weight: 850; /* Texto fuerte. */
+      color: var(--text); /* Texto claro. */
+      background: rgba(255, 255, 255, 0.025); /* Fondo transparente oscuro. */
+    }
+
+    .section { /* Estilo base para cada bloque de página. */
+      border-bottom: 1px solid var(--line); /* Separador horizontal entre secciones. */
+    }
+
+    .container { /* Contenedor central reutilizable. */
+      width: min(var(--max), calc(100% - 44px)); /* Ancho máximo con margen lateral. */
+      margin: 0 auto; /* Centra el contenido. */
+    }
+
+    .hero { /* Primera sección principal. */
+      padding: 86px 0 82px; /* Espacio vertical superior e inferior. */
+    }
+
+    .hero-grid { /* Grilla del hero con texto y tarjeta. */
+      display: grid; /* Activa layout de columnas. */
+      grid-template-columns: 1.06fr 0.85fr; /* Texto más ancho que la tarjeta. */
+      gap: 74px; /* Separación grande entre columnas. */
+      align-items: start; /* Alinea ambas columnas arriba. */
+    }
+
+    .eyebrow { /* Pastilla celeste superior. */
+      display: inline-flex; /* Ajusta ancho al contenido. */
+      align-items: center; /* Centra verticalmente. */
+      border: 1px solid rgba(49, 200, 238, 0.32); /* Borde celeste oscuro. */
+      background: var(--cyan-dark); /* Fondo celeste transparente. */
+      color: var(--text); /* Texto blanco. */
+      padding: 10px 18px; /* Tamaño de pastilla. */
+      border-radius: 999px; /* Forma tipo cápsula. */
+      font-weight: 900; /* Texto fuerte. */
+      font-size: 14px; /* Tamaño pequeño. */
+      margin-bottom: 26px; /* Separación del título. */
+    }
+
+    .hero h1 { /* Título gigante del hero. */
+      font-size: clamp(42px, 5.05vw, 72px); /* Tamaño adaptable, grande en escritorio. */
+      line-height: 1.09; /* Altura compacta como captura. */
+      letter-spacing: -0.055em; /* Ajusta letras para look premium. */
+      margin: 0 0 24px; /* Quita margen superior y deja aire abajo. */
+      max-width: 710px; /* Controla el ancho del título. */
+      font-weight: 930; /* Grosor muy fuerte. */
+    }
+
+    .hero p { /* Párrafo inicial. */
+      color: var(--muted); /* Color secundario. */
+      font-size: 17px; /* Tamaño cómodo. */
+      line-height: 1.7; /* Espaciado como captura. */
+      max-width: 735px; /* Ancho máximo del texto. */
+      margin: 0 0 34px; /* Separación inferior. */
+    }
+
+    .hero-card { /* Tarjeta derecha del hero. */
+      margin-top: 0; /* Alinea con el inicio visual del hero. */
+      border: 1px solid var(--line-strong); /* Borde claro. */
+      border-radius: 25px; /* Redondeo grande. */
+      background: rgba(17, 26, 43, 0.72); /* Fondo de tarjeta. */
+      box-shadow: var(--shadow); /* Sombra para profundidad. */
+      padding: 30px 28px 32px; /* Aire interno. */
+      max-width: 520px; /* Ancho controlado. */
+    }
+
+    .card-kicker { /* Texto chico arriba de la tarjeta. */
+      color: #88dcff; /* Celeste luminoso. */
+      font-size: 13px; /* Tamaño chico. */
+      font-weight: 950; /* Bien marcado. */
+      letter-spacing: 0.28em; /* Letras separadas. */
+      text-transform: uppercase; /* Todo en mayúscula. */
+      margin-bottom: 10px; /* Separación con título. */
+    }
+
+    .hero-card h2 { /* Título de la tarjeta derecha. */
+      margin: 0 0 18px; /* Margen inferior. */
+      font-size: clamp(26px, 2.6vw, 40px); /* Tamaño adaptable. */
+      line-height: 1.18; /* Altura compacta. */
+      letter-spacing: -0.04em; /* Ajuste visual. */
+      font-weight: 930; /* Peso alto. */
+    }
+
+    .hero-card ul { /* Lista de beneficios de la tarjeta. */
+      padding-left: 20px; /* Sangría para viñetas. */
+      margin: 0 0 20px; /* Separación inferior. */
+      color: var(--muted); /* Texto azul claro. */
+      line-height: 1.9; /* Espacio entre ítems. */
+      font-size: 15.5px; /* Tamaño de lista. */
+    }
+
+    .hero-card p { /* Texto final dentro de tarjeta. */
+      margin: 0; /* Quita márgenes heredados. */
+      font-size: 15.5px; /* Tamaño similar a lista. */
+      line-height: 1.65; /* Altura cómoda. */
+    }
+
+    .pill-stack { /* Grupo de pills bajo el hero. */
+      display: grid; /* Organiza las pills en filas. */
+      gap: 14px; /* Separación entre pills. */
+      max-width: 650px; /* Ancho parecido a captura. */
+      margin-left: 40px; /* Desplazamiento para replicar composición. */
+    }
+
+    .pill { /* Cada pill de valor. */
+      border: 1px solid rgba(49, 200, 238, 0.28); /* Borde celeste suave. */
+      background: rgba(6, 35, 55, 0.55); /* Fondo azul petróleo. */
+      border-radius: 12px; /* Bordes suaves. */
+      color: var(--text); /* Texto claro. */
+      font-weight: 900; /* Texto fuerte. */
+      padding: 14px 16px; /* Tamaño interno. */
+      max-width: 650px; /* Mantiene el ancho. */
+    }
+
+    .primary-button { /* Botón principal celeste. */
+      display: inline-flex; /* Permite centrar texto. */
+      align-items: center; /* Centrado vertical. */
+      justify-content: center; /* Centrado horizontal. */
+      min-height: 58px; /* Altura de botón. */
+      padding: 0 27px; /* Aire horizontal. */
+      border-radius: 13px; /* Bordes redondeados. */
+      background: linear-gradient(135deg, var(--cyan), var(--cyan-2)); /* Degradado celeste. */
+      color: #06101c; /* Texto oscuro para contraste. */
+      font-weight: 950; /* Texto muy fuerte. */
+      border: 0; /* Sin borde extra. */
+      cursor: pointer; /* Cursor de botón. */
+      box-shadow: 0 20px 50px rgba(49, 200, 238, 0.18); /* Sombra celeste sutil. */
+    }
+
+    .cta-note { /* Texto bajo el botón principal. */
+      color: var(--muted); /* Color secundario. */
+      font-size: 16px; /* Tamaño legible. */
+      line-height: 1.65; /* Espaciado cómodo. */
+      max-width: 730px; /* Ancho similar al screenshot. */
+      margin-top: 18px; /* Separación desde botón. */
+    }
+
+    .center-line { /* Línea de posicionamiento centrada. */
+      text-align: center; /* Centra el texto. */
+      color: var(--muted); /* Texto azul claro. */
+      font-size: 16px; /* Tamaño medio. */
+      font-weight: 850; /* Negrita marcada. */
+      line-height: 2.3; /* Aire vertical. */
+      padding: 0 0 78px; /* Aire inferior. */
+    }
+
+    .problem { /* Sección de problema. */
+      padding: 90px 0 76px; /* Espacio vertical. */
+    }
+
+    .wide-title { /* Títulos anchos grandes. */
+      font-size: clamp(34px, 4vw, 52px); /* Tamaño adaptable. */
+      line-height: 1.16; /* Alto compacto. */
+      letter-spacing: -0.045em; /* Look editorial. */
+      margin: 0 0 28px; /* Margen inferior. */
+      font-weight: 930; /* Peso alto. */
+      max-width: 940px; /* Ancho del título. */
+    }
+
+    .problem-cards { /* Grilla de tres tarjetas de dolor. */
+      display: grid; /* Layout de grilla. */
+      grid-template-columns: repeat(3, 1fr); /* Tres columnas iguales. */
+      gap: 18px; /* Separación entre tarjetas. */
+      margin-top: 28px; /* Separación desde el título. */
+    }
+
+    .small-card { /* Tarjeta compacta. */
+      border: 1px solid var(--line-strong); /* Borde suave. */
+      background: rgba(17, 26, 43, 0.75); /* Fondo de tarjeta. */
+      border-radius: 20px; /* Bordes redondeados. */
+      padding: 25px 25px; /* Aire interno. */
+      min-height: 155px; /* Altura mínima. */
+    }
+
+    .small-card h3 { /* Título de tarjeta compacta. */
+      margin: 0 0 8px; /* Separación inferior. */
+      font-size: 17px; /* Tamaño del título. */
+      font-weight: 950; /* Grosor fuerte. */
+    }
+
+    .small-card p { /* Texto de tarjeta compacta. */
+      margin: 0; /* Quita margen. */
+      color: var(--muted); /* Color secundario. */
+      line-height: 1.7; /* Legibilidad. */
+      font-size: 16px; /* Tamaño de lectura. */
+    }
+
+    .enable { /* Sección que habilita la solución. */
+      padding: 84px 0 82px; /* Espacio vertical. */
+    }
+
+    .section-lead { /* Bajada de sección. */
+      color: var(--muted); /* Texto secundario. */
+      font-size: 16px; /* Tamaño estándar. */
+      line-height: 1.7; /* Espaciado. */
+      max-width: 980px; /* Ancho amplio. */
+      margin: 0 0 56px; /* Separación inferior grande. */
+    }
+
+    .two-col { /* Grilla de dos columnas. */
+      display: grid; /* Activa columnas. */
+      grid-template-columns: 0.9fr 1.05fr; /* Columna derecha un poco más ancha. */
+      gap: 68px; /* Separación grande. */
+      align-items: start; /* Alinea arriba. */
+    }
+
+    .number-list { /* Lista numerada visual. */
+      display: grid; /* Organiza cada item en filas. */
+      gap: 28px; /* Separación entre items. */
+    }
+
+    .number-item { /* Cada item numerado. */
+      display: grid; /* Permite número y texto en columnas. */
+      grid-template-columns: 58px 1fr; /* Columna del número y del contenido. */
+      gap: 18px; /* Separación. */
+      align-items: start; /* Alinea arriba. */
+    }
+
+    .number-box { /* Cuadrado con número. */
+      width: 58px; /* Ancho del cuadro. */
+      height: 58px; /* Alto del cuadro. */
+      border-radius: 14px; /* Bordes redondeados. */
+      display: grid; /* Centra el número. */
+      place-items: center; /* Centro perfecto. */
+      background: rgba(49, 200, 238, 0.11); /* Fondo celeste transparente. */
+      border: 1px solid rgba(49, 200, 238, 0.25); /* Borde celeste. */
+      color: var(--text); /* Texto claro. */
+      font-weight: 950; /* Número fuerte. */
+    }
+
+    .number-item h3 { /* Título de item numerado. */
+      margin: 0 0 7px; /* Separación inferior. */
+      font-size: 17px; /* Tamaño título. */
+      font-weight: 950; /* Grosor. */
+    }
+
+    .number-item p { /* Texto de item numerado. */
+      margin: 0; /* Sin margen extra. */
+      color: var(--muted); /* Color secundario. */
+      line-height: 1.65; /* Legibilidad. */
+      font-size: 16px; /* Tamaño cómodo. */
+    }
+
+    .benefit-stack { /* Pila de tarjetas de beneficios. */
+      display: grid; /* Filas. */
+      gap: 18px; /* Separación. */
+    }
+
+    .benefit-card { /* Tarjeta de beneficio. */
+      border: 1px solid var(--line-strong); /* Borde. */
+      border-radius: 20px; /* Redondeo. */
+      background: rgba(17, 26, 43, 0.78); /* Fondo. */
+      padding: 27px 27px; /* Aire. */
+    }
+
+    .benefit-card.highlight { /* Tarjeta destacada del final. */
+      border-color: rgba(49, 200, 238, 0.35); /* Borde celeste más fuerte. */
+      background: rgba(6, 35, 55, 0.54); /* Fondo azul petróleo. */
+    }
+
+    .benefit-card h3 { /* Título de beneficio. */
+      margin: 0 0 18px; /* Separación. */
+      font-size: 18px; /* Tamaño. */
+      font-weight: 950; /* Grosor. */
+    }
+
+    .benefit-card p { /* Descripción de beneficio. */
+      margin: 0; /* Sin margen. */
+      color: var(--muted); /* Texto secundario. */
+      line-height: 1.75; /* Espaciado. */
+      font-size: 16px; /* Tamaño. */
+    }
+
+    .notice { /* Banda celeste oscura entre secciones. */
+      margin: 44px auto 0; /* Margen superior. */
+      border: 1px solid rgba(49, 200, 238, 0.32); /* Borde celeste. */
+      background: rgba(6, 35, 55, 0.55); /* Fondo azul petróleo. */
+      border-radius: 16px; /* Bordes redondeados. */
+      color: var(--text); /* Texto claro. */
+      font-size: 17px; /* Tamaño. */
+      line-height: 1.6; /* Legibilidad. */
+      padding: 20px 22px; /* Aire interno. */
+    }
+
+    .fit { /* Sección de ajuste o fit. */
+      padding: 88px 0 80px; /* Espacio vertical. */
+    }
+
+    .fit p { /* Bajada de fit. */
+      color: var(--muted); /* Texto secundario. */
+      font-size: 16px; /* Tamaño. */
+      line-height: 1.7; /* Espaciado. */
+      margin: 0 0 28px; /* Separación. */
+    }
+
+    .fit-grid { /* Grilla de condiciones. */
+      display: grid; /* Activa grilla. */
+      grid-template-columns: repeat(3, 1fr); /* Tres columnas. */
+      gap: 18px; /* Separación. */
+    }
+
+    .fit-box { /* Tarjeta de condición. */
+      border: 1px solid var(--line-strong); /* Borde. */
+      background: rgba(17, 26, 43, 0.72); /* Fondo. */
+      border-radius: 18px; /* Redondeo. */
+      color: var(--muted); /* Texto secundario. */
+      font-size: 16px; /* Tamaño. */
+      line-height: 1.7; /* Alto de línea. */
+      padding: 24px 24px; /* Aire interno. */
+      min-height: 96px; /* Altura mínima. */
+    }
+
+    .steps { /* Sección cómo funciona. */
+      padding: 82px 0 82px; /* Espacio vertical. */
+    }
+
+    .steps-grid { /* Grilla de pasos. */
+      display: grid; /* Activa grilla. */
+      grid-template-columns: repeat(4, 1fr); /* Cuatro columnas. */
+      gap: 17px; /* Separación. */
+      margin-top: 32px; /* Espacio desde bajada. */
+    }
+
+    .step-card { /* Tarjeta de cada paso. */
+      border: 1px solid var(--line-strong); /* Borde. */
+      background: rgba(17, 26, 43, 0.75); /* Fondo. */
+      border-radius: 21px; /* Redondeo. */
+      padding: 22px 22px 24px; /* Aire interno. */
+      min-height: 235px; /* Altura similar a captura. */
+    }
+
+    .step-num { /* Número del paso. */
+      width: 45px; /* Ancho. */
+      height: 45px; /* Alto. */
+      border-radius: 13px; /* Redondeo. */
+      display: grid; /* Centra número. */
+      place-items: center; /* Centro. */
+      color: var(--text); /* Color. */
+      font-weight: 950; /* Grosor. */
+      background: rgba(49, 200, 238, 0.14); /* Fondo celeste. */
+      border: 1px solid rgba(49, 200, 238, 0.3); /* Borde. */
+      margin-bottom: 22px; /* Separación inferior. */
+    }
+
+    .step-card h3 { /* Título de paso. */
+      margin: 0 0 16px; /* Separación. */
+      font-size: 16px; /* Tamaño. */
+      line-height: 1.3; /* Alto compacto. */
+      font-weight: 950; /* Grosor. */
+    }
+
+    .step-card p { /* Texto de paso. */
+      margin: 0; /* Sin margen. */
+      color: var(--muted); /* Color secundario. */
+      line-height: 1.7; /* Espaciado. */
+      font-size: 16px; /* Tamaño. */
+    }
+
+    .diagnosis { /* Sección de diagnóstico incluido. */
+      padding: 72px 0 82px; /* Espacio vertical. */
+    }
+
+    .diagnosis-grid { /* Grilla de lista y oferta. */
+      display: grid; /* Activa columnas. */
+      grid-template-columns: 0.95fr 0.95fr; /* Dos columnas parejas. */
+      gap: 40px; /* Separación. */
+      align-items: start; /* Alinea arriba. */
+    }
+
+    .accordion-list { /* Lista visual de entregables. */
+      display: grid; /* Filas. */
+      gap: 13px; /* Separación. */
+      margin-top: 28px; /* Espacio superior. */
+    }
+
+    .accordion-row { /* Fila de entregable. */
+      border: 1px solid var(--line-strong); /* Borde. */
+      background: rgba(17, 26, 43, 0.72); /* Fondo. */
+      border-radius: 14px; /* Redondeo. */
+      padding: 18px 20px; /* Aire. */
+      font-weight: 950; /* Texto fuerte. */
+      color: var(--text); /* Texto claro. */
+    }
+
+    .offer-card { /* Tarjeta grande de oferta. */
+      border: 1px solid var(--line-strong); /* Borde. */
+      border-radius: 24px; /* Redondeo. */
+      background: rgba(13, 23, 40, 0.78); /* Fondo. */
+      min-height: 378px; /* Altura similar a screenshot. */
+      padding: 32px 32px; /* Aire interno. */
+    }
+
+    .offer-card h2 { /* Título de la oferta. */
+      margin: 7px 0 18px; /* Separación. */
+      font-size: clamp(34px, 3.45vw, 48px); /* Tamaño grande. */
+      line-height: 1.08; /* Alto compacto. */
+      letter-spacing: -0.045em; /* Ajuste visual. */
+      font-weight: 930; /* Grosor. */
+    }
+
+    .offer-card p { /* Texto de oferta. */
+      color: var(--muted); /* Color secundario. */
+      line-height: 1.7; /* Espaciado. */
+      font-size: 17px; /* Tamaño. */
+      margin: 0 0 27px; /* Separación inferior. */
+      max-width: 590px; /* Ancho controlado. */
+    }
+
+    .offer-card .primary-button { /* Botón dentro de oferta. */
+      width: 100%; /* Ocupa todo el ancho disponible. */
+    }
+
+    .faq { /* Sección de preguntas frecuentes. */
+      padding: 78px 0 82px; /* Espacio vertical. */
+    }
+
+    .faq-list { /* Contenedor de FAQs. */
+      display: grid; /* Filas. */
+      gap: 13px; /* Separación. */
+      margin-top: 28px; /* Separación superior. */
+    }
+
+    details { /* Cada pregunta desplegable. */
+      border: 1px solid var(--line-strong); /* Borde. */
+      border-radius: 16px; /* Redondeo. */
+      background: rgba(17, 26, 43, 0.72); /* Fondo. */
+      color: var(--text); /* Texto claro. */
+      padding: 18px 20px; /* Aire interno. */
+    }
+
+    summary { /* Cabecera de cada pregunta. */
+      cursor: pointer; /* Muestra que se puede abrir. */
+      font-weight: 950; /* Texto fuerte. */
+      list-style-position: inside; /* Deja el triángulo dentro. */
+    }
+
+    details p { /* Respuesta desplegable. */
+      color: var(--muted); /* Texto secundario. */
+      line-height: 1.7; /* Legibilidad. */
+      margin: 14px 0 0 22px; /* Espacio desde pregunta. */
+    }
+
+    .final-cta { /* Sección final de conversión. */
+      padding: 68px 0 58px; /* Espacio vertical. */
+      background: rgba(13, 23, 40, 0.42); /* Fondo apenas distinto. */
+    }
+
+    .final-cta h2 { /* Título final. */
+      font-size: clamp(34px, 3.6vw, 52px); /* Tamaño grande. */
+      line-height: 1.14; /* Alto. */
+      letter-spacing: -0.045em; /* Ajuste. */
+      margin: 0 0 20px; /* Separación. */
+      font-weight: 930; /* Grosor. */
+      max-width: 1120px; /* Ancho. */
+    }
+
+    .final-cta p { /* Texto final. */
+      color: var(--muted); /* Color secundario. */
+      font-size: 16px; /* Tamaño. */
+      margin: 0 0 30px; /* Separación. */
+    }
+
+    .site-footer { /* Pie de página. */
+      background: #07101f; /* Fondo oscuro. */
+      padding: 28px 0 24px; /* Aire interno. */
+    }
+
+    .footer-grid { /* Grilla del footer. */
+      display: flex; /* Distribuye marca y links en línea. */
+      align-items: center; /* Centra verticalmente. */
+      justify-content: space-between; /* Separa extremos. */
+      gap: 24px; /* Espacio si se achica. */
+    }
+
+    .footer-links { /* Links del footer. */
+      display: flex; /* Pone enlaces en fila. */
+      gap: 24px; /* Separación. */
+      color: var(--muted); /* Color. */
+      font-weight: 850; /* Peso. */
+    }
+
+    @media (max-width: 980px) { /* Ajustes para tablet y pantallas medianas. */
+      .nav-wrap, .hero-grid, .two-col, .diagnosis-grid { /* Grillas que pasan a una columna. */
+        grid-template-columns: 1fr; /* Usa una sola columna. */
+      }
+
+      .nav-wrap { /* Header en móvil/tablet. */
+        min-height: auto; /* Quita altura fija. */
+      }
+
+      .problem-cards, .fit-grid, .steps-grid { /* Grillas múltiples en móvil/tablet. */
+        grid-template-columns: 1fr 1fr; /* Dos columnas. */
+      }
+
+      .pill-stack { /* Pila de pills móvil. */
+        margin-left: 0; /* Quita desplazamiento. */
+      }
+    }
+
+    @media (max-width: 680px) { /* Ajustes para celular. */
+      .nav-links, .footer-grid, .footer-links { /* Menús en celular. */
+        flex-wrap: wrap; /* Permite salto de línea. */
+      }
+
+      .problem-cards, .fit-grid, .steps-grid { /* Tarjetas en celular. */
+        grid-template-columns: 1fr; /* Una columna. */
+      }
+
+      .hero { /* Hero en celular. */
+        padding-top: 48px; /* Reduce aire superior. */
+      }
+
+      .container, .nav-wrap { /* Contenedores en celular. */
+        width: min(100% - 28px, var(--max)); /* Márgenes más chicos. */
+      }
+    }
+  </style>
+</head>
+
+<body> <!-- Contiene todo lo que el usuario ve y usa en la página. -->
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KS28BPPV" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <header class="site-header"> <!-- Barra superior con marca, menú y botón principal. -->
+    <div class="nav-wrap"> <!-- Centra y organiza el contenido del header. -->
+      <a class="brand" href="index.html" aria-label="Performance Labs"> <!-- Lleva al inicio al hacer clic en la marca. -->
+        <span class="logo">PL</span> <!-- Logo simple de Performance Labs. -->
+        <span>
+          <span class="brand-title">Performance Labs</span> <!-- Nombre de la marca. -->
+          <span class="brand-subtitle">Diagnóstico, reportería y seguimiento para centros deportivos</span> <!-- Bajada breve de la marca. -->
+        </span>
       </a>
 
-      <nav class="nav" aria-label="Navegación principal">
-        <a href="#problema">Problema</a>
-        <a href="#solucion">Solución</a>
-        <a href="#como-funciona">Cómo funciona</a>
-        <a href="#preguntas">Preguntas</a>
-      </nav>
-
-      <a class="btn btn--primary btn--nav js-lead-cta" href="https://forms.gle/Sb2u6RuwZ6XTGvu79" target="_blank" rel="noopener noreferrer" data-cta-location="header">Solicitar diagnóstico sin costo</a>
+      <div class="nav-side"> <!-- Agrupa links superiores y botón de diagnóstico. -->
+        <nav class="nav-links" aria-label="Navegación principal"> <!-- Menú principal del sitio. -->
+          <a class="active" href="index.html">Inicio</a> <!-- Link a la página inicial. -->
+          <a href="quienes-somos.html">¿Quiénes somos?</a> <!-- Link a la página institucional. -->
+          <a href="mision-vision.html">Misión y visión</a> <!-- Link a misión y visión. -->
+          <a href="valores-sellos.html">Valores y sellos</a> <!-- Link a valores y sellos. -->
+        </nav>
+        <a class="top-cta" href="#diagnostico">Diagnóstico sin costo</a> <!-- Botón superior que baja a la sección de diagnóstico. -->
+      </div>
     </div>
   </header>
 
-  <main id="main">
-    <section class="hero hero--leadgen">
-      <div class="container hero__grid hero__grid--leadgen">
-        <div class="hero__copy">
-          <div class="badge">Diagnóstico inicial sin costo</div>
-          <h1>Profesionaliza el seguimiento de tus alumnos y detecta oportunidades de mejora con una primera lectura clara de tus datos.</h1>
-          <p class="lead">Performance Labs ayuda a <strong>centros deportivos medianos</strong> a convertir información dispersa en reportes claros, indicadores accionables y decisiones que mejoran el seguimiento, la retención y la percepción de valor del servicio.</p>
-
-          <div class="hero-points">
-            <div class="hero-point">Seguimiento más profesional por alumno y grupo</div>
-            <div class="hero-point">Detección temprana de riesgo de abandono</div>
-            <div class="hero-point">Mayor valor percibido por alumnos y apoderados</div>
-          </div>
-
-          <div class="cta">
-            <a class="btn btn--primary btn--large js-lead-cta" href="https://forms.gle/Sb2u6RuwZ6XTGvu79" target="_blank" rel="noopener noreferrer" data-cta-location="hero">Solicitar diagnóstico sin costo</a>
-            <a class="btn btn--ghost" href="performance_dashboard.html">Ver Demo</a>
-          </div>
-
-          <p class="hero__micro">Ideal para centros que ya trabajan con alumnos, grupos, asistencia, planillas o métricas deportivas y quieren ordenar su seguimiento sin partir con software complejo.</p>
+  <main> <!-- Agrupa todo el contenido principal de la landing. -->
+    <section class="section hero"> <!-- Hero principal con promesa y tarjeta de valor. -->
+      <div class="container hero-grid"> <!-- Divide el hero en dos columnas. -->
+        <div> <!-- Columna izquierda del hero. -->
+          <span class="eyebrow">Diagnóstico inicial sin costo</span> <!-- Sello superior de oferta. -->
+          <h1>Profesionaliza el seguimiento de tus alumnos con una base más clara para decidir, mejorar la experiencia y fortalecer la propuesta de valor de tu centro.</h1> <!-- Promesa principal. -->
+          <p>Performance Labs ayuda a centros deportivos a transformar información dispersa en reportería clara, a través de indicadores accionables que permiten fortalecer el seguimiento, la retención y la mejora continua del servicio.</p> <!-- Explicación principal. -->
         </div>
 
-        <aside class="hero-lead-box" aria-label="Propuesta de valor del diagnóstico">
-          <div class="lead-box__kicker">Qué te llevas</div>
-          <h2>Una primera base objetiva para decidir mejor</h2>
-
-          <ul class="lead-box__list">
-            <li>Revisión inicial de tus datos disponibles</li>
-            <li>Identificación de focos de riesgo y mejora</li>
-            <li>Propuesta de indicadores prioritarios</li>
-            <li>Ejemplo de reportería inicial</li>
-            <li>Recomendación concreta de siguiente paso</li>
+        <aside class="hero-card"> <!-- Tarjeta lateral con lo que recibe el usuario. -->
+          <div class="card-kicker">Qué te llevas</div> <!-- Encabezado pequeño de tarjeta. -->
+          <h2>Una primera base objetiva para decidir mejor</h2> <!-- Título de tarjeta. -->
+          <ul> <!-- Lista de entregables resumidos. -->
+            <li>Revisión inicial de los datos disponibles</li> <!-- Entregable 1. -->
+            <li>Identificación de focos de riesgo y mejora</li> <!-- Entregable 2. -->
+            <li>Propuesta de indicadores prioritarios</li> <!-- Entregable 3. -->
+            <li>Ejemplo de reportería inicial</li> <!-- Entregable 4. -->
+            <li>Recomendación concreta de siguiente paso</li> <!-- Entregable 5. -->
           </ul>
+          <p>Sin software complejo. Comenzamos con la información que tu centro ya genera hoy.</p> <!-- Cierre de tarjeta. -->
+        </aside>
+      </div>
 
-          <a class="btn btn--primary btn--full js-lead-cta" href="https://forms.gle/Sb2u6RuwZ6XTGvu79" target="_blank" rel="noopener noreferrer" data-cta-location="hero-box">Quiero mi diagnóstico</a>
-          <p class="lead-box__note">Sin software complejo. Partimos con lo que tu centro ya usa hoy.</p>
+      <div class="container" style="margin-top: 78px;"> <!-- Bloque inferior del hero con señales de valor. -->
+        <div class="pill-stack"> <!-- Pila de tres mensajes. -->
+          <div class="pill">Seguimiento deportivo profesional individual y grupal</div> <!-- Mensaje 1. -->
+          <div class="pill">Detección temprana de riesgo de abandono</div> <!-- Mensaje 2. -->
+          <div class="pill">Percepción de valor agregado por el cliente</div> <!-- Mensaje 3. -->
+          <div style="margin-top:14px;"> <!-- Bloque de botón principal bajo las pills. -->
+            <a class="primary-button" href="#diagnostico">Solicitar diagnóstico</a> <!-- CTA principal. -->
+            <p class="cta-note">Ideal para centros deportivos y clubes que ya trabajan con planillas y/o métricas deportivas y quieren ordenar su seguimiento de manera simple.</p> <!-- Nota del CTA. -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container center-line"> <!-- Texto centrado de posicionamiento. -->
+      Diseñado para academias, clubes y centros deportivos en etapa de crecimiento &nbsp; • &nbsp; Foco en seguimiento, retención y profesionalización &nbsp; •<br>
+      Implementación inicial simple
+    </div>
+
+    <section class="section problem"> <!-- Sección de dolores del mercado. -->
+      <div class="container"> <!-- Contenedor central. -->
+        <h2 class="wide-title">Muchos centros ya generan información, el desafío está en transformarla, para tomar decisiones oportunas, generando mejoras visibles en un corto plazo.</h2> <!-- Título problema. -->
+        <div class="problem-cards"> <!-- Tarjetas de problemas. -->
+          <article class="small-card"> <!-- Dolor 1. -->
+            <h3>Seguimiento fragmentado</h3> <!-- Título dolor 1. -->
+            <p>La información existe, pero está dispersa entre asistencia, métricas, observaciones y memoria del coach.</p> <!-- Texto dolor 1. -->
+          </article>
+          <article class="small-card"> <!-- Dolor 2. -->
+            <h3>Pérdida silenciosa de alumnos</h3> <!-- Título dolor 2. -->
+            <p>Muchas veces el centro detecta tarde las señales de desmotivación, baja constancia o abandono.</p> <!-- Texto dolor 2. -->
+          </article>
+          <article class="small-card"> <!-- Dolor 3. -->
+            <h3>Poco valor visible</h3> <!-- Título dolor 3. -->
+            <p>Si el alumno no ve seguimiento claro ni evidencia de progreso, percibe menos valor en el servicio.</p> <!-- Texto dolor 3. -->
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section enable"> <!-- Sección de solución y beneficios. -->
+      <div class="container"> <!-- Contenedor central. -->
+        <h2 class="wide-title">Qué habilita Performance Labs en un centro deportivo</h2> <!-- Título de sección. -->
+        <p class="section-lead">Ordena tus datos actuales y los transforma en una primera capa de inteligencia de seguimiento para coaches, dirección y gestión del centro.</p> <!-- Bajada de solución. -->
+
+        <div class="two-col"> <!-- Layout de lista izquierda y beneficios derecha. -->
+          <div> <!-- Columna izquierda. -->
+            <h3 style="margin:0 0 24px;font-size:18px;font-weight:950;">Lo que puedes empezar a ver</h3> <!-- Subtítulo izquierdo. -->
+            <div class="number-list"> <!-- Lista numerada. -->
+              <div class="number-item"> <!-- Item 1. -->
+                <div class="number-box">01</div> <!-- Número 1. -->
+                <div>
+                  <h3>Adherencia y constancia</h3> <!-- Título item 1. -->
+                  <p>Qué grupos y alumnos muestran mejores o peores señales de continuidad.</p> <!-- Texto item 1. -->
+                </div>
+              </div>
+
+              <div class="number-item"> <!-- Item 2. -->
+                <div class="number-box">02</div> <!-- Número 2. -->
+                <div>
+                  <h3>Riesgo de abandono</h3> <!-- Título item 2. -->
+                  <p>Alertas tempranas para actuar antes de perder alumnos silenciosamente.</p> <!-- Texto item 2. -->
+                </div>
+              </div>
+
+              <div class="number-item"> <!-- Item 3. -->
+                <div class="number-box">03</div> <!-- Número 3. -->
+                <div>
+                  <h3>Lectura clara para dirección</h3> <!-- Título item 3. -->
+                  <p>Una base más sólida y objetiva para priorizar acciones y ordenar operaciones.</p> <!-- Texto item 3. -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div> <!-- Columna derecha. -->
+            <h3 style="margin:0 0 24px;font-size:18px;font-weight:950;">Cómo esta solución fortalece la propuesta de valor de tu centro</h3> <!-- Subtítulo derecho. -->
+            <div class="benefit-stack"> <!-- Pila de beneficios. -->
+              <article class="benefit-card"> <!-- Beneficio 1. -->
+                <h3>Mayor valor percibido</h3> <!-- Título beneficio 1. -->
+                <p>Los alumnos perciben más profesionalismo cuando existe seguimiento visible, criterios claros y una lectura comprensible del progreso.</p> <!-- Texto beneficio 1. -->
+              </article>
+              <article class="benefit-card"> <!-- Beneficio 2. -->
+                <h3>Mejor comunicación</h3> <!-- Título beneficio 2. -->
+                <p>Permite mostrar avances, explicar decisiones y sostener conversaciones con mayor claridad frente a alumnos, apoderados y equipos.</p> <!-- Texto beneficio 2. -->
+              </article>
+              <article class="benefit-card"> <!-- Beneficio 3. -->
+                <h3>Orden operativo</h3> <!-- Título beneficio 3. -->
+                <p>Reduce la improvisación y dependencia de la memoria, realizando un seguimiento profesional.</p> <!-- Texto beneficio 3. -->
+              </article>
+              <article class="benefit-card"> <!-- Beneficio 4. -->
+                <h3>Diferenciación real</h3> <!-- Título beneficio 4. -->
+                <p>Ayuda al centro a posicionarse con una propuesta más moderna y profesional, basada en evidencia.</p> <!-- Texto beneficio 4. -->
+              </article>
+              <article class="benefit-card highlight"> <!-- Beneficio destacado. -->
+                <h3>Experiencias más motivadoras</h3> <!-- Título destacado. -->
+                <p>El seguimiento estructurado también puede habilitar estrategias de gamificación, transformando avances, hitos y hábitos en experiencias más visibles y motivadoras para los alumnos.</p> <!-- Texto destacado. -->
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="notice">Una primera capa de reportería puede ayudarte a ordenar el seguimiento, detectar señales tempranas y comunicar mejor el valor de tu servicio.</div> <!-- Banda final de la sección. -->
+      </div>
+    </section>
+
+    <section class="section fit"> <!-- Sección de ajuste del cliente ideal. -->
+      <div class="container"> <!-- Contenedor central. -->
+        <h2 class="wide-title">Centros para los que esta solución suele tener mejor ajuste</h2> <!-- Título de ajuste. -->
+        <p>Si reconoces estas señales, esta es la solución para ti.</p> <!-- Bajada breve. -->
+
+        <div class="fit-grid"> <!-- Grilla de condiciones. -->
+          <div class="fit-box">Trabajas con alumnos o grupos de entrenamiento de forma recurrente</div> <!-- Condición 1. -->
+          <div class="fit-box">Tienes asistencia, planillas o métricas, pero todavía no una lectura integrada</div> <!-- Condición 2. -->
+          <div class="fit-box">Buscas profesionalizar el seguimiento sin partir con una plataforma pesada</div> <!-- Condición 3. -->
+          <div class="fit-box">Quieres más retención, mejor comunicación y mayor valor percibido</div> <!-- Condición 4. -->
+          <div class="fit-box">Tienes uno o más coaches y necesitan mayor consistencia en el seguimiento</div> <!-- Condición 5. -->
+          <div class="fit-box">Quieres ver oportunidades concretas antes de invertir en algo más grande</div> <!-- Condición 6. -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section steps"> <!-- Sección del proceso. -->
+      <div class="container"> <!-- Contenedor central. -->
+        <h2 class="wide-title">Cómo funciona</h2> <!-- Título del proceso. -->
+        <p class="section-lead" style="margin-bottom:0;">Un proceso simple para generar valor rápido y sin fricción innecesaria.</p> <!-- Bajada del proceso. -->
+
+        <div class="steps-grid"> <!-- Grilla de pasos. -->
+          <article class="step-card"> <!-- Paso 1. -->
+            <div class="step-num">1</div> <!-- Número paso 1. -->
+            <h3>Dejas tus datos</h3> <!-- Título paso 1. -->
+            <p>Nos compartes información básica de tu centro y el principal problema que hoy quieres resolver.</p> <!-- Texto paso 1. -->
+          </article>
+          <article class="step-card"> <!-- Paso 2. -->
+            <div class="step-num">2</div> <!-- Número paso 2. -->
+            <h3>Revisamos tu contexto</h3> <!-- Título paso 2. -->
+            <p>Entendemos tu operación, los datos disponibles y el nivel de madurez actual.</p> <!-- Texto paso 2. -->
+          </article>
+          <article class="step-card"> <!-- Paso 3. -->
+            <div class="step-num">3</div> <!-- Número paso 3. -->
+            <h3>Recibes una primera lectura</h3> <!-- Título paso 3. -->
+            <p>Te mostramos oportunidades de seguimiento, indicadores y focos de mejora.</p> <!-- Texto paso 3. -->
+          </article>
+          <article class="step-card"> <!-- Paso 4. -->
+            <div class="step-num">4</div> <!-- Número paso 4. -->
+            <h3>Evaluamos el siguiente paso</h3> <!-- Título paso 4. -->
+            <p>Si te hace sentido, avanzamos a una reportería y un seguimiento periódico.</p> <!-- Texto paso 4. -->
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="diagnostico" class="section diagnosis"> <!-- Sección de diagnóstico y CTA. -->
+      <div class="container diagnosis-grid"> <!-- Grilla del diagnóstico. -->
+        <div> <!-- Columna de entregables. -->
+          <h2 class="wide-title">Qué incluye el diagnóstico inicial</h2> <!-- Título de entregables. -->
+          <p class="section-lead" style="margin-bottom:0;">La entrada está diseñada para ser clara, útil y realista desde el primer contacto.</p> <!-- Bajada de entregables. -->
+
+          <div class="accordion-list"> <!-- Lista visual de entregables. -->
+            <div class="accordion-row">Levantamiento del contexto del centro</div> <!-- Entregable 1. -->
+            <div class="accordion-row">Revisión de datos disponibles</div> <!-- Entregable 2. -->
+            <div class="accordion-row">Propuesta de indicadores prioritarios</div> <!-- Entregable 3. -->
+            <div class="accordion-row">Detección de focos de riesgo y mejora</div> <!-- Entregable 4. -->
+            <div class="accordion-row">Ejemplo de reportería o dashboard</div> <!-- Entregable 5. -->
+            <div class="accordion-row">Recomendación de siguiente paso</div> <!-- Entregable 6. -->
+          </div>
+        </div>
+
+        <aside class="offer-card"> <!-- Tarjeta de oferta comercial. -->
+          <div class="card-kicker">Oferta de entrada</div> <!-- Sello de oferta. -->
+          <h2>Evalúa tu centro sin costo inicial</h2> <!-- Título de oferta. -->
+          <p>Una primera lectura puede mostrarte dónde hay oportunidades de seguimiento, retención, valor percibido y profesionalización del servicio.</p> <!-- Texto de oferta. -->
+          <a class="primary-button" href="https://forms.gle/" target="_blank" rel="noopener noreferrer">Evaluar mi centro</a> <!-- Botón al formulario externo. -->
         </aside>
       </div>
     </section>
 
-    <section class="section section--tight social-proof-strip">
-      <div class="container social-proof-strip__inner">
-        <span>Diseñado para academias, clubes y centros deportivos en etapa de crecimiento</span>
-        <span>•</span>
-        <span>Foco en seguimiento, retención y profesionalización</span>
-        <span>•</span>
-        <span>Implementación inicial simple</span>
-      </div>
-    </section>
+    <section class="section faq"> <!-- Sección de preguntas frecuentes. -->
+      <div class="container"> <!-- Contenedor central. -->
+        <h2 class="wide-title">Preguntas frecuentes</h2> <!-- Título FAQ. -->
+        <p class="section-lead" style="margin-bottom:0;">Lo justo y necesario para despejar dudas antes de dejar tus datos.</p> <!-- Bajada FAQ. -->
 
-    <section id="problema" class="section">
-      <div class="container">
-        <div class="section__head">
-          <h2>Muchos centros tienen datos. El problema es que no los convierten en seguimiento útil.</h2>
-          <p class="muted">Cuando la información vive en planillas, registros sueltos, observaciones técnicas o apps separadas, se vuelve difícil detectar alumnos en riesgo, mostrar avances con claridad y tomar decisiones con respaldo.</p>
-        </div>
-
-        <div class="pain-grid">
-          <article class="pain-card">
-            <h3>Seguimiento fragmentado</h3>
-            <p>La información existe, pero está dispersa entre asistencia, métricas, observaciones y memoria del coach.</p>
-          </article>
-          <article class="pain-card">
-            <h3>Pérdida silenciosa de alumnos</h3>
-            <p>Muchas veces el centro detecta tarde las señales de desmotivación, baja constancia o abandono.</p>
-          </article>
-          <article class="pain-card">
-            <h3>Poco valor visible</h3>
-            <p>Si el alumno no ve seguimiento claro ni evidencia de progreso, percibe menos valor en el servicio.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="solucion" class="section section--soft">
-      <div class="container">
-        <div class="section__head">
-          <h2>Qué hace Performance Labs</h2>
-          <p class="muted">Ordena tus datos actuales y los transforma en una primera capa de inteligencia de seguimiento para coaches, dirección y gestión del centro.</p>
-        </div>
-
-        <div class="solution-grid">
-          <div class="solution-block">
-            <h3>Lo que puedes empezar a ver</h3>
-            <div class="bullet-list">
-              <div class="bullet-item">
-                <div class="bullet-item__icon">01</div>
-                <div>
-                  <div class="bullet-item__title">Adherencia y constancia</div>
-                  <div class="bullet-item__desc">Qué grupos y alumnos muestran mejores o peores señales de continuidad.</div>
-                </div>
-              </div>
-              <div class="bullet-item">
-                <div class="bullet-item__icon">02</div>
-                <div>
-                  <div class="bullet-item__title">Riesgo de abandono</div>
-                  <div class="bullet-item__desc">Alertas tempranas para actuar antes de perder alumnos silenciosamente.</div>
-                </div>
-              </div>
-              <div class="bullet-item">
-                <div class="bullet-item__icon">03</div>
-                <div>
-                  <div class="bullet-item__title">Lectura clara para dirección</div>
-                  <div class="bullet-item__desc">Una base más objetiva para priorizar acciones y ordenar operación.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="solution-block">
-            <h3>Por qué esto vende mejor tu servicio</h3>
-            <div class="card-grid">
-              <article class="card">
-                <div class="card__title">Mayor valor percibido</div>
-                <div class="card__desc">Los alumnos perciben más profesionalismo cuando hay seguimiento visible y criterio.</div>
-              </article>
-              <article class="card">
-                <div class="card__title">Mejor comunicación</div>
-                <div class="card__desc">Permite mostrar avances y explicar decisiones con mucha más claridad.</div>
-              </article>
-              <article class="card">
-                <div class="card__title">Más orden operativo</div>
-                <div class="card__desc">Reduce improvisación y dependencia de memoria o conversaciones sueltas.</div>
-              </article>
-              <article class="card card--accent">
-                <div class="card__title">Diferenciación real</div>
-                <div class="card__desc">Te ayuda a verte más serio frente a centros que todavía operan sin reportería útil.</div>
-              </article>
-            </div>
-          </div>
-        </div>
-
-        <div class="inline-cta">
-          <a class="btn btn--primary js-lead-cta" href="https://forms.gle/Sb2u6RuwZ6XTGvu79" target="_blank" rel="noopener noreferrer" data-cta-location="mid-solution">Solicitar diagnóstico sin costo</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section__head">
-          <h2>Ideal para centros que hoy están en este punto</h2>
-          <p class="muted">Si te reconoces en estas señales, esta solución probablemente te calce bien.</p>
-        </div>
-
-        <div class="fit-grid">
-          <article class="fit-card">Trabajas con alumnos o grupos de entrenamiento de forma recurrente</article>
-          <article class="fit-card">Tienes asistencia, planillas o métricas, pero no una lectura integrada</article>
-          <article class="fit-card">Quieres profesionalizar el seguimiento sin partir con una plataforma pesada</article>
-          <article class="fit-card">Buscas más retención, mejor comunicación y más valor percibido</article>
-          <article class="fit-card">Tienes uno o más coaches y quieres mayor consistencia en el seguimiento</article>
-          <article class="fit-card">Quieres ver oportunidades concretas antes de invertir en algo más grande</article>
-        </div>
-      </div>
-    </section>
-
-    <section id="como-funciona" class="section section--soft">
-      <div class="container">
-        <div class="section__head">
-          <h2>Cómo funciona</h2>
-          <p class="muted">Un proceso simple para generar valor rápido y sin fricción innecesaria.</p>
-        </div>
-
-        <div class="steps">
-          <article class="step">
-            <div class="step__num">1</div>
-            <div class="step__title">Dejas tus datos</div>
-            <div class="step__desc">Nos compartes información básica de tu centro y el principal problema que hoy quieres resolver.</div>
-          </article>
-          <article class="step">
-            <div class="step__num">2</div>
-            <div class="step__title">Revisamos tu contexto</div>
-            <div class="step__desc">Entendemos tu operación, los datos disponibles y el nivel de madurez actual.</div>
-          </article>
-          <article class="step">
-            <div class="step__num">3</div>
-            <div class="step__title">Recibes una primera lectura</div>
-            <div class="step__desc">Te mostramos oportunidades de seguimiento, indicadores y focos de mejora.</div>
-          </article>
-          <article class="step">
-            <div class="step__num">4</div>
-            <div class="step__title">Evaluamos el siguiente paso</div>
-            <div class="step__desc">Si hace sentido, avanzamos a reportería y seguimiento periódico.</div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="diagnostico" class="section section--diagnostic-cta">
-      <div class="container diagnostic-hero">
-        <div class="diagnostic-hero__copy">
-          <div class="diagnostic-box__kicker">Oferta de entrada</div>
-          <h2>Solicita un diagnóstico inicial sin costo</h2>
-          <p class="muted">Te ayudamos a identificar qué información ya tiene tu centro, qué señales vale la pena seguir y cómo podrías empezar a profesionalizar el seguimiento con una primera base objetiva.</p>
-          <div class="diagnostic-list diagnostic-list--compact">
-            <div class="diagnostic-item">Sin costo inicial</div>
-            <div class="diagnostic-item">Sin software complejo</div>
-            <div class="diagnostic-item">Sin necesidad de tener todo ordenado</div>
-          </div>
-        </div>
-
-        <div class="diagnostic-hero__cta">
-          <a class="btn btn--primary btn--large btn--full js-lead-cta" href="https://forms.gle/Sb2u6RuwZ6XTGvu79" target="_blank" rel="noopener noreferrer" data-cta-location="diagnostic-section">Solicitar diagnóstico sin costo</a>
-          <p class="lead-box__note lead-box__note--center">Completa el formulario y te contactaremos para evaluar el ajuste con tu centro.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="preguntas" class="section">
-      <div class="container">
-        <div class="section__head">
-          <h2>Preguntas frecuentes</h2>
-          <p class="muted">Lo justo y necesario para despejar dudas antes de dejar tus datos.</p>
-        </div>
-        <div class="faq">
-          <details>
-            <summary>¿Necesitamos tener todo ordenado para empezar?</summary>
-            <div class="faq__body">No. Podemos partir con planillas, asistencia, métricas y registros simples.</div>
+        <div class="faq-list"> <!-- Lista de preguntas. -->
+          <details> <!-- Pregunta 1. -->
+            <summary>¿Necesitamos tener todo ordenado para empezar?</summary> <!-- Título pregunta 1. -->
+            <p>No. La idea del diagnóstico es partir desde la información que ya existe y detectar cómo ordenarla mejor.</p> <!-- Respuesta 1. -->
           </details>
-          <details>
-            <summary>¿Esto reemplaza el criterio del coach?</summary>
-            <div class="faq__body">No. Lo complementa con mayor claridad, estructura y respaldo para decidir mejor.</div>
+          <details> <!-- Pregunta 2. -->
+            <summary>¿Esto reemplaza el criterio del coach?</summary> <!-- Título pregunta 2. -->
+            <p>No. Lo complementa con evidencia, señales de seguimiento y una lectura más clara para decidir.</p> <!-- Respuesta 2. -->
           </details>
-          <details>
-            <summary>¿Sirve para centros medianos?</summary>
-            <div class="faq__body">Sí. Está pensado especialmente para centros que están creciendo y necesitan más estructura.</div>
+          <details> <!-- Pregunta 3. -->
+            <summary>¿Sirve para centros medianos?</summary> <!-- Título pregunta 3. -->
+            <p>Sí. Está pensado especialmente para centros que ya tienen operación recurrente, alumnos y necesidad de profesionalizar seguimiento.</p> <!-- Respuesta 3. -->
           </details>
-          <details>
-            <summary>¿Qué recibimos con el diagnóstico?</summary>
-            <div class="faq__body">Una primera lectura de tus datos, focos de mejora, indicadores prioritarios y una recomendación concreta de siguiente paso.</div>
+          <details> <!-- Pregunta 4. -->
+            <summary>¿Qué recibimos con el diagnóstico?</summary> <!-- Título pregunta 4. -->
+            <p>Una primera lectura del contexto, datos disponibles, oportunidades de indicadores y recomendación concreta de siguiente paso.</p> <!-- Respuesta 4. -->
           </details>
-          <details>
-            <summary>¿Qué pasa después del formulario?</summary>
-            <div class="faq__body">Revisamos la información enviada y te contactamos para evaluar el ajuste y los próximos pasos.</div>
+          <details> <!-- Pregunta 5. -->
+            <summary>¿Qué pasa después del formulario?</summary> <!-- Título pregunta 5. -->
+            <p>Revisamos la información enviada y coordinamos una primera conversación para entender el caso del centro.</p> <!-- Respuesta 5. -->
           </details>
         </div>
       </div>
     </section>
 
-    <section class="final">
-      <div class="container final__grid">
-        <div>
-          <h2>Mientras antes ordenes tu seguimiento, antes podrás detectar fugas y mostrar más valor.</h2>
-          <p class="muted">No necesitas esperar a tener una infraestructura perfecta para empezar a tomar mejores decisiones.</p>
-        </div>
-        <div class="final__cta">
-          <a class="btn btn--primary js-lead-cta" href="https://forms.gle/Sb2u6RuwZ6XTGvu79" target="_blank" rel="noopener noreferrer" data-cta-location="final">Solicitar diagnóstico sin costo</a>
-        </div>
+    <section class="final-cta"> <!-- Cierre persuasivo final. -->
+      <div class="container"> <!-- Contenedor central. -->
+        <h2>Una mejor estructura de seguimiento permite detectar antes, comunicar mejor y sostener mayor valor en el tiempo.</h2> <!-- Mensaje final. -->
+        <p>No necesitas esperar a tener una infraestructura perfecta para empezar a tomar mejores decisiones.</p> <!-- Bajada final. -->
+        <a class="primary-button" href="#diagnostico">Agendar una primera conversación</a> <!-- CTA final. -->
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__left">
-        <div class="footer__mark">PL</div>
-        <div>
-          <div class="footer__brand">Performance Labs</div>
-          <div class="muted muted--small">Diagnóstico, reportería y seguimiento para centros deportivos</div>
-        </div>
-      </div>
-      <div class="footer__right">
-        <a href="#problema">Problema</a>
-        <a href="#solucion">Solución</a>
-        <a href="#diagnostico">Diagnóstico</a>
-        <a href="mailto:contacto@performancelabs.tech">contacto@performancelabs.tech</a>
-      </div>
+  <footer class="site-footer"> <!-- Pie de página con marca y navegación. -->
+    <div class="container footer-grid"> <!-- Contenedor del footer. -->
+      <a class="brand" href="index.html" aria-label="Performance Labs"> <!-- Marca del footer. -->
+        <span class="logo">PL</span> <!-- Logo del footer. -->
+        <span>
+          <span class="brand-title">Performance Labs</span> <!-- Nombre en footer. -->
+          <span class="brand-subtitle">Diagnóstico, reportería y seguimiento para centros deportivos</span> <!-- Bajada en footer. -->
+        </span>
+      </a>
+
+      <nav class="footer-links" aria-label="Navegación del pie de página"> <!-- Links del footer. -->
+        <a href="index.html">Inicio</a> <!-- Link inicio. -->
+        <a href="quienes-somos.html">¿Quiénes somos?</a> <!-- Link quiénes somos. -->
+        <a href="mision-vision.html">Misión y visión</a> <!-- Link misión. -->
+        <a href="valores-sellos.html">Valores y sellos</a> <!-- Link valores. -->
+      </nav>
     </div>
   </footer>
-
-  <script src="./app.js"></script>
 </body>
 </html>
