@@ -1,106 +1,193 @@
 <!DOCTYPE html>
-<html lang="es"> <!-- Define que la página está en español, para que navegadores y buscadores lo interpreten bien. -->
-<head> <!-- Contiene configuración técnica, estilos y scripts de medición. -->
-  <meta charset="UTF-8"> <!-- Permite usar tildes, ñ y caracteres especiales sin errores. -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace que la página se adapte a celular, tablet y computador. -->
-  <meta name="description" content="Performance Labs ayuda a centros deportivos a transformar información dispersa en reportería clara, indicadores accionables y seguimiento profesional."> <!-- Resume el contenido para buscadores. -->
-  <title>Performance Labs | Diagnóstico, reportería y seguimiento</title> <!-- Define el título que aparece en la pestaña del navegador. -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Performance Labs transforma datos deportivos en Business Intelligence, dashboards e insights accionables para centros deportivos, clubes, academias y equipos." />
+  <title>Performance Labs | BI en Deportes y Analítica Deportiva</title>
 
   <!-- Google Tag Manager -->
   <script>
     (function(w,d,s,l,i){
-      w[l]=w[l]||[]; // Crea una mochila llamada dataLayer para guardar eventos del sitio.
-      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'}); // Marca cuándo GTM empieza a cargar.
+      w[l]=w[l]||[]; // Crea una mochila de eventos para medición.
+      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'}); // Marca cuándo comienza a cargar GTM.
       var f=d.getElementsByTagName(s)[0], // Busca el primer script de la página.
-          j=d.createElement(s), // Crea un nuevo script para cargar GTM.
-          dl=l!='dataLayer'?'&l='+l:''; // Agrega el nombre del dataLayer si se usa uno distinto.
-      j.async=true; // Carga GTM sin frenar la página.
-      j.src='https://www.googletagmanager.com/gtm.js?id=GTM-KS28BPPV'+dl; // Carga tu contenedor real de GTM.
+          j=d.createElement(s), // Crea el script de GTM.
+          dl=l!='dataLayer'?'&l='+l:''; // Usa dataLayer por defecto o uno personalizado.
+      j.async=true; // Carga GTM sin bloquear la página.
+      j.src='https://www.googletagmanager.com/gtm.js?id=GTM-KS28BPPV'+dl; // Carga el contenedor real de GTM.
       f.parentNode.insertBefore(j,f); // Inserta GTM antes del primer script encontrado.
     })(window,document,'script','dataLayer','GTM-KS28BPPV'); // Ejecuta GTM con tu ID real.
   </script>
   <!-- End Google Tag Manager -->
 
   <style>
-    :root{--bg:#07101f;--bg2:#0b1424;--panel:#111a2b;--line:rgba(174,194,226,.16);--line2:rgba(174,194,226,.26);--text:#f4f7ff;--muted:#b8cae9;--cyan:#31c8ee;--cyan2:#5aaeff;--cyanDark:rgba(49,200,238,.12);--shadow:0 24px 80px rgba(0,0,0,.32);--max:1180px} /* Variables de diseño: colores, sombras y ancho máximo. */
-    *{box-sizing:border-box} /* Evita que padding y bordes rompan los tamaños. */
-    html{scroll-behavior:smooth} /* Hace que los enlaces internos bajen suavemente. */
-    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);letter-spacing:.01em} /* Estilo general de la página. */
-    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 22% 4%,rgba(49,200,238,.055),transparent 30%),radial-gradient(circle at 70% 12%,rgba(90,174,255,.045),transparent 32%);z-index:-1} /* Brillo de fondo sutil. */
-    a{color:inherit;text-decoration:none} /* Quita subrayados en enlaces. */
-    .site-header{border-bottom:1px solid var(--line);background:rgba(7,16,31,.92);backdrop-filter:blur(14px);position:sticky;top:0;z-index:20} /* Header fijo con efecto vidrio. */
-    .nav-wrap{width:min(var(--max),calc(100% - 44px));min-height:128px;margin:0 auto;display:grid;grid-template-columns:430px 1fr;align-items:start;gap:24px;padding:28px 0 18px} /* Contenedor del menú. */
-    .brand{display:flex;align-items:flex-start;gap:14px} /* Ordena logo y texto. */
-    .logo{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;color:#06101c;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--cyan2));box-shadow:0 16px 42px rgba(49,200,238,.2)} /* Logo PL. */
-    .brand-title{display:block;font-weight:900;font-size:16px;line-height:1.1;margin-bottom:8px} /* Nombre de marca. */
-    .brand-subtitle{display:block;color:var(--muted);font-size:15px;line-height:1.6;max-width:390px} /* Bajada de marca. */
-    .nav-side{display:flex;flex-direction:column;align-items:flex-start;gap:28px} /* Agrupa links y CTA superior. */
-    .nav-links{display:flex;align-items:center;gap:34px;color:var(--muted);font-weight:800;font-size:15px} /* Links del menú. */
-    .nav-links a{padding:10px 12px;border-radius:10px;transition:.2s ease} /* Área clickeable de navegación. */
-    .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(255,255,255,.055)} /* Estado activo y hover del menú. */
-    .top-cta{border:1px solid var(--line2);border-radius:13px;padding:14px 20px;font-weight:850;color:var(--text);background:rgba(255,255,255,.025)} /* Botón superior diagnóstico. */
-    .section{border-bottom:1px solid var(--line)} /* Separador entre secciones. */
-    .container{width:min(var(--max),calc(100% - 44px));margin:0 auto} /* Contenedor central. */
-    .hero{padding:86px 0 82px} /* Espaciado del hero. */
-    .hero-grid{display:grid;grid-template-columns:1.06fr .85fr;gap:74px;align-items:start} /* Dos columnas del hero. */
-    .eyebrow{display:inline-flex;align-items:center;border:1px solid rgba(49,200,238,.32);background:var(--cyanDark);color:var(--text);padding:10px 18px;border-radius:999px;font-weight:900;font-size:14px;margin-bottom:26px} /* Pastilla superior. */
-    .hero h1{font-size:clamp(42px,5.05vw,72px);line-height:1.09;letter-spacing:-.055em;margin:0 0 24px;max-width:710px;font-weight:930} /* Título principal. */
-    .hero p{color:var(--muted);font-size:17px;line-height:1.7;max-width:735px;margin:0 0 34px} /* Párrafo del hero. */
-    .hero-card{border:1px solid var(--line2);border-radius:25px;background:rgba(17,26,43,.72);box-shadow:var(--shadow);padding:30px 28px 32px;max-width:520px} /* Tarjeta derecha. */
-    .card-kicker{color:#88dcff;font-size:13px;font-weight:950;letter-spacing:.28em;text-transform:uppercase;margin-bottom:10px} /* Etiqueta de tarjeta. */
-    .hero-card h2{margin:0 0 18px;font-size:clamp(26px,2.6vw,40px);line-height:1.18;letter-spacing:-.04em;font-weight:930} /* Título tarjeta. */
-    .hero-card ul{padding-left:20px;margin:0 0 20px;color:var(--muted);line-height:1.9;font-size:15.5px} /* Lista de tarjeta. */
-    .hero-card p{margin:0;font-size:15.5px;line-height:1.65} /* Texto tarjeta. */
-    .pill-stack{display:grid;gap:14px;max-width:650px;margin-left:40px} /* Pila de mensajes. */
-    .pill{border:1px solid rgba(49,200,238,.28);background:rgba(6,35,55,.55);border-radius:12px;color:var(--text);font-weight:900;padding:14px 16px;max-width:650px} /* Caja de mensaje. */
-    .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:14px} /* Contenedor de botones agregados. */
-    .primary-button{display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 27px;border-radius:13px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));color:#06101c;font-weight:950;border:0;cursor:pointer;box-shadow:0 20px 50px rgba(49,200,238,.18)} /* CTA principal destacado. */
-    .primary-button:hover{transform:translateY(-1px);box-shadow:0 24px 56px rgba(49,200,238,.25)} /* Hover del CTA principal. */
-    .secondary-button{display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 25px;border-radius:13px;background:rgba(255,255,255,.025);color:var(--text);font-weight:900;border:1px solid var(--line2);cursor:pointer} /* Botón secundario demo. */
-    .secondary-button:hover{border-color:rgba(49,200,238,.55);background:rgba(49,200,238,.08)} /* Hover del botón demo. */
-    .cta-note{color:var(--muted);font-size:16px;line-height:1.65;max-width:730px;margin-top:18px} /* Texto bajo los botones. */
-    .center-line{text-align:center;color:var(--muted);font-size:16px;font-weight:850;line-height:2.3;padding:0 0 78px} /* Frase centrada. */
-    .wide-title{font-size:clamp(34px,4vw,52px);line-height:1.16;letter-spacing:-.045em;margin:0 0 28px;font-weight:930;max-width:940px} /* Títulos grandes. */
-    .problem,.fit{padding:88px 0 80px} /* Espaciado de secciones. */
-    .problem-cards,.fit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px} /* Grillas de tarjetas. */
-    .small-card,.fit-box,.benefit-card,.step-card,.accordion-row,details{border:1px solid var(--line2);background:rgba(17,26,43,.72);border-radius:20px} /* Estilo base de tarjetas. */
-    .small-card{padding:25px;min-height:155px} /* Tarjeta de problema. */
-    .small-card h3,.benefit-card h3{margin:0 0 8px;font-size:17px;font-weight:950} /* Títulos de tarjetas. */
-    .small-card p,.benefit-card p,.number-item p,.step-card p,.fit p,details p{margin:0;color:var(--muted);line-height:1.7;font-size:16px} /* Textos secundarios. */
-    .enable,.steps,.diagnosis,.faq{padding:78px 0 82px} /* Espaciado de secciones medias. */
-    .section-lead{color:var(--muted);font-size:16px;line-height:1.7;max-width:980px;margin:0 0 56px} /* Bajada de sección. */
-    .two-col{display:grid;grid-template-columns:.9fr 1.05fr;gap:68px;align-items:start} /* Dos columnas. */
-    .number-list,.benefit-stack,.faq-list,.accordion-list{display:grid;gap:18px} /* Listas verticales. */
-    .number-item{display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:start} /* Item numerado. */
-    .number-box,.step-num{width:58px;height:58px;border-radius:14px;display:grid;place-items:center;background:rgba(49,200,238,.11);border:1px solid rgba(49,200,238,.25);color:var(--text);font-weight:950} /* Número visual. */
-    .number-item h3{margin:0 0 7px;font-size:17px;font-weight:950} /* Título item numerado. */
-    .benefit-card{padding:27px} /* Tarjeta de beneficio. */
-    .benefit-card.highlight{border-color:rgba(49,200,238,.35);background:rgba(6,35,55,.54)} /* Tarjeta destacada. */
-    .notice{margin:44px auto 0;border:1px solid rgba(49,200,238,.32);background:rgba(6,35,55,.55);border-radius:16px;color:var(--text);font-size:17px;line-height:1.6;padding:20px 22px} /* Banda informativa. */
-    .fit p{margin:0 0 28px} /* Bajada sección fit. */
-    .fit-box{color:var(--muted);font-size:16px;line-height:1.7;padding:24px;min-height:96px} /* Caja fit. */
-    .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px;margin-top:32px} /* Grilla pasos. */
-    .step-card{padding:22px;min-height:235px} /* Tarjeta paso. */
-    .step-num{width:45px;height:45px;border-radius:13px;margin-bottom:22px} /* Número paso. */
-    .step-card h3{margin:0 0 16px;font-size:16px;line-height:1.3;font-weight:950} /* Título paso. */
-    .diagnosis-grid{display:grid;grid-template-columns:.95fr .95fr;gap:40px;align-items:start} /* Grilla diagnóstico. */
-    .accordion-list{margin-top:28px;gap:13px} /* Lista de entregables. */
-    .accordion-row{border-radius:14px;padding:18px 20px;font-weight:950;color:var(--text)} /* Fila entregable. */
-    .offer-card{border:1px solid var(--line2);border-radius:24px;background:rgba(13,23,40,.78);min-height:378px;padding:32px} /* Tarjeta oferta. */
-    .offer-card h2{margin:7px 0 18px;font-size:clamp(34px,3.45vw,48px);line-height:1.08;letter-spacing:-.045em;font-weight:930} /* Título oferta. */
-    .offer-card p{color:var(--muted);line-height:1.7;font-size:17px;margin:0 0 27px;max-width:590px} /* Texto oferta. */
-    .offer-card .primary-button{width:100%} /* Botón ancho completo. */
-    details{border-radius:16px;padding:18px 20px} /* Pregunta FAQ. */
-    summary{cursor:pointer;font-weight:950;list-style-position:inside} /* Título pregunta. */
-    details p{margin:14px 0 0 22px} /* Respuesta FAQ. */
-    .final-cta{padding:68px 0 58px;background:rgba(13,23,40,.42)} /* CTA final. */
-    .final-cta h2{font-size:clamp(34px,3.6vw,52px);line-height:1.14;letter-spacing:-.045em;margin:0 0 20px;font-weight:930;max-width:1120px} /* Título final. */
-    .final-cta p{color:var(--muted);font-size:16px;margin:0 0 30px} /* Texto final. */
-    .site-footer{background:#07101f;padding:28px 0 24px} /* Footer. */
-    .footer-grid{display:flex;align-items:center;justify-content:space-between;gap:24px} /* Layout footer. */
-    .footer-links{display:flex;gap:24px;color:var(--muted);font-weight:850} /* Links footer. */
-    @media(max-width:980px){.nav-wrap,.hero-grid,.two-col,.diagnosis-grid{grid-template-columns:1fr}.nav-wrap{min-height:auto}.problem-cards,.fit-grid,.steps-grid{grid-template-columns:1fr 1fr}.pill-stack{margin-left:0}} /* Tablet. */
-    @media(max-width:680px){.nav-links,.footer-grid,.footer-links{flex-wrap:wrap}.problem-cards,.fit-grid,.steps-grid{grid-template-columns:1fr}.hero{padding-top:48px}.container,.nav-wrap{width:min(100% - 28px,var(--max))}} /* Celular. */
+    :root{
+      --bg:#07101f;
+      --bg2:#0b1424;
+      --card:#111a2b;
+      --card2:#0d2130;
+      --line:rgba(174,194,226,.18);
+      --line2:rgba(174,194,226,.3);
+      --text:#f4f7ff;
+      --muted:#b8cae9;
+      --muted2:#91a7ca;
+      --cyan:#31c8ee;
+      --blue:#5aaeff;
+      --green:#67f5c8;
+      --darkCyan:rgba(49,200,238,.12);
+      --shadow:0 24px 80px rgba(0,0,0,.34);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% -5%, rgba(49,200,238,.11), transparent 32%),
+        radial-gradient(circle at 80% 4%, rgba(90,174,255,.09), transparent 34%),
+        var(--bg);
+      color:var(--text);
+      letter-spacing:.01em;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .container{width:min(var(--max), calc(100% - 44px));margin:0 auto}
+
+    .site-header{
+      position:sticky;top:0;z-index:30;
+      background:rgba(7,16,31,.92);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-wrap{
+      width:min(var(--max), calc(100% - 44px));
+      min-height:128px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:430px 1fr;
+      align-items:start;
+      gap:24px;
+      padding:28px 0 18px;
+    }
+    .brand{display:flex;align-items:flex-start;gap:14px}
+    .logo{
+      width:44px;height:44px;border-radius:13px;
+      display:grid;place-items:center;
+      color:#06101c;font-weight:950;
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
+      box-shadow:0 16px 42px rgba(49,200,238,.22)
+    }
+    .brand-title{display:block;font-weight:950;font-size:16px;line-height:1.1;margin-bottom:8px}
+    .brand-subtitle{display:block;color:var(--muted);font-size:15px;line-height:1.6;max-width:390px}
+    .nav-side{display:flex;flex-direction:column;align-items:flex-start;gap:28px}
+    .nav-links{display:flex;align-items:center;gap:34px;color:var(--muted);font-weight:850;font-size:15px}
+    .nav-links a{padding:10px 12px;border-radius:10px;transition:.2s ease}
+    .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(255,255,255,.055)}
+    .top-cta{border:1px solid var(--line2);border-radius:13px;padding:14px 20px;font-weight:900;background:rgba(255,255,255,.025)}
+
+    .section{border-bottom:1px solid var(--line)}
+    .hero{padding:86px 0 70px}
+    .hero-grid{display:grid;grid-template-columns:1.06fr .88fr;gap:68px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;border:1px solid rgba(49,200,238,.34);background:var(--darkCyan);padding:10px 18px;border-radius:999px;font-weight:950;font-size:14px;margin-bottom:26px}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(42px,5.05vw,72px);line-height:1.08;letter-spacing:-.055em;margin-bottom:24px;font-weight:950;max-width:760px}
+    h2{font-size:clamp(34px,4vw,52px);line-height:1.16;letter-spacing:-.045em;font-weight:950;margin-bottom:24px;max-width:990px}
+    h3{font-size:18px;font-weight:950;margin-bottom:10px}
+    p{color:var(--muted);font-size:17px;line-height:1.72}
+    .lead{max-width:760px;margin-bottom:34px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:26px}
+    .primary-button,.secondary-button{display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 27px;border-radius:13px;font-weight:950;transition:.18s ease}
+    .primary-button{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#06101c;box-shadow:0 20px 50px rgba(49,200,238,.22)}
+    .primary-button:hover{transform:translateY(-1px);box-shadow:0 24px 60px rgba(49,200,238,.28)}
+    .secondary-button{background:rgba(255,255,255,.025);border:1px solid var(--line2);color:var(--text)}
+    .secondary-button:hover{border-color:rgba(49,200,238,.58);background:rgba(49,200,238,.08)}
+
+    .bi-card{
+      border:1px solid var(--line2);
+      border-radius:26px;
+      background:linear-gradient(180deg,rgba(17,26,43,.9),rgba(9,20,34,.94));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .bi-image{
+      min-height:230px;
+      background:
+        linear-gradient(180deg,rgba(7,16,31,.1),rgba(7,16,31,.82)),
+        url('https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80') center/cover;
+    }
+    .bi-card-body{padding:28px}
+    .card-kicker{color:#88dcff;font-size:13px;font-weight:950;letter-spacing:.28em;text-transform:uppercase;margin-bottom:10px}
+    .bi-card h2{font-size:clamp(26px,2.6vw,40px);line-height:1.16;margin-bottom:18px}
+    .metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+    .metric{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);padding:16px}
+    .metric strong{display:block;font-size:28px;letter-spacing:-.04em}
+    .metric span{display:block;color:var(--muted2);font-size:13px;margin-top:4px}
+
+    .center-line{text-align:center;color:var(--muted);font-size:16px;font-weight:850;line-height:2.3;padding:0 0 78px}
+    .proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+    .proof{border:1px solid rgba(49,200,238,.28);background:rgba(6,35,55,.55);border-radius:14px;padding:18px;font-weight:950}
+
+    .problem,.enable,.fit,.steps,.diagnosis,.faq{padding:88px 0 80px}
+    .problem-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+    .small-card{border:1px solid var(--line2);background:rgba(17,26,43,.75);border-radius:20px;padding:25px;min-height:165px}
+    .small-card p{font-size:16px;margin-bottom:0}
+
+    .image-band{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:34px}
+    .photo-card{min-height:240px;border-radius:22px;border:1px solid var(--line2);overflow:hidden;position:relative;background:#111a2b;box-shadow:var(--shadow)}
+    .photo-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(7,16,31,.88))}
+    .photo-card.one{background:url('https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80') center/cover}
+    .photo-card.two{background:url('https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=900&q=80') center/cover}
+    .photo-card.three{background:url('https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=900&q=80') center/cover}
+    .photo-label{position:absolute;z-index:2;left:22px;right:22px;bottom:22px;font-weight:950;font-size:18px}
+
+    .two-col{display:grid;grid-template-columns:.9fr 1.05fr;gap:68px;align-items:start}
+    .number-list{display:grid;gap:28px}
+    .number-item{display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:start}
+    .number-box{width:58px;height:58px;border-radius:14px;display:grid;place-items:center;background:rgba(49,200,238,.11);border:1px solid rgba(49,200,238,.25);font-weight:950}
+    .number-item p{font-size:16px;margin-bottom:0}
+    .benefit-stack{display:grid;gap:18px}
+    .benefit-card{border:1px solid var(--line2);border-radius:20px;background:rgba(17,26,43,.78);padding:27px}
+    .benefit-card.highlight{border-color:rgba(49,200,238,.35);background:rgba(6,35,55,.54)}
+    .benefit-card p{font-size:16px;margin-bottom:0}
+    .notice{margin:44px auto 0;border:1px solid rgba(49,200,238,.32);background:rgba(6,35,55,.55);border-radius:16px;font-size:17px;line-height:1.6;padding:20px 22px}
+
+    .fit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+    .fit-box{border:1px solid var(--line2);background:rgba(17,26,43,.72);border-radius:18px;color:var(--muted);font-size:16px;line-height:1.7;padding:24px;min-height:96px}
+    .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px;margin-top:32px}
+    .step-card{border:1px solid var(--line2);background:rgba(17,26,43,.75);border-radius:21px;padding:22px;min-height:235px}
+    .step-num{width:45px;height:45px;border-radius:13px;display:grid;place-items:center;background:rgba(49,200,238,.14);border:1px solid rgba(49,200,238,.3);font-weight:950;margin-bottom:22px}
+    .step-card p{font-size:16px;margin-bottom:0}
+
+    .diagnosis-grid{display:grid;grid-template-columns:.95fr .95fr;gap:40px;align-items:start}
+    .accordion-list{display:grid;gap:13px;margin-top:28px}
+    .accordion-row{border:1px solid var(--line2);background:rgba(17,26,43,.72);border-radius:14px;padding:18px 20px;font-weight:950}
+    .offer-card{border:1px solid var(--line2);border-radius:24px;background:rgba(13,23,40,.78);min-height:378px;padding:32px}
+    .offer-card h2{font-size:clamp(34px,3.45vw,48px);line-height:1.08;letter-spacing:-.045em}
+    .offer-card .primary-button{width:100%}
+    .faq-list{display:grid;gap:13px;margin-top:28px}
+    details{border:1px solid var(--line2);border-radius:16px;background:rgba(17,26,43,.72);padding:18px 20px}
+    summary{cursor:pointer;font-weight:950;list-style-position:inside}
+    details p{font-size:16px;margin:14px 0 0 22px}
+    .final-cta{padding:68px 0 58px;background:rgba(13,23,40,.42)}
+    .final-cta h2{font-size:clamp(34px,3.6vw,52px);line-height:1.14;letter-spacing:-.045em;margin-bottom:20px;font-weight:950;max-width:1120px}
+    .site-footer{background:#07101f;padding:28px 0 24px}
+    .footer-grid{display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .footer-links{display:flex;gap:24px;color:var(--muted);font-weight:850}
+
+    @media (max-width:980px){
+      .nav-wrap,.hero-grid,.two-col,.diagnosis-grid{grid-template-columns:1fr}
+      .nav-wrap{min-height:auto}
+      .problem-cards,.fit-grid,.steps-grid,.proof-grid,.image-band{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:680px){
+      .nav-links,.footer-grid,.footer-links{flex-wrap:wrap}
+      .problem-cards,.fit-grid,.steps-grid,.proof-grid,.image-band,.metric-row{grid-template-columns:1fr}
+      .hero{padding-top:48px}
+      .container,.nav-wrap{width:min(100% - 28px,var(--max))}
+    }
   </style>
 </head>
 <body>
@@ -110,37 +197,189 @@
 
   <header class="site-header">
     <div class="nav-wrap">
-      <a class="brand" href="index.html" aria-label="Performance Labs"><span class="logo">PL</span><span><span class="brand-title">Performance Labs</span><span class="brand-subtitle">Diagnóstico, reportería y seguimiento para centros deportivos</span></span></a>
-      <div class="nav-side"><nav class="nav-links" aria-label="Navegación principal"><a class="active" href="index.html">Inicio</a><a href="quienes-somos.html">¿Quiénes somos?</a><a href="mision-vision.html">Misión y visión</a><a href="valores-sellos.html">Valores y sellos</a></nav><a class="top-cta" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Diagnóstico sin costo</a></div>
+      <a class="brand" href="index.html" aria-label="Performance Labs">
+        <span class="logo">PL</span>
+        <span>
+          <span class="brand-title">Performance Labs</span>
+          <span class="brand-subtitle">Business Intelligence en deportes y analítica deportiva para centros, clubes y equipos</span>
+        </span>
+      </a>
+      <div class="nav-side">
+        <nav class="nav-links" aria-label="Navegación principal">
+          <a class="active" href="index.html">Inicio</a>
+          <a href="quienes-somos.html">¿Quiénes somos?</a>
+          <a href="mision-vision.html">Misión y visión</a>
+          <a href="valores-sellos.html">Valores y sellos</a>
+        </nav>
+        <a class="top-cta" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Diagnóstico BI sin costo</a>
+      </div>
     </div>
   </header>
 
   <main>
     <section class="section hero">
       <div class="container hero-grid">
-        <div><span class="eyebrow">Diagnóstico inicial sin costo</span><h1>Profesionaliza el seguimiento de tus alumnos con una base más clara para decidir, mejorar la experiencia y fortalecer la propuesta de valor de tu centro.</h1><p>Performance Labs ayuda a centros deportivos a transformar información dispersa en reportería clara, a través de indicadores accionables que permiten fortalecer el seguimiento, la retención y la mejora continua del servicio.</p></div>
-        <aside class="hero-card"><div class="card-kicker">Qué te llevas</div><h2>Una primera base objetiva para decidir mejor</h2><ul><li>Revisión inicial de los datos disponibles</li><li>Identificación de focos de riesgo y mejora</li><li>Propuesta de indicadores prioritarios</li><li>Ejemplo de reportería inicial</li><li>Recomendación concreta de siguiente paso</li></ul><p>Sin software complejo. Comenzamos con la información que tu centro ya genera hoy.</p></aside>
+        <div>
+          <span class="eyebrow">BI en Deportes + Analítica Deportiva</span>
+          <h1>Convierte los datos de tu centro deportivo en decisiones, rendimiento y crecimiento.</h1>
+          <p class="lead">Performance Labs ayuda a centros deportivos, clubes, academias y equipos a transformar información dispersa en dashboards, indicadores y reportes ejecutivos para mejorar rendimiento, retención, operación y experiencia del deportista.</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Solicitar diagnóstico</a>
+            <a class="secondary-button" href="demo/" target="_blank" rel="noopener noreferrer">Ver demo</a>
+          </div>
+        </div>
+        <aside class="bi-card">
+          <div class="bi-image"></div>
+          <div class="bi-card-body">
+            <div class="card-kicker">Qué te llevas</div>
+            <h2>Una capa de inteligencia deportiva para decidir mejor</h2>
+            <p>Dashboards de rendimiento, adherencia, carga, asistencia, progreso y gestión operacional para que cada entrenamiento deje evidencia accionable.</p>
+            <div class="metric-row">
+              <div class="metric"><strong>BI</strong><span>Paneles ejecutivos</span></div>
+              <div class="metric"><strong>KPI</strong><span>Indicadores claros</span></div>
+              <div class="metric"><strong>AI</strong><span>Insights accionables</span></div>
+            </div>
+          </div>
+        </aside>
       </div>
-      <div class="container" style="margin-top:78px"><div class="pill-stack"><div class="pill">Seguimiento deportivo profesional individual y grupal</div><div class="pill">Detección temprana de riesgo de abandono</div><div class="pill">Percepción de valor agregado por el cliente</div><div class="hero-actions"><a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Solicitar diagnóstico</a><a class="secondary-button" href="demo/" target="_blank" rel="noopener noreferrer">Ver demo</a></div><p class="cta-note">Ideal para centros deportivos y clubes que ya trabajan con planillas y/o métricas deportivas y quieren ordenar su seguimiento de manera simple.</p></div></div>
     </section>
 
-    <div class="container center-line">Diseñado para academias, clubes y centros deportivos en etapa de crecimiento &nbsp; • &nbsp; Foco en seguimiento, retención y profesionalización &nbsp; •<br>Implementación inicial simple</div>
+    <div class="container center-line">
+      Diseñado para academias, clubes y centros deportivos en etapa de crecimiento &nbsp; • &nbsp; Foco en BI, rendimiento, retención y profesionalización &nbsp; •<br>
+      Implementación inicial simple
+    </div>
 
-    <section class="section problem"><div class="container"><h2 class="wide-title">Muchos centros ya generan información, el desafío está en transformarla, para tomar decisiones oportunas, generando mejoras visibles en un corto plazo.</h2><div class="problem-cards"><article class="small-card"><h3>Seguimiento fragmentado</h3><p>La información existe, pero está dispersa entre asistencia, métricas, observaciones y memoria del coach.</p></article><article class="small-card"><h3>Pérdida silenciosa de alumnos</h3><p>Muchas veces el centro detecta tarde las señales de desmotivación, baja constancia o abandono.</p></article><article class="small-card"><h3>Poco valor visible</h3><p>Si el alumno no ve seguimiento claro ni evidencia de progreso, percibe menos valor en el servicio.</p></article></div></div></section>
+    <section class="section problem">
+      <div class="container">
+        <h2>Muchos centros ya generan datos, el desafío está en convertirlos en inteligencia para decidir, actuar y mejorar.</h2>
+        <div class="problem-cards">
+          <article class="small-card"><h3>Datos fragmentados</h3><p>La información existe, pero está dispersa entre asistencia, planillas, relojes, métricas, observaciones y memoria del coach.</p></article>
+          <article class="small-card"><h3>Decisiones sin tablero</h3><p>Muchas decisiones se toman tarde porque no existe una vista integrada de rendimiento, adherencia, riesgo y progreso.</p></article>
+          <article class="small-card"><h3>Poco valor visible</h3><p>Si alumnos, apoderados o dirección no ven evidencia clara de avance, el servicio pierde valor percibido.</p></article>
+        </div>
+        <div class="image-band">
+          <div class="photo-card one"><div class="photo-label">Datos de entrenamiento convertidos en indicadores</div></div>
+          <div class="photo-card two"><div class="photo-label">Seguimiento por deportista, grupo y disciplina</div></div>
+          <div class="photo-card three"><div class="photo-label">Reportería ejecutiva para dirección deportiva</div></div>
+        </div>
+      </div>
+    </section>
 
-    <section class="section enable"><div class="container"><h2 class="wide-title">Qué habilita Performance Labs en un centro deportivo</h2><p class="section-lead">Ordena tus datos actuales y los transforma en una primera capa de inteligencia de seguimiento para coaches, dirección y gestión del centro.</p><div class="two-col"><div><h3 style="margin:0 0 24px;font-size:18px;font-weight:950">Lo que puedes empezar a ver</h3><div class="number-list"><div class="number-item"><div class="number-box">01</div><div><h3>Adherencia y constancia</h3><p>Qué grupos y alumnos muestran mejores o peores señales de continuidad.</p></div></div><div class="number-item"><div class="number-box">02</div><div><h3>Riesgo de abandono</h3><p>Alertas tempranas para actuar antes de perder alumnos silenciosamente.</p></div></div><div class="number-item"><div class="number-box">03</div><div><h3>Lectura clara para dirección</h3><p>Una base más sólida y objetiva para priorizar acciones y ordenar operaciones.</p></div></div></div></div><div><h3 style="margin:0 0 24px;font-size:18px;font-weight:950">Cómo esta solución fortalece la propuesta de valor de tu centro</h3><div class="benefit-stack"><article class="benefit-card"><h3>Mayor valor percibido</h3><p>Los alumnos perciben más profesionalismo cuando existe seguimiento visible, criterios claros y una lectura comprensible del progreso.</p></article><article class="benefit-card"><h3>Mejor comunicación</h3><p>Permite mostrar avances, explicar decisiones y sostener conversaciones con mayor claridad frente a alumnos, apoderados y equipos.</p></article><article class="benefit-card"><h3>Orden operativo</h3><p>Reduce la improvisación y dependencia de la memoria, realizando un seguimiento profesional.</p></article><article class="benefit-card"><h3>Diferenciación real</h3><p>Ayuda al centro a posicionarse con una propuesta más moderna y profesional, basada en evidencia.</p></article><article class="benefit-card highlight"><h3>Experiencias más motivadoras</h3><p>El seguimiento estructurado también puede habilitar estrategias de gamificación, transformando avances, hitos y hábitos en experiencias más visibles y motivadoras para los alumnos.</p></article></div></div></div><div class="notice">Una primera capa de reportería puede ayudarte a ordenar el seguimiento, detectar señales tempranas y comunicar mejor el valor de tu servicio.</div></div></section>
+    <section class="section enable">
+      <div class="container">
+        <h2>Qué habilita Performance Labs en una organización deportiva</h2>
+        <p class="section-lead">Ordena tus datos actuales y los transforma en una primera capa de Business Intelligence deportiva para coaches, dirección, gestión comercial y experiencia del alumno.</p>
+        <div class="two-col">
+          <div>
+            <h3 style="margin:0 0 24px;font-size:18px;font-weight:950;">Lo que puedes empezar a ver</h3>
+            <div class="number-list">
+              <div class="number-item"><div class="number-box">01</div><div><h3>Rendimiento y progreso</h3><p>Evolución de deportistas, carga, cumplimiento, asistencia y señales de mejora.</p></div></div>
+              <div class="number-item"><div class="number-box">02</div><div><h3>Riesgo de abandono</h3><p>Alertas tempranas para actuar antes de perder alumnos silenciosamente.</p></div></div>
+              <div class="number-item"><div class="number-box">03</div><div><h3>Lectura ejecutiva</h3><p>Una base objetiva para dirección, coordinación deportiva, coaches y gestión comercial.</p></div></div>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 24px;font-size:18px;font-weight:950;">Cómo BI fortalece la propuesta de valor de tu centro</h3>
+            <div class="benefit-stack">
+              <article class="benefit-card"><h3>Mayor valor percibido</h3><p>Los alumnos perciben más profesionalismo cuando existe seguimiento visible, criterios claros y reportes comprensibles.</p></article>
+              <article class="benefit-card"><h3>Mejor comunicación</h3><p>Permite mostrar avances, explicar decisiones y sostener conversaciones con mayor claridad frente a alumnos, apoderados y equipos.</p></article>
+              <article class="benefit-card"><h3>Orden operativo</h3><p>Reduce improvisación y dependencia de planillas sueltas, ordenando la operación con indicadores consistentes.</p></article>
+              <article class="benefit-card"><h3>Diferenciación real</h3><p>Ayuda al centro a posicionarse con una propuesta moderna, profesional y basada en evidencia.</p></article>
+              <article class="benefit-card highlight"><h3>Experiencias más motivadoras</h3><p>El seguimiento estructurado puede habilitar rankings, hitos, badges y gamificación para hacer visible el avance.</p></article>
+            </div>
+          </div>
+        </div>
+        <div class="notice">Una capa de BI deportivo puede ayudarte a ordenar el seguimiento, detectar señales tempranas y comunicar mejor el valor de tu servicio.</div>
+      </div>
+    </section>
 
-    <section class="section fit"><div class="container"><h2 class="wide-title">Centros para los que esta solución suele tener mejor ajuste</h2><p>Si reconoces estas señales, esta es la solución para ti.</p><div class="fit-grid"><div class="fit-box">Trabajas con alumnos o grupos de entrenamiento de forma recurrente</div><div class="fit-box">Tienes asistencia, planillas o métricas, pero todavía no una lectura integrada</div><div class="fit-box">Buscas profesionalizar el seguimiento sin partir con una plataforma pesada</div><div class="fit-box">Quieres más retención, mejor comunicación y mayor valor percibido</div><div class="fit-box">Tienes uno o más coaches y necesitan mayor consistencia en el seguimiento</div><div class="fit-box">Quieres ver oportunidades concretas antes de invertir en algo más grande</div></div></div></section>
+    <section class="section fit">
+      <div class="container">
+        <h2>Centros para los que esta solución suele tener mejor ajuste</h2>
+        <p>Si reconoces estas señales, esta es la solución para ti.</p>
+        <div class="fit-grid">
+          <div class="fit-box">Trabajas con alumnos, deportistas o grupos de entrenamiento de forma recurrente</div>
+          <div class="fit-box">Tienes asistencia, planillas, relojes o métricas, pero todavía no una lectura integrada</div>
+          <div class="fit-box">Buscas profesionalizar el seguimiento sin partir con una plataforma pesada</div>
+          <div class="fit-box">Quieres más retención, mejor comunicación y mayor valor percibido</div>
+          <div class="fit-box">Tienes uno o más coaches y necesitan mayor consistencia en el seguimiento</div>
+          <div class="fit-box">Quieres ver oportunidades concretas antes de invertir en algo más grande</div>
+        </div>
+      </div>
+    </section>
 
-    <section class="section steps"><div class="container"><h2 class="wide-title">Cómo funciona</h2><p class="section-lead" style="margin-bottom:0">Un proceso simple para generar valor rápido y sin fricción innecesaria.</p><div class="steps-grid"><article class="step-card"><div class="step-num">1</div><h3>Dejas tus datos</h3><p>Nos compartes información básica de tu centro y el principal problema que hoy quieres resolver.</p></article><article class="step-card"><div class="step-num">2</div><h3>Revisamos tu contexto</h3><p>Entendemos tu operación, los datos disponibles y el nivel de madurez actual.</p></article><article class="step-card"><div class="step-num">3</div><h3>Recibes una primera lectura</h3><p>Te mostramos oportunidades de seguimiento, indicadores y focos de mejora.</p></article><article class="step-card"><div class="step-num">4</div><h3>Evaluamos el siguiente paso</h3><p>Si te hace sentido, avanzamos a una reportería y un seguimiento periódico.</p></article></div></div></section>
+    <section class="section steps">
+      <div class="container">
+        <h2>Cómo funciona</h2>
+        <p class="section-lead" style="margin-bottom:0;">Un proceso simple para generar valor rápido y sin fricción innecesaria.</p>
+        <div class="steps-grid">
+          <article class="step-card"><div class="step-num">1</div><h3>Dejas tus datos</h3><p>Nos compartes información básica de tu centro y el principal problema que hoy quieres resolver.</p></article>
+          <article class="step-card"><div class="step-num">2</div><h3>Revisamos tu contexto</h3><p>Entendemos tu operación, los datos disponibles y el nivel de madurez actual.</p></article>
+          <article class="step-card"><div class="step-num">3</div><h3>Recibes una primera lectura</h3><p>Te mostramos oportunidades de seguimiento, indicadores y focos de mejora.</p></article>
+          <article class="step-card"><div class="step-num">4</div><h3>Evaluamos el siguiente paso</h3><p>Si te hace sentido, avanzamos a una reportería, dashboard y seguimiento periódico.</p></article>
+        </div>
+      </div>
+    </section>
 
-    <section id="diagnostico" class="section diagnosis"><div class="container diagnosis-grid"><div><h2 class="wide-title">Qué incluye el diagnóstico inicial</h2><p class="section-lead" style="margin-bottom:0">La entrada está diseñada para ser clara, útil y realista desde el primer contacto.</p><div class="accordion-list"><div class="accordion-row">Levantamiento del contexto del centro</div><div class="accordion-row">Revisión de datos disponibles</div><div class="accordion-row">Propuesta de indicadores prioritarios</div><div class="accordion-row">Detección de focos de riesgo y mejora</div><div class="accordion-row">Ejemplo de reportería o dashboard</div><div class="accordion-row">Recomendación de siguiente paso</div></div></div><aside class="offer-card"><div class="card-kicker">Oferta de entrada</div><h2>Evalúa tu centro sin costo inicial</h2><p>Una primera lectura puede mostrarte dónde hay oportunidades de seguimiento, retención, valor percibido y profesionalización del servicio.</p><a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Evaluar mi centro</a></aside></div></section>
+    <section id="diagnostico" class="section diagnosis">
+      <div class="container diagnosis-grid">
+        <div>
+          <h2>Qué incluye el diagnóstico BI inicial</h2>
+          <p class="section-lead" style="margin-bottom:0;">La entrada está diseñada para ser clara, útil y realista desde el primer contacto.</p>
+          <div class="accordion-list">
+            <div class="accordion-row">Levantamiento del contexto del centro</div>
+            <div class="accordion-row">Revisión de datos disponibles</div>
+            <div class="accordion-row">Propuesta de indicadores prioritarios</div>
+            <div class="accordion-row">Detección de focos de riesgo y mejora</div>
+            <div class="accordion-row">Ejemplo de reportería o dashboard</div>
+            <div class="accordion-row">Recomendación de siguiente paso</div>
+          </div>
+        </div>
+        <aside class="offer-card">
+          <div class="card-kicker">Oferta de entrada</div>
+          <h2>Evalúa tu centro sin costo inicial</h2>
+          <p>Una primera lectura puede mostrarte dónde hay oportunidades de BI, seguimiento, retención, valor percibido y profesionalización del servicio.</p>
+          <a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Evaluar mi centro</a>
+        </aside>
+      </div>
+    </section>
 
-    <section class="section faq"><div class="container"><h2 class="wide-title">Preguntas frecuentes</h2><p class="section-lead" style="margin-bottom:0">Lo justo y necesario para despejar dudas antes de dejar tus datos.</p><div class="faq-list"><details><summary>¿Necesitamos tener todo ordenado para empezar?</summary><p>No. La idea del diagnóstico es partir desde la información que ya existe y detectar cómo ordenarla mejor.</p></details><details><summary>¿Esto reemplaza el criterio del coach?</summary><p>No. Lo complementa con evidencia, señales de seguimiento y una lectura más clara para decidir.</p></details><details><summary>¿Sirve para centros medianos?</summary><p>Sí. Está pensado especialmente para centros que ya tienen operación recurrente, alumnos y necesidad de profesionalizar seguimiento.</p></details><details><summary>¿Qué recibimos con el diagnóstico?</summary><p>Una primera lectura del contexto, datos disponibles, oportunidades de indicadores y recomendación concreta de siguiente paso.</p></details><details><summary>¿Qué pasa después del formulario?</summary><p>Revisamos la información enviada y coordinamos una primera conversación para entender el caso del centro.</p></details></div></div></section>
+    <section class="section faq">
+      <div class="container">
+        <h2>Preguntas frecuentes</h2>
+        <p class="section-lead" style="margin-bottom:0;">Lo justo y necesario para despejar dudas antes de dejar tus datos.</p>
+        <div class="faq-list">
+          <details><summary>¿Necesitamos tener todo ordenado para empezar?</summary><p>No. La idea del diagnóstico es partir desde la información que ya existe y detectar cómo ordenarla mejor.</p></details>
+          <details><summary>¿Esto reemplaza el criterio del coach?</summary><p>No. Lo complementa con evidencia, señales de seguimiento y una lectura más clara para decidir.</p></details>
+          <details><summary>¿Sirve para centros medianos?</summary><p>Sí. Está pensado especialmente para centros que ya tienen operación recurrente, alumnos y necesidad de profesionalizar seguimiento.</p></details>
+          <details><summary>¿Qué recibimos con el diagnóstico?</summary><p>Una primera lectura del contexto, datos disponibles, oportunidades de indicadores y recomendación concreta de siguiente paso.</p></details>
+          <details><summary>¿Qué pasa después del formulario?</summary><p>Revisamos la información enviada y coordinamos una primera conversación para entender el caso del centro.</p></details>
+        </div>
+      </div>
+    </section>
 
-    <section class="final-cta"><div class="container"><h2>Una mejor estructura de seguimiento permite detectar antes, comunicar mejor y sostener mayor valor en el tiempo.</h2><p>No necesitas esperar a tener una infraestructura perfecta para empezar a tomar mejores decisiones.</p><a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Agendar una primera conversación</a></div></section>
+    <section class="final-cta">
+      <div class="container">
+        <h2>Una mejor estructura de inteligencia deportiva permite detectar antes, comunicar mejor y sostener mayor valor en el tiempo.</h2>
+        <p>No necesitas esperar a tener una infraestructura perfecta para empezar a tomar mejores decisiones.</p>
+        <a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Agendar una primera conversación</a>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-grid"><a class="brand" href="index.html" aria-label="Performance Labs"><span class="logo">PL</span><span><span class="brand-title">Performance Labs</span><span class="brand-subtitle">Diagnóstico, reportería y seguimiento para centros deportivos</span></span></a><nav class="footer-links" aria-label="Navegación del pie de página"><a href="index.html">Inicio</a><a href="quienes-somos.html">¿Quiénes somos?</a><a href="mision-vision.html">Misión y visión</a><a href="valores-sellos.html">Valores y sellos</a></nav></div></footer>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <a class="brand" href="index.html" aria-label="Performance Labs">
+        <span class="logo">PL</span>
+        <span><span class="brand-title">Performance Labs</span><span class="brand-subtitle">Business Intelligence en deportes y analítica deportiva</span></span>
+      </a>
+      <nav class="footer-links" aria-label="Navegación del pie de página">
+        <a href="index.html">Inicio</a>
+        <a href="quienes-somos.html">¿Quiénes somos?</a>
+        <a href="mision-vision.html">Misión y visión</a>
+        <a href="valores-sellos.html">Valores y sellos</a>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>
