@@ -1,1518 +1,467 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚡ Performance Labs Dashboard</title>
-
-<!-- Google Fonts: Inter + Space Grotesk -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- Plotly.js (CDN) -->
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>entrenapp · Coach Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
+<script src="https://unpkg.com/recharts@2.10.3/umd/Recharts.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-/* ================================================================
-   SILICON VALLEY DARK THEME — Performance Labs
-   ================================================================ */
-
-/* Variables de color globales */
-:root {
-  --bg:       #09090B;
-  --bg-card:  #18181B;
-  --bg-hover: #1F1F23;
-  --border:   #3F3F46;
-  --cyan:     #06B6D4;
-  --green:    #10B981;
-  --amber:    #F59E0B;
-  --red:      #EF4444;
-  --purple:   #8B5CF6;
-  --orange:   #F97316;
-  --text:     #FAFAFA;
-  --muted:    #A1A1AA;
-  --dim:      #52525B;
-}
-
-/* Reset y base */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  overflow-x: hidden;
-}
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 4px; }
-
-/* ── Navbar ── */
-.navbar {
-  position: sticky; top: 0; z-index: 100;
-  background: linear-gradient(135deg, #0E7490 0%, #7C3AED 100%);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 24px;
-  height: 52px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(20px);
-}
-
-.navbar-brand {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: 3px;
-  color: #fff;
-  text-transform: uppercase;
-}
-
-.navbar-sub {
-  font-size: 0.73rem;
-  color: rgba(255,255,255,0.6);
-  letter-spacing: 0.5px;
-}
-
-/* ── Tabs de navegación ── */
-.tabs {
-  display: flex;
-  gap: 2px;
-  padding: 0 24px;
-  background: rgba(255,255,255,0.04);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-}
-
-.tab-btn {
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: var(--muted);
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  padding: 12px 16px 10px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-.tab-btn.active { color: var(--cyan); border-bottom-color: var(--cyan); }
-
-/* ── Páginas del dashboard ── */
-.page { display: none; padding: 20px 24px; }
-.page.active { display: block; }
-
-/* ── Layout de grilla ── */
-.grid {
-  display: grid;
-  gap: 16px;
-}
-
-.grid-2  { grid-template-columns: 1fr 1fr; }
-.grid-3  { grid-template-columns: 1fr 1fr 1fr; }
-.grid-4  { grid-template-columns: 1fr 1fr 1fr 1fr; }
-.grid-5  { grid-template-columns: repeat(5, 1fr); }
-.grid-main { grid-template-columns: 220px 1fr; gap: 16px; }
-.grid-thirds { grid-template-columns: 220px 1fr 1fr; gap: 16px; }
-
-/* ── Tarjeta genérica ── */
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px;
-  transition: box-shadow 0.2s ease;
-}
-
-.card:hover { box-shadow: 0 6px 32px rgba(6,182,212,0.1); }
-
-.card-title {
-  color: var(--muted);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* ── KPI / Value Box ── */
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.kpi {
-  border-radius: 14px;
-  padding: 16px 18px;
-  border: 1px solid rgba(255,255,255,0.06);
-  position: relative;
-  overflow: hidden;
-}
-
-.kpi::before {
-  content: '';
-  position: absolute; inset: 0;
-  opacity: 0.08;
-}
-
-.kpi-cyan    { background: linear-gradient(135deg, #0E7490, #06B6D4); }
-.kpi-green   { background: linear-gradient(135deg, #065F46, #10B981); }
-.kpi-amber   { background: linear-gradient(135deg, #92400E, #F59E0B); }
-.kpi-red     { background: linear-gradient(135deg, #7F1D1D, #EF4444); }
-.kpi-purple  { background: linear-gradient(135deg, #4C1D95, #8B5CF6); }
-
-.kpi-icon  { font-size: 1.4rem; margin-bottom: 6px; opacity: 0.9; }
-.kpi-value {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 1.55rem;
-  color: #fff;
-  line-height: 1.1;
-}
-
-.kpi-label {
-  font-size: 0.68rem;
-  color: rgba(255,255,255,0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-top: 4px;
-  font-weight: 500;
-}
-
-/* ── Badges de rendimiento ── */
-.badge {
-  display: inline-block;
-  padding: 2px 9px;
-  border-radius: 20px;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-.badge-intenso  { background: rgba(239,68,68,0.15);  color: #EF4444; border: 1px solid rgba(239,68,68,0.3); }
-.badge-moderado { background: rgba(245,158,11,0.15); color: #F59E0B; border: 1px solid rgba(245,158,11,0.3); }
-.badge-suave    { background: rgba(16,185,129,0.15); color: #10B981; border: 1px solid rgba(16,185,129,0.3); }
-
-/* ── Panel de filtros ── */
-.filter-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.filter-group {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px;
-}
-
-.filter-label {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  margin-bottom: 10px;
-}
-
-.filter-check {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.filter-check label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.84rem;
-  color: var(--text);
-  cursor: pointer;
-}
-
-.filter-check input[type="checkbox"] {
-  accent-color: var(--cyan);
-  width: 14px;
-  height: 14px;
-  cursor: pointer;
-}
-
-.filter-sport-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-/* Botón de resetear filtros */
-.btn-reset {
-  background: rgba(6,182,212,0.1);
-  border: 1px solid rgba(6,182,212,0.3);
-  border-radius: 8px;
-  color: var(--cyan);
-  cursor: pointer;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  padding: 8px 14px;
-  text-transform: uppercase;
-  transition: all 0.2s;
-  width: 100%;
-}
-
-.btn-reset:hover {
-  background: rgba(6,182,212,0.2);
-  box-shadow: 0 0 12px rgba(6,182,212,0.3);
-}
-
-/* ── Zona de referencia (leyenda de zonas) ── */
-.zone-list { display: flex; flex-direction: column; gap: 6px; }
-.zone-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 0.78rem;
-}
-
-.zone-z1 { background: rgba(16,185,129,0.1); color: #10B981; }
-.zone-z2 { background: rgba(6,182,212,0.1);  color: #06B6D4; }
-.zone-z3 { background: rgba(245,158,11,0.1); color: #F59E0B; }
-.zone-z4 { background: rgba(239,68,68,0.1);  color: #EF4444; }
-
-/* ── Tablas ── */
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.82rem;
-}
-
-.data-table th {
-  background: rgba(255,255,255,0.04);
-  color: var(--muted);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  padding: 8px 12px;
-  text-align: left;
-  text-transform: uppercase;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-
-.data-table td {
-  padding: 8px 12px;
-  border-bottom: 1px solid rgba(63,63,70,0.5);
-  color: var(--text);
-}
-
-.data-table tr:hover td { background: var(--bg-hover); }
-.data-table tr:last-child td { border-bottom: none; }
-
-/* ── Contenedor de gráfico Plotly ── */
-.chart-container {
-  width: 100%;
-  min-height: 250px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-/* ── Nota de referencia científica ── */
-.sci-note {
-  font-size: 0.68rem;
-  color: var(--dim);
-  margin-top: 8px;
-  font-style: italic;
-}
-
-/* ── Separador de sección ── */
-.section-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--cyan);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin: 20px 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.section-title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
-}
-
-/* ── Responsive ── */
-@media (max-width: 900px) {
-  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
-  .grid-2, .grid-3, .grid-main, .grid-thirds { grid-template-columns: 1fr; }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body,#root{height:100%;background:#09090e;color:#e4e4ef;font-family:"Inter",system-ui,sans-serif}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#2e2e3a;border-radius:9999px}
+.glow{box-shadow:0 0 0 1px rgba(255,255,255,0.04),0 8px 32px rgba(0,0,0,0.5)}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.ani{animation:fi 0.4s ease-out}
+@keyframes pd{0%,100%{opacity:1}50%{opacity:0.3}}
+.pdot{animation:pd 2s infinite}
 </style>
 </head>
 <body>
+<div id="root"></div>
+<script type="text/babel">
+const SPORTS=[{id:'tennis',label:'Tenis',icon:'🎾',color:'#f59e0b',accent:'#fbbf24'},{id:'football',label:'Fútbol',icon:'⚽',color:'#3b82f6',accent:'#60a5fa'},{id:'swimming',label:'Natación',icon:'🏊',color:'#06b6d4',accent:'#22d3ee'},{id:'gym',label:'Gimnasio',icon:'💪',color:'#8b5cf6',accent:'#a78bfa'}]
+const ATHLETES=[{id:1,name:'Sofía Martínez',sport:'tennis',av:'SM',lvl:87,streak:14,badges:['🔥','⚡','🎯'],hrv:72,rec:89,trend:'up',sess:47,rank:1},{id:2,name:'Diego Herrera',sport:'football',av:'DH',lvl:74,streak:7,badges:['💨','🏆'],hrv:58,rec:65,trend:'down',sess:39,rank:3},{id:3,name:'Camila Rojas',sport:'swimming',av:'CR',lvl:92,streak:21,badges:['🔥','🌊','⚡','🎯','🏆'],hrv:81,rec:95,trend:'up',sess:63,rank:1},{id:4,name:'Mateo López',sport:'gym',av:'ML',lvl:61,streak:3,badges:['💪'],hrv:45,rec:52,trend:'flat',sess:28,rank:5},{id:5,name:'Valentina Cruz',sport:'tennis',av:'VC',lvl:78,streak:9,badges:['🔥','🎯'],hrv:68,rec:78,trend:'up',sess:41,rank:2},{id:6,name:'Andrés Silva',sport:'football',av:'AS',lvl:83,streak:12,badges:['💨','⚡','🏆'],hrv:74,rec:86,trend:'up',sess:55,rank:2}]
+const HISTORY=[{w:"S1",s:58,l:42,r:71},{w:"S2",s:62,l:55,r:68},{w:"S3",s:61,l:61,r:63},{w:"S4",s:67,l:48,r:74},{w:"S5",s:71,l:53,r:78},{w:"S6",s:69,l:67,r:65},{w:"S7",s:75,l:58,r:80},{w:"S8",s:79,l:52,r:84}]
+const RADAR=[{a:"Técnica",A:85,B:72},{a:"Velocidad",A:78,B:90},{a:"Resistencia",A:92,B:68},{a:"Fuerza",A:65,B:85},{a:"Mental",A:88,B:74},{a:"Recovery",A:95,B:65}]
+const METRICS={
+tennis:{stats:[{lbl:"Primer Servicio",val:"68%",delta:"+4%",good:true,unit:"efect."},{lbl:"Errores No Forz.",val:"12",delta:"-3",good:true,unit:"por set"},{lbl:"Vel. de Servicio",val:"187",delta:"+8",good:true,unit:"km/h"},{lbl:"Games Ganados",val:"61%",delta:"+3%",good:true,unit:""}],dirs:[{p:"high",icon:"\ud83c\udfaf",t:"Trabaja el segundo servicio",d:"El % de doble falta subi\u00f3 2pts. Enfoca 20min/sesi\u00f3n en kicker con spin para estabilizarlo."},{p:"medium",icon:"\u26a1",t:"Sube intensidad los martes",d:"Tu HRV sugiere capacidad sin usar. Los martes son perfectos para drills de alta intensidad."},{p:"low",icon:"\ud83e\udde0",t:"Explota la derecha cruzada",d:"En sets decisivos ganas el 78% con derecha cruzada. \u00dasala m\u00e1s conscientemente."}]},
+football:{stats:[{lbl:"Distancia Total",val:"9.4",delta:"+0.6",good:true,unit:"km/partido"},{lbl:"Sprints >25km/h",val:"18",delta:"+3",good:true,unit:"por partido"},{lbl:"Precisi\u00f3n Pase",val:"84%",delta:"+2%",good:true,unit:""},{lbl:"Duelos Ganados",val:"61%",delta:"-1%",good:false,unit:""}],dirs:[{p:"high",icon:"\u26a0\ufe0f",t:"Recovery activo hoy",d:"Carga alta 3 d\u00edas seguidos. HRV baj\u00f3 13pts. Protocolo de recovery obligatorio."},{p:"medium",icon:"\ud83c\udfc3",t:"Mejora el arranque de sprint",d:"Los 10m iniciales est\u00e1n 0.3s bajo tu mejor marca. Trabaja aceleraciones explosivas."},{p:"low",icon:"\ud83d\udccd",t:"Posicionamiento defensivo",d:"Concedes espacio en transici\u00f3n. Revisar video de la sesi\u00f3n 3 con el equipo t\u00e9cnico."}]},
+swimming:{stats:[{lbl:"SWOLF Score",val:"34",delta:"-2",good:true,unit:"crawl 50m"},{lbl:"Brazadas/Largo",val:"17",delta:"-1",good:true,unit:"avg"},{lbl:"Tiempo 100m",val:"1:02.4",delta:"-1.8s",good:true,unit:""},{lbl:"Efic. de Viraje",val:"91%",delta:"+3%",good:true,unit:""}],dirs:[{p:"high",icon:"\ud83c\udf0a",t:"Reduce brazadas en el fondo",d:"SWOLF mejora pero gastas energ\u00eda extra en los metros 25-75. Trabaja el deslizamiento post-brazada."},{p:"medium",icon:"\u23f1\ufe0f",t:"Series de pace control",d:"Arranques r\u00e1pidos seguidos de ca\u00edda de ritmo. Esta semana: 8x100m a ritmo uniforme estricto."},{p:"low",icon:"\ud83d\udca8",t:"Respiraci\u00f3n bilateral",d:"Respiras cada 2 brazadas bajo estr\u00e9s. El entrenamiento bilateral mejora simetr\u00eda y eficiencia."}]},
+gym:{stats:[{lbl:"Volumen Semanal",val:"12,400",delta:"+800",good:true,unit:"kg totales"},{lbl:"RPE Promedio",val:"7.2",delta:"+0.4",good:true,unit:"/10"},{lbl:"1RM Squat Est.",val:"127",delta:"+4",good:true,unit:"kg"},{lbl:"Progresi\u00f3n Mens.",val:"+6.3%",delta:"",good:true,unit:"fuerza"}],dirs:[{p:"high",icon:"\u26a0\ufe0f",t:"Deload esta semana",d:"4 semanas de carga progresiva. HRV cay\u00f3 12pts. Reduce volumen 40% para supercompensaci\u00f3n."},{p:"medium",icon:"\ud83d\udcaa",t:"Prioriza movimientos compuestos",d:"Ratio compound/aislamiento es 40/60. Invertirlo aumenta est\u00edmulo hormonal y resultados."},{p:"low",icon:"\ud83d\ude34",t:"Optimiza el sue\u00f1o pre-sesi\u00f3n",d:"Tus mejores sesiones correlacionan con +7.5h de sue\u00f1o. Prep\u00e1rate 30min antes del onset."}]},
+}
+const LBOARD=[{r:1,n:"Camila Rojas",sp:"swimming",pts:4280,ico:"\ud83c\udfc6",d:"+120"},{r:2,n:"Sof\u00eda Mart\u00ednez",sp:"tennis",pts:3950,ico:"\ud83e\udd48",d:"+85"},{r:3,n:"Andr\u00e9s Silva",sp:"football",pts:3720,ico:"\ud83e\udd49",d:"+210"},{r:4,n:"Valentina Cruz",sp:"tennis",pts:3340,ico:"\u2b50",d:"+45"},{r:5,n:"Diego Herrera",sp:"football",pts:2980,ico:"\u2b50",d:"-30"},{r:6,n:"Mateo L\u00f3pez",sp:"gym",pts:2540,ico:"\u2b50",d:"+95"}]
 
-<!-- ============================================================
-     NAVBAR
-     ============================================================ -->
-<nav class="navbar">
-  <div class="navbar-brand">⚡ Performance Labs</div>
-  <div class="navbar-sub">Apple Watch · Feb – Mar 2026</div>
-</nav>
+const {useState,useEffect}=React
+const {AreaChart,Area,XAxis,YAxis,Tooltip,ResponsiveContainer,CartesianGrid,RadarChart,Radar,PolarGrid,PolarAngleAxis}=Recharts
+const cx=(...a)=>a.filter(Boolean).join(' ')
+const rColor=r=>r>=80?'#34d399':r>=60?'#fbbf24':'#f87171'
+const rTxt=r=>r>=80?'text-emerald-400':r>=60?'text-yellow-400':'text-red-400'
+const rBg=r=>r>=80?'bg-emerald-500/10 border-emerald-500/20':r>=60?'bg-yellow-500/10 border-yellow-500/20':'bg-red-500/10 border-red-500/20'
+const sColor=s=>s>=85?'text-emerald-400':s>=70?'text-yellow-400':'text-red-400'
 
-<!-- ============================================================
-     TABS DE NAVEGACIÓN ENTRE PÁGINAS
-     ============================================================ -->
-<div class="tabs">
-  <button class="tab-btn active" onclick="showPage('overview', this)">🏠 Resumen</button>
-  <button class="tab-btn" onclick="showPage('cardio', this)">❤️ Cardio Lab</button>
-  <button class="tab-btn" onclick="showPage('sports', this)">🏅 Por Deporte</button>
-  <button class="tab-btn" onclick="showPage('load', this)">📊 Carga & Progresión</button>
-</div>
-
-<!-- ============================================================
-     DATOS EMBEBIDOS (JSON) — usados por todos los gráficos JS
-     ============================================================ -->
-<script>
-// Todos los entrenamientos procesados, limpios y con métricas calculadas
-const WORKOUTS = [{"fecha": "2026-02-08", "sport": "Natación", "sport_raw": "Piscina Nadar", "dur_hms": "01:07:44", "dur_min": 67.7, "dur_secs": 4064.0, "total_kj": 1746.0, "active_kj": 1308.0, "total_kcal": 417, "active_kcal": 313, "hr_max": 116.0, "hr_avg": 90.0, "hr_zone": "Z3 Umbral", "effort_pct": 77.6, "rpe_est": 7.8, "trimp": 101.6, "energy_rate": 4.62, "dist_original": 825.0, "dist_unit": "m", "dist_km": 0.825, "avg_speed": 730.73, "step_count": 210, "step_cadence": null, "swim_strokes": 472, "swolf": 137.5, "stroke_eff": 1.748, "step_economy": null, "elevation_asc": null, "perf_badge": "Intenso", "session_id": 1, "session_label": "S1 · 08 Feb", "trimp_acum": 101.6, "dias_descanso": null, "estado_rec": "Inicio"}, {"fecha": "2026-02-12", "sport": "Natación", "sport_raw": "Piscina Nadar", "dur_hms": "00:19:40", "dur_min": 19.7, "dur_secs": 1180.0, "total_kj": 376.1, "active_kj": 162.1, "total_kcal": 90, "active_kcal": 39, "hr_max": 98.0, "hr_avg": 75.8, "hr_zone": "Z3 Umbral", "effort_pct": 77.4, "rpe_est": 7.7, "trimp": 18.3, "energy_rate": 1.97, "dist_original": 60.0, "dist_unit": "m", "dist_km": 0.06, "avg_speed": 182.99, "step_count": 11, "step_cadence": null, "swim_strokes": 35, "swolf": 506.2, "stroke_eff": 1.714, "step_economy": null, "elevation_asc": null, "perf_badge": "Suave", "session_id": 2, "session_label": "S2 · 12 Feb", "trimp_acum": 119.9, "dias_descanso": 4, "estado_rec": "Descanso óptimo"}, {"fecha": "2026-02-14", "sport": "Caminata", "sport_raw": "Aire Libre Caminar", "dur_hms": "01:58:19", "dur_min": 118.3, "dur_secs": 7099.0, "total_kj": 2346.0, "active_kj": 1586.0, "total_kcal": 561, "active_kcal": 379, "hr_max": 119.0, "hr_avg": 82.7, "hr_zone": "Z2 Aeróbico", "effort_pct": 69.5, "rpe_est": 6.9, "trimp": 95.0, "energy_rate": 3.2, "dist_original": 6.84, "dist_unit": "km", "dist_km": 6.84, "avg_speed": 3.47, "step_count": 8708, "step_cadence": 73.6, "swim_strokes": null, "swolf": null, "stroke_eff": null, "step_economy": 1273, "elevation_asc": 99.69, "perf_badge": "Moderado", "session_id": 3, "session_label": "S3 · 14 Feb", "trimp_acum": 214.9, "dias_descanso": 2, "estado_rec": "Descanso corto"}, {"fecha": "2026-02-18", "sport": "Natación", "sport_raw": "Piscina Nadar", "dur_hms": "00:49:38", "dur_min": 49.6, "dur_secs": 2978.0, "total_kj": 1084.0, "active_kj": 762.7, "total_kcal": 259, "active_kcal": 182, "hr_max": 137.0, "hr_avg": 101.9, "hr_zone": "Z2 Aeróbico", "effort_pct": 74.4, "rpe_est": 7.4, "trimp": 76.7, "energy_rate": 3.67, "dist_original": 475.0, "dist_unit": "m", "dist_km": 0.475, "avg_speed": 574.17, "step_count": 147, "step_cadence": 3.0, "swim_strokes": 327, "swolf": 173.9, "stroke_eff": 1.453, "step_economy": null, "elevation_asc": null, "perf_badge": "Moderado", "session_id": 4, "session_label": "S4 · 18 Feb", "trimp_acum": 291.6, "dias_descanso": 4, "estado_rec": "Descanso óptimo"}, {"fecha": "2026-02-20", "sport": "Tenis", "sport_raw": "Tenis", "dur_hms": "01:25:19", "dur_min": 85.3, "dur_secs": 5119.0, "total_kj": 2302.0, "active_kj": 1750.0, "total_kcal": 550, "active_kcal": 418, "hr_max": 128.0, "hr_avg": 100.2, "hr_zone": "Z3 Umbral", "effort_pct": 78.3, "rpe_est": 7.8, "trimp": 157.1, "energy_rate": 4.9, "dist_original": null, "dist_unit": "km", "dist_km": null, "avg_speed": 2.18, "step_count": 3924, "step_cadence": 46.0, "swim_strokes": null, "swolf": null, "stroke_eff": null, "step_economy": null, "elevation_asc": null, "perf_badge": "Intenso", "session_id": 5, "session_label": "S5 · 20 Feb", "trimp_acum": 448.7, "dias_descanso": 2, "estado_rec": "Descanso corto"}, {"fecha": "2026-02-27", "sport": "Tenis", "sport_raw": "Tenis", "dur_hms": "00:23:27", "dur_min": 23.4, "dur_secs": 1407.0, "total_kj": 763.9, "active_kj": 517.1, "total_kcal": 183, "active_kcal": 124, "hr_max": 129.0, "hr_avg": 106.5, "hr_zone": "Z3 Umbral", "effort_pct": 82.6, "rpe_est": 8.3, "trimp": 57.7, "energy_rate": 5.27, "dist_original": 0.92, "dist_unit": "km", "dist_km": 0.92, "avg_speed": 2.35, "step_count": 1154, "step_cadence": 49.2, "swim_strokes": null, "swolf": null, "stroke_eff": null, "step_economy": null, "elevation_asc": null, "perf_badge": "Moderado", "session_id": 6, "session_label": "S6 · 27 Feb", "trimp_acum": 506.4, "dias_descanso": 7, "estado_rec": "Descanso largo"}, {"fecha": "2026-03-01", "sport": "Tenis", "sport_raw": "Tenis", "dur_hms": "01:54:05", "dur_min": 114.1, "dur_secs": 6845.0, "total_kj": 3377.0, "active_kj": 2562.0, "total_kcal": 807, "active_kcal": 612, "hr_max": 134.0, "hr_avg": 101.8, "hr_zone": "Z3 Umbral", "effort_pct": 76.0, "rpe_est": 7.6, "trimp": 190.6, "energy_rate": 5.37, "dist_original": null, "dist_unit": "km", "dist_km": null, "avg_speed": 2.31, "step_count": 5666, "step_cadence": 49.7, "swim_strokes": null, "swolf": null, "stroke_eff": null, "step_economy": null, "elevation_asc": null, "perf_badge": "Intenso", "session_id": 7, "session_label": "S7 · 01 Mar", "trimp_acum": 697.0, "dias_descanso": 2, "estado_rec": "Descanso corto"}];
-
-// Paleta de colores por deporte (consistente en todos los gráficos)
-const SPORT_COLORS = {
-  "Natación": "#06B6D4",
-  "Caminata": "#10B981",
-  "Tenis":    "#F97316"
-};
-
-// Colores por zona de FC
-const ZONE_COLORS = {
-  "Z1 Recuperación": "#10B981",
-  "Z2 Aeróbico":     "#06B6D4",
-  "Z3 Umbral":       "#F59E0B",
-  "Z4 Anaeróbico":   "#EF4444"
-};
-
-// Configuración base de layout de Plotly (dark theme)
-const BASE_LAYOUT = {
-  paper_bgcolor: "#18181B",
-  plot_bgcolor:  "#18181B",
-  font:          { color: "#A1A1AA", family: "Inter, sans-serif", size: 11 },
-  margin:        { t: 30, r: 20, b: 40, l: 50 },
-  xaxis:         { gridcolor: "#27272A", zeroline: false, showline: false },
-  yaxis:         { gridcolor: "#27272A", zeroline: false, showline: false },
-  legend:        { bgcolor: "rgba(0,0,0,0)", font: { size: 10 }, orientation: "h", x: 0, y: 1.1 },
-  hoverlabel:    { bgcolor: "#1F1F23", bordercolor: "#3F3F46", font: { color: "#FAFAFA", size: 12 } }
-};
-
-// Configuración de Plotly (sin barra de herramientas para look limpio)
-const PLOTLY_CONFIG = { displayModeBar: false, responsive: true };
-
-// ── Estado de filtros activos ────────────────────────────────
-let activeFilters = {
-  sports: new Set(["Natación", "Caminata", "Tenis"])  // Todos activos por defecto
-};
-
-// Retorna el subconjunto filtrado de workouts según filtros activos
-function getFiltered() {
-  return WORKOUTS.filter(w => activeFilters.sports.has(w.sport));
+function Av({t,sz='md',g='from-blue-500 to-violet-600'}){
+  const s=sz==='lg'?'w-10 h-10 text-xs':sz==='sm'?'w-6 h-6 text-[9px]':'w-8 h-8 text-xs'
+  return <div className={cx('rounded-full bg-gradient-to-br flex items-center justify-center font-bold text-white shrink-0',g,s)}>{t}</div>
+}
+function Arc({val,max=100,color,sz=88,sw=7}){
+  const r=(sz-sw)/2,c=2*Math.PI*r,d=c*(Math.min(val/max,1))
+  return(<svg width={sz} height={sz} style={{transform:'rotate(-90deg)'}}>
+    <circle cx={sz/2} cy={sz/2} r={r} fill="none" stroke="#1e1e2a" strokeWidth={sw}/>
+    <circle cx={sz/2} cy={sz/2} r={r} fill="none" stroke={color} strokeWidth={sw}
+      strokeDasharray={`${d} ${c-d}`} strokeLinecap="round" style={{transition:'stroke-dasharray 1s ease'}}/>
+  </svg>)
+}
+function Card({children,className=''}){
+  return <div className={cx('bg-[#111118] border border-[#1e1e2a] rounded-xl glow hover:border-[#272737] transition-all',className)}>{children}</div>
+}
+function Tip({active,payload,label}){
+  if(!active||!payload?.length)return null
+  return(<div className="bg-[#18181f] border border-[#2a2a38] rounded-lg px-3 py-2.5 shadow-2xl">
+    <p className="text-[10px] text-zinc-400 mb-1.5 font-medium">{label}</p>
+    {payload.map((p,i)=>(<div key={i} className="flex items-center gap-2 mb-0.5 text-[11px]">
+      <span className="w-2 h-2 rounded-full" style={{background:p.color}}/>
+      <span className="text-zinc-300">{p.name==='s'?'Rendimiento':p.name==='r'?'Recovery':'Carga'}</span>
+      <span className="font-bold text-white ml-1">{p.value}</span>
+    </div>))}
+  </div>)
 }
 
-// Aplica los filtros y redibuja todos los gráficos de la página activa
-function applyFilters() {
-  // Leer estado de checkboxes de deporte
-  document.querySelectorAll(".sport-check:checked").forEach(cb => {
-    activeFilters.sports.add(cb.value);
-  });
-  document.querySelectorAll(".sport-check:not(:checked)").forEach(cb => {
-    activeFilters.sports.delete(cb.value);
-  });
-
-  // Redibujar todos los gráficos registrados
-  Object.keys(chartRenderers).forEach(id => {
-    if (document.getElementById(id)) {
-      chartRenderers[id]();
-    }
-  });
-
-  // Actualizar tabla de datos
-  updateDataTable();
+function Sidebar({view,setView,sport,setSport}){
+  const nav=[{id:'dashboard',label:'Dashboard'},{id:'athletes',label:'Atletas'},{id:'sessions',label:'Sesiones'},{id:'ranking',label:'Ranking'}]
+  return(<aside className="w-52 shrink-0 flex flex-col bg-[#0b0b11] border-r border-[#191923] h-full">
+    <div className="px-4 py-5 border-b border-[#191923]">
+      <div className="flex items-center gap-2.5">
+        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold shadow-lg">⚡</div>
+        <span className="font-extrabold text-white tracking-tight">entrenapp</span>
+      </div>
+      <p className="text-[10px] text-zinc-600 mt-1 ml-9">Coach dashboard</p>
+    </div>
+    <nav className="flex-1 px-2.5 py-4 space-y-0.5">
+      <p className="text-[9px] font-bold text-zinc-700 uppercase tracking-widest px-2 mb-2">General</p>
+      {nav.map(({id,label})=>(<button key={id} onClick={()=>setView(id)}
+        className={cx('w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all',
+          view===id?'bg-[#1c1c2e] text-white':'text-zinc-500 hover:text-zinc-200 hover:bg-[#14141c]')}>
+        <span>{label}</span>
+        {view===id&&<span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500"/>}
+      </button>))}
+      <div className="pt-4">
+        <p className="text-[9px] font-bold text-zinc-700 uppercase tracking-widest px-2 mb-2">Deportes</p>
+        {SPORTS.map(s=>(<button key={s.id} onClick={()=>setSport(s.id)}
+          className={cx('w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all',
+            sport===s.id?'bg-[#1c1c2e] text-white':'text-zinc-500 hover:text-zinc-200 hover:bg-[#14141c]')}>
+          <span>{s.icon}</span><span>{s.label}</span>
+          {sport===s.id&&<span className="ml-auto w-1.5 h-1.5 rounded-full" style={{background:s.color}}/>}
+        </button>))}
+      </div>
+    </nav>
+    <div className="p-2.5 border-t border-[#191923]">
+      <div className="flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-[#14141c] cursor-pointer transition-all">
+        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-[10px] font-bold text-white">CO</div>
+        <div className="min-w-0">
+          <p className="text-xs font-semibold text-zinc-200">Carlos Ortega</p>
+          <p className="text-[9px] text-zinc-500">Head Coach</p>
+        </div>
+        <span className="ml-auto text-zinc-600 text-sm">⚙</span>
+      </div>
+    </div>
+  </aside>)
 }
 
-// Resetear filtros a "todos seleccionados"
-function resetFilters() {
-  document.querySelectorAll(".sport-check").forEach(cb => { cb.checked = true; });
-  activeFilters.sports = new Set(["Natación", "Caminata", "Tenis"]);
-  applyFilters();
+function TopBar({sport,athletes,selId,onSel}){
+  const sp=SPORTS.find(s=>s.id===sport)
+  return(<div className="flex items-center justify-between px-5 py-3 border-b border-[#191923] bg-[#0d0d14] shrink-0">
+    <div className="flex items-center gap-3">
+      <span className="text-lg">{sp?.icon}</span>
+      <div>
+        <h1 className="text-sm font-bold text-white">{sp?.label}</h1>
+        <p className="text-[10px] text-zinc-500">Lun 12 May · Ciclo semana 3/4</p>
+      </div>
+      <span className="ml-1 text-[10px] text-zinc-500 border border-[#252535] px-2 py-0.5 rounded-full">{athletes.length} atletas</span>
+    </div>
+    <div className="flex items-center gap-1.5">
+      {athletes.map(a=>(<button key={a.id} onClick={()=>onSel(a.id)}
+        className={cx('flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-medium border transition-all',
+          selId===a.id?'bg-[#1c1c2e] border-[#3a3a55] text-white':'border-[#1e1e2a] text-zinc-400 hover:border-[#2a2a38] hover:text-zinc-200')}>
+        <div className="relative">
+          <Av t={a.av} sz="sm"/>
+          <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full border border-[#0d0d14]" style={{background:rColor(a.rec)}}/>
+        </div>
+        {a.name.split(' ')[0]}
+      </button>))}
+    </div>
+  </div>)
 }
 
-// Navegar entre páginas (tabs)
-function showPage(pageId, btn) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-  document.getElementById("page-" + pageId).classList.add("active");
-  btn.classList.add("active");
-  // Redibujar gráficos de la nueva página (Plotly necesita que el elemento sea visible)
-  setTimeout(() => applyFilters(), 100);
+function HRVCard({ath}){
+  if(!ath)return null
+  const rc=rColor(ath.rec),hc=ath.hrv>=70?'#60a5fa':ath.hrv>=50?'#fbbf24':'#f87171'
+  const msg=ath.rec>=80?'✅ Listo para alta intensidad':ath.rec>=60?'⚠️ Intensidad moderada hoy':'🛑 Recovery bajo — descanso activo'
+  return(<Card className="p-5 col-span-2">
+    <div className="flex items-center gap-2 mb-4">
+      <span className="text-sm">⌚</span>
+      <p className="text-[11px] font-semibold text-zinc-300 uppercase tracking-wider">Apple Watch · En vivo</p>
+      <span className="ml-auto flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block pdot"/>Sync
+      </span>
+    </div>
+    <div className="flex items-center gap-5">
+      <div className="flex gap-4">
+        {[{val:ath.rec,c:rc,lbl:'Recovery',u:'%'},{val:ath.hrv,c:hc,lbl:'HRV',u:'ms'}].map((arc,i)=>(
+          <div key={i} className="flex flex-col items-center gap-1">
+            <div className="relative">
+              <Arc val={arc.val} color={arc.c}/>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-lg font-bold text-white leading-none">{arc.val}</span>
+                <span className="text-[8px] text-zinc-500">{arc.u}</span>
+              </div>
+            </div>
+            <p className="text-[10px] text-zinc-400 font-medium">{arc.lbl}</p>
+          </div>
+        ))}
+      </div>
+      <div className="flex-1 space-y-2">
+        <div className={cx('rounded-lg px-3 py-2 text-xs font-medium border',rBg(ath.rec),rTxt(ath.rec))}>{msg}</div>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="bg-[#17171f] rounded-lg px-3 py-2">
+            <p className="text-[9px] text-zinc-500">FC en reposo</p>
+            <div className="flex items-center gap-1 mt-0.5"><span className="text-red-400">♥</span><span className="text-sm font-bold text-white">62 bpm</span></div>
+          </div>
+          <div className="bg-[#17171f] rounded-lg px-3 py-2">
+            <p className="text-[9px] text-zinc-500">Racha activa</p>
+            <div className="flex items-center gap-1 mt-0.5"><span>🔥</span><span className="text-sm font-bold text-white">{ath.streak}d</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Card>)
 }
 
-// Registrador de funciones de renderizado por gráfico
-const chartRenderers = {};
+function GamCard({ath,sport}){
+  if(!ath)return null
+  const sp=SPORTS.find(s=>s.id===sport),xp=((ath.lvl%100)+20)
+  const rIco=ath.rank===1?'🏆':ath.rank===2?'🥈':'🥉'
+  return(<Card className="p-5 col-span-3">
+    <div className="flex items-start gap-4 mb-3">
+      <Av t={ath.av} sz="lg"/>
+      <div className="flex-1">
+        <div className="flex items-center gap-2">
+          <p className="text-sm font-bold text-white">{ath.name}</p>
+          <span className={ath.trend==='up'?'text-emerald-400 text-xs':ath.trend==='down'?'text-red-400 text-xs':'text-zinc-500 text-xs'}>{ath.trend==='up'?'↑':ath.trend==='down'?'↓':'—'}</span>
+        </div>
+        <p className="text-[10px] text-zinc-500">Nivel {ath.lvl} · {ath.sess} sesiones completadas</p>
+        <div className="flex items-center gap-2 mt-2">
+          <span className="text-[9px] text-zinc-600 shrink-0">Nv {ath.lvl}</span>
+          <div className="flex-1 h-1.5 bg-[#1a1a24] rounded-full overflow-hidden">
+            <div className="h-full rounded-full transition-all duration-1000" style={{width:`${xp}%`,background:`linear-gradient(90deg,${sp?.color},${sp?.accent})`}}/>
+          </div>
+          <span className="text-[9px] text-zinc-600 shrink-0">Nv {ath.lvl+1}</span>
+        </div>
+      </div>
+      <div className="text-center shrink-0"><div className="text-xl">{rIco}</div><div className="text-[10px] text-zinc-500">#{ath.rank} deporte</div></div>
+    </div>
+    <div>
+      <p className="text-[10px] text-zinc-500 mb-2">Logros desbloqueados</p>
+      <div className="flex gap-1.5 flex-wrap items-center">
+        {ath.badges.map((b,i)=>(<span key={i} className="text-base bg-[#1a1a24] border border-[#252535] rounded-lg w-8 h-8 flex items-center justify-center hover:scale-110 transition-transform cursor-default">{b}</span>))}
+        <span className="text-[10px] text-zinc-600 ml-1">+{Math.floor(ath.lvl/15)} por desbloquear</span>
+      </div>
+    </div>
+  </Card>)
+}
+
+function PerfChart({sport}){
+  const sp=SPORTS.find(s=>s.id===sport),c=sp?.color||'#60a5fa'
+  return(<Card className="p-5 col-span-3">
+    <div className="flex items-center justify-between mb-4">
+      <div>
+        <h3 className="text-sm font-semibold text-white">Rendimiento · Últimas 8 semanas</h3>
+        <p className="text-[10px] text-zinc-500 mt-0.5">Score, carga y recovery</p>
+      </div>
+      <div className="flex gap-3 text-[10px] text-zinc-500">
+        {[{c,l:'Rendimiento'},{c:'#34d399',l:'Recovery'},{c:'#3f3f50',l:'Carga'}].map((x,i)=>(
+          <span key={i} className="flex items-center gap-1.5"><span className="w-3 h-1 rounded-full inline-block" style={{background:x.c}}/>{x.l}</span>
+        ))}
+      </div>
+    </div>
+    <ResponsiveContainer width="100%" height={170}>
+      <AreaChart data={HISTORY} margin={{top:0,right:0,bottom:0,left:-20}}>
+        <defs>
+          <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor={c} stopOpacity={0.35}/><stop offset="95%" stopColor={c} stopOpacity={0}/>
+          </linearGradient>
+          <linearGradient id="rg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#34d399" stopOpacity={0.2}/><stop offset="95%" stopColor="#34d399" stopOpacity={0}/>
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray="3 3" stroke="#1a1a24" vertical={false}/>
+        <XAxis dataKey="w" tick={{fill:'#52525b',fontSize:10}} axisLine={false} tickLine={false}/>
+        <YAxis tick={{fill:'#52525b',fontSize:10}} axisLine={false} tickLine={false} domain={[40,100]}/>
+        <Tooltip content={<Tip/>}/>
+        <Area type="monotone" dataKey="l" stroke="#3f3f50" fill="none" strokeWidth={1.5} strokeDasharray="4 2" dot={false}/>
+        <Area type="monotone" dataKey="r" stroke="#34d399" fill="url(#rg)" strokeWidth={1.5} dot={false}/>
+        <Area type="monotone" dataKey="s" stroke={c} fill="url(#sg)" strokeWidth={2} dot={{fill:c,strokeWidth:0,r:3}} activeDot={{r:5,fill:c}}/>
+      </AreaChart>
+    </ResponsiveContainer>
+  </Card>)
+}
+
+function Dirs({dirs}){
+  const PC={high:{w:'bg-red-500/10 border-red-500/20',lt:'text-red-400',lb:'ALTA'},medium:{w:'bg-yellow-500/10 border-yellow-500/20',lt:'text-yellow-400',lb:'MEDIA'},low:{w:'bg-blue-500/10 border-blue-500/20',lt:'text-blue-400',lb:'OPORTUN.'}}
+  return(<Card className="p-5 col-span-2">
+    <div className="flex items-center gap-2 mb-4">
+      <span>🧠</span>
+      <h3 className="text-sm font-semibold text-white">Directrices del Coach</h3>
+      <span className="ml-auto text-[10px] text-zinc-500 bg-[#1a1a24] px-2 py-0.5 rounded-full">Hoy</span>
+    </div>
+    <div className="space-y-2">
+      {dirs.map((d,i)=>{const p=PC[d.p]; return(<div key={i} className={cx('rounded-lg border px-3 py-3 cursor-pointer hover:opacity-80 transition-all',p.w)}>
+        <div className="flex items-start gap-2">
+          <span className="text-base leading-none mt-0.5 shrink-0">{d.icon}</span>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-xs font-semibold text-white">{d.t}</p>
+              <span className={cx('text-[9px] font-bold tracking-wider',p.lt)}>{p.lb}</span>
+            </div>
+            <p className="text-[11px] text-zinc-400 leading-relaxed">{d.d}</p>
+          </div>
+        </div>
+      </div>)})}
+    </div>
+  </Card>)
+}
+
+function StatCard({lbl,val,delta,unit,good}){
+  const ok=good!==false
+  return(<Card className="p-4 col-span-1">
+    <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">{lbl}</p>
+    <div className="flex items-end gap-1 mt-1">
+      <span className="text-xl font-bold text-white leading-none">{val}</span>
+      {unit&&<span className="text-[10px] text-zinc-500 mb-0.5">{unit}</span>}
+    </div>
+    {delta&&<div className={cx('flex items-center gap-1 text-[10px] font-medium mt-1',ok?'text-emerald-400':'text-red-400')}>{ok?'↑':'↓'} {delta} vs sem.</div>}
+  </Card>)
+}
+
+function DashboardView({sport}){
+  const aths=ATHLETES.filter(a=>a.sport===sport)
+  const [selId,setSel]=useState(aths[0]?.id)
+  const ath=ATHLETES.find(a=>a.id===selId)
+  const m=METRICS[sport]
+  useEffect(()=>setSel(ATHLETES.filter(a=>a.sport===sport)[0]?.id),[sport])
+  return(<div className="flex flex-col h-full">
+    <TopBar sport={sport} athletes={aths} selId={selId} onSel={setSel}/>
+    <div className="flex-1 overflow-y-auto p-4 space-y-3 ani">
+      <div className="grid grid-cols-4 gap-3">{m.stats.map((s,i)=><StatCard key={i} lbl={s.lbl} val={s.val} delta={s.delta} unit={s.unit} good={s.good}/>)}</div>
+      <div className="grid grid-cols-5 gap-3"><HRVCard ath={ath}/><GamCard ath={ath} sport={sport}/></div>
+      <div className="grid grid-cols-5 gap-3"><PerfChart sport={sport}/><Dirs dirs={m.dirs}/></div>
+    </div>
+  </div>)
+}
+
+function AthletesView({sport}){
+  const aths=ATHLETES.filter(a=>a.sport===sport),sp=SPORTS.find(s=>s.id===sport)
+  return(<div className="flex flex-col h-full">
+    <div className="px-5 py-4 border-b border-[#191923] bg-[#0d0d14] shrink-0">
+      <h1 className="text-sm font-bold text-white">Atletas · {sp?.label}</h1>
+      <p className="text-[10px] text-zinc-500">{aths.length} atletas activos en este ciclo</p>
+    </div>
+    <div className="flex-1 overflow-y-auto p-4 space-y-2.5 ani">
+      {aths.map(a=>{const xp=((a.lvl%100)+20); return(<Card key={a.id} className="p-4 cursor-pointer">
+        <div className="flex items-center gap-4">
+          <div className="relative"><Av t={a.av} sz="lg"/><span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-[#111118]" style={{background:rColor(a.rec)}}/></div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-semibold text-white">{a.name}</p>
+              <span className={a.trend==='up'?'text-emerald-400 text-xs':a.trend==='down'?'text-red-400 text-xs':'text-zinc-500 text-xs'}>{a.trend==='up'?'↑':a.trend==='down'?'↓':'—'}</span>
+              <span className="text-[10px] text-zinc-500">{a.sess} sesiones</span>
+            </div>
+            <div className="flex items-center gap-1.5 mt-1">{a.badges.map((b,i)=><span key={i} className="text-sm">{b}</span>)}<span className="text-[10px] text-zinc-500 ml-1">Racha {a.streak}d 🔥</span></div>
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-[9px] text-zinc-600 shrink-0">Nv {a.lvl}</span>
+              <div className="flex-1 h-1 bg-[#1a1a24] rounded-full overflow-hidden"><div className="h-full rounded-full" style={{width:`${xp}%`,background:`linear-gradient(90deg,${sp?.color},${sp?.accent})`}}/></div>
+              <span className="text-[9px] text-zinc-600 shrink-0">Nv {a.lvl+1}</span>
+            </div>
+          </div>
+          <div className={cx('flex items-center gap-2 px-3 py-2 rounded-lg border text-xs shrink-0',rBg(a.rec),rTxt(a.rec))}>
+            <span>⌚</span><div><div className="font-semibold">Recovery {a.rec}%</div><div className="text-[9px] text-zinc-500">HRV {a.hrv}ms</div></div>
+          </div>
+          <div className="text-center shrink-0"><div className="text-sm font-bold text-zinc-200">#{a.rank}</div><div className="text-[9px] text-zinc-500">rank</div></div>
+        </div>
+      </Card>)})}
+    </div>
+  </div>)
+}
+
+function SessionsView({sport}){
+  const allSess=[
+    {id:1,aid:3,date:'Hoy 7:00am',dur:55,int:'Alta',  sc:94,note:'PR en 100m libre. Excelente viraje en fondo. Mejor marca del ciclo.',   hrv:81,kcal:420,ld:72},
+    {id:2,aid:1,date:'Hoy 9:30am',dur:70,int:'Media', sc:81,note:'Mejora en primer servicio. Segundo servicio todavía necesita trabajo.',   hrv:72,kcal:380,ld:58},
+    {id:3,aid:2,date:'Ayer 5pm',  dur:90,int:'Alta',  sc:61,note:'HRV bajo detectado mid-sesión. Se redujo la carga de manera preventiva.', hrv:45,kcal:610,ld:85},
+    {id:4,aid:6,date:'Ayer 5pm',  dur:90,int:'Alta',  sc:88,note:'+0.8km vs semana anterior. Excelente distancia cubierta en partido.',    hrv:74,kcal:720,ld:78},
+  ]
+  const IC={Alta:'text-red-400 bg-red-500/10 border-red-500/20',Media:'text-yellow-400 bg-yellow-500/10 border-yellow-500/20',Baja:'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'}
+  return(<div className="flex flex-col h-full">
+    <div className="flex items-center justify-between px-5 py-4 border-b border-[#191923] bg-[#0d0d14] shrink-0">
+      <div><h1 className="text-sm font-bold text-white">Sesiones de Entrenamiento</h1><p className="text-[10px] text-zinc-500">Historial y análisis detallado de cada sesión</p></div>
+      <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition-all">+ Nueva sesión</button>
+    </div>
+    <div className="flex-1 overflow-y-auto p-4 ani">
+      <div className="grid grid-cols-4 gap-3 mb-4">
+        {[{ic:'📅',lb:'Esta semana',v:'8',u:'sesiones'},{ic:'⏱️',lb:'Minutos totales',v:'420',u:'min'},{ic:'📈',lb:'Score promedio',v:'78',u:'/100'},{ic:'⚠️',lb:'Alertas HRV',v:'2',u:'atletas'}].map((c,i)=>(
+          <Card key={i} className="p-4"><div className="text-xl mb-2">{c.ic}</div><div className="text-xl font-bold text-white">{c.v} <span className="text-xs text-zinc-500 font-normal">{c.u}</span></div><div className="text-[10px] text-zinc-500 mt-0.5">{c.lb}</div></Card>
+        ))}
+      </div>
+      <Card className="p-5">
+        <h3 className="text-sm font-semibold text-white mb-4">Sesiones recientes</h3>
+        <div className="space-y-3">
+          {allSess.map(s=>{const a=ATHLETES.find(x=>x.id===s.aid); return(
+            <div key={s.id} className="bg-[#17171f] border border-[#1e1e2a] rounded-lg p-4 hover:border-[#2a2a38] transition-all cursor-pointer">
+              <div className="flex items-start gap-3">
+                <div className={cx('w-1.5 h-12 rounded-full shrink-0',s.sc>=85?'bg-emerald-400':s.sc>=70?'bg-yellow-400':'bg-red-400')}/>
+                <Av t={a?.av||'?'}/>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="text-xs font-semibold text-white">{a?.name}</p>
+                    <span className={cx('text-[9px] font-semibold px-1.5 py-0.5 rounded-full border',IC[s.int])}>{s.int}</span>
+                    <span className="text-[10px] text-zinc-500">{s.date} · {s.dur}min</span>
+                  </div>
+                  <p className="text-[11px] text-zinc-400 mb-2">{s.note}</p>
+                  <div className="flex gap-4">
+                    {[{c:'bg-blue-400',t:`HRV ${s.hrv}ms`},{c:'bg-orange-400',t:`${s.kcal} kcal`},{c:'bg-violet-400',t:`Carga ${s.ld}/100`}].map((x,i)=>(
+                      <span key={i} className="flex items-center gap-1 text-[10px] text-zinc-500"><span className={cx('w-1.5 h-1.5 rounded-full inline-block',x.c)}/>{x.t}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="text-right shrink-0"><div className={cx('text-2xl font-bold',sColor(s.sc))}>{s.sc}</div><div className="text-[9px] text-zinc-500">score</div></div>
+              </div>
+            </div>
+          )})}
+        </div>
+      </Card>
+    </div>
+  </div>)
+}
+
+function RankingView({sport}){
+  const sp=SPORTS.find(s=>s.id===sport),spAths=ATHLETES.filter(a=>a.sport===sport)
+  return(<div className="flex flex-col h-full">
+    <div className="px-5 py-4 border-b border-[#191923] bg-[#0d0d14] shrink-0">
+      <h1 className="text-sm font-bold text-white">Ranking Global</h1>
+      <p className="text-[10px] text-zinc-500">Basado en consistencia, mejora progresiva y asistencia</p>
+    </div>
+    <div className="flex-1 overflow-y-auto p-4 ani">
+      <div className="grid grid-cols-5 gap-3">
+        <Card className="p-5 col-span-3">
+          <h3 className="text-sm font-semibold text-white mb-4">Tabla de posiciones</h3>
+          <div className="space-y-1.5">
+            {LBOARD.map((p,i)=>{
+              const pSp=SPORTS.find(s=>s.id===p.sp),isPos=p.d.startsWith('+')
+              return(<div key={p.r} className={cx('flex items-center gap-3 px-3 py-3 rounded-lg transition-all',
+                i===0?'bg-gradient-to-r from-yellow-500/10 to-transparent border border-yellow-500/20':'bg-[#17171f] hover:bg-[#1c1c27] cursor-pointer')}>
+                <span className="text-base w-6 text-center">{p.ico}</span>
+                <Av t={p.n.split(' ').map(x=>x[0]).join('')} sz="sm"/>
+                <div className="flex-1 min-w-0"><p className="text-xs font-semibold text-white">{p.n}</p><p className="text-[10px] text-zinc-500">{pSp?.icon} {pSp?.label}</p></div>
+                <span className={cx('text-[10px] font-medium',isPos?'text-emerald-400':'text-red-400')}>{isPos?'↑':'↓'}{p.d}</span>
+                <div className="text-right"><div className="text-sm font-bold text-white">{p.pts.toLocaleString()}</div><div className="text-[9px] text-zinc-500">pts</div></div>
+              </div>)
+            })}
+          </div>
+        </Card>
+        <div className="col-span-2 space-y-3">
+          {spAths.length>=1&&(<Card className="p-5">
+            <h3 className="text-xs font-semibold text-white mb-1">Radar de habilidades</h3>
+            <p className="text-[10px] text-zinc-500 mb-3">Top 2 atletas · {sp?.label}</p>
+            <ResponsiveContainer width="100%" height={190}>
+              <RadarChart data={RADAR}>
+                <PolarGrid stroke="#1e1e2a"/>
+                <PolarAngleAxis dataKey="a" tick={{fill:'#52525b',fontSize:9}}/>
+                <Radar dataKey="A" stroke={sp?.color} fill={sp?.color} fillOpacity={0.15} strokeWidth={1.5}/>
+                <Radar dataKey="B" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.1} strokeWidth={1.5}/>
+              </RadarChart>
+            </ResponsiveContainer>
+            <div className="flex justify-center gap-4">
+              {spAths.slice(0,2).map((a,i)=>(<div key={a.id} className="flex items-center gap-1.5 text-[10px] text-zinc-400"><span className="w-3 h-1 rounded-full inline-block" style={{background:i===0?sp?.color:'#8b5cf6'}}/>{a.name.split(' ')[0]}</div>))}
+            </div>
+          </Card>)}
+          <Card className="p-4">
+            <h3 className="text-xs font-semibold text-white mb-3">🏅 Próximos logros</h3>
+            <div className="space-y-3">
+              {[{ic:'🔥',n:'Racha 30 días',w:'Sofía · 16 días restantes',p:47},{ic:'⚡',n:'50 sesiones',w:'Valentina · 9 sesiones',p:82},{ic:'🎯',n:'PR personal',w:'Diego · próxima semana',p:65}].map((m,i)=>(
+                <div key={i}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-sm">{m.ic}</span>
+                    <div className="flex-1"><p className="text-[11px] font-medium text-white">{m.n}</p><p className="text-[9px] text-zinc-500">{m.w}</p></div>
+                    <span className="text-[10px] font-bold text-zinc-300">{m.p}%</span>
+                  </div>
+                  <div className="h-1 bg-[#1a1a24] rounded-full overflow-hidden ml-6"><div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-500" style={{width:`${m.p}%`}}/></div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  </div>)
+}
+
+function App(){
+  const [view,setView]=useState('dashboard')
+  const [sport,setSport]=useState('tennis')
+  const handleSport=s=>{setSport(s);setView('dashboard')}
+  const V={dashboard:DashboardView,athletes:AthletesView,sessions:SessionsView,ranking:RankingView}
+  const View=V[view]||DashboardView
+  return(<div className="flex h-screen overflow-hidden bg-[#09090e]">
+    <Sidebar view={view} setView={setView} sport={sport} setSport={handleSport}/>
+    <main className="flex-1 flex flex-col min-w-0 overflow-hidden"><View sport={sport}/></main>
+  </div>)
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>)
 </script>
-
-<!-- ============================================================
-     PÁGINA 1: RESUMEN (OVERVIEW)
-     ============================================================ -->
-<div id="page-overview" class="page active">
-
-  <!-- KPIs superiores -->
-  <div class="kpi-grid">
-    <div class="kpi kpi-cyan">
-      <div class="kpi-icon">📅</div>
-      <div class="kpi-value">7</div>
-      <div class="kpi-label">Sesiones Registradas</div>
-    </div>
-    <div class="kpi kpi-green">
-      <div class="kpi-icon">⏱</div>
-      <div class="kpi-value">8.0 h</div>
-      <div class="kpi-label">Tiempo Total</div>
-    </div>
-    <div class="kpi kpi-amber">
-      <div class="kpi-icon">🔥</div>
-      <div class="kpi-value">2,067 kcal</div>
-      <div class="kpi-label">Energía Activa</div>
-    </div>
-    <div class="kpi kpi-red">
-      <div class="kpi-icon">❤️</div>
-      <div class="kpi-value">94 lpm</div>
-      <div class="kpi-label">FC Media Global</div>
-    </div>
-    <div class="kpi kpi-purple">
-      <div class="kpi-icon">⚡</div>
-      <div class="kpi-value">697.0</div>
-      <div class="kpi-label">Carga TRIMP Total</div>
-    </div>
-  </div>
-
-  <!-- Grid principal: sidebar + 2 gráficos -->
-  <div class="grid grid-thirds" style="align-items: start;">
-
-    <!-- Panel lateral: filtros + leyenda de zonas -->
-    <div class="filter-panel">
-      <div class="filter-group">
-        <div class="filter-label">🏅 Deporte</div>
-        <div class="filter-check">
-          <label><input type="checkbox" class="sport-check" value="Natación" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#06B6D4"></span> Natación
-          </label>
-          <label><input type="checkbox" class="sport-check" value="Caminata" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#10B981"></span> Caminata
-          </label>
-          <label><input type="checkbox" class="sport-check" value="Tenis" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#F97316"></span> Tenis
-          </label>
-        </div>
-        <button class="btn-reset" onclick="resetFilters()" style="margin-top:10px">↺ Resetear Filtros</button>
-      </div>
-
-      <!-- Leyenda de zonas de FC -->
-      <div class="filter-group">
-        <div class="filter-label">Zonas FC (Seiler, 2006)</div>
-        <div class="zone-list">
-          <div class="zone-item zone-z1">Z1 Recuperación <span>&lt;65%</span></div>
-          <div class="zone-item zone-z2">Z2 Aeróbico <span>65–75%</span></div>
-          <div class="zone-item zone-z3">Z3 Umbral <span>75–85%</span></div>
-          <div class="zone-item zone-z4">Z4 Anaeróbico <span>&gt;85%</span></div>
-        </div>
-        <div class="sci-note">Referencia: % FC máxima por sesión</div>
-      </div>
-
-      <!-- Sesión más intensa (marcador) -->
-      <div class="filter-group" style="border-color: rgba(245,158,11,0.3);">
-        <div class="filter-label" style="color:#F59E0B">🏆 Sesión Top</div>
-        <div style="font-family:'Space Grotesk';font-size:1rem;font-weight:700;color:#fff">
-          S7 · 01 Mar
-        </div>
-        <div style="color:var(--muted);font-size:0.78rem;margin-top:3px">
-          Tenis · TRIMP 190.6
-        </div>
-        <div class="badge badge-intenso" style="margin-top:8px">Intenso</div>
-      </div>
-    </div>
-
-    <!-- Gráfico TRIMP por sesión -->
-    <div class="card">
-      <div class="card-title">⚡ Carga de Entrenamiento por Sesión (TRIMP · Bannister 1991)</div>
-      <div id="chart-trimp-bars" class="chart-container" style="min-height:280px"></div>
-      <div class="sci-note">TRIMP = Duración(min) × ΔFC_ratio × e^(1.92 × ΔFC_ratio) — Bannister EW. Modelling elite athletic performance, 1991.</div>
-    </div>
-
-    <!-- Gráfico Duración vs Esfuerzo -->
-    <div class="card">
-      <div class="card-title">💪 Duración vs Intensidad (Índice de Esfuerzo %FC máx)</div>
-      <div id="chart-scatter-main" class="chart-container" style="min-height:280px"></div>
-      <div class="sci-note">Tamaño del punto = kcal activas consumidas</div>
-    </div>
-
-  </div>
-
-  <!-- Segunda fila: distribución deportes + energía comparativa -->
-  <div class="grid grid-2" style="margin-top:16px">
-    <div class="card">
-      <div class="card-title">🏅 Distribución de Sesiones por Deporte</div>
-      <div id="chart-sport-donut" class="chart-container" style="min-height:220px"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">🔥 Gasto Calórico Acumulado por Deporte</div>
-      <div id="chart-energy-sport" class="chart-container" style="min-height:220px"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     PÁGINA 2: CARDIO LAB
-     ============================================================ -->
-<div id="page-cardio" class="page">
-
-  <div class="grid grid-main" style="align-items: start;">
-
-    <!-- Sidebar filtros cardio -->
-    <div class="filter-panel">
-      <div class="filter-group">
-        <div class="filter-label">🏅 Deporte</div>
-        <div class="filter-check">
-          <label><input type="checkbox" class="sport-check" value="Natación" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#06B6D4"></span> Natación
-          </label>
-          <label><input type="checkbox" class="sport-check" value="Caminata" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#10B981"></span> Caminata
-          </label>
-          <label><input type="checkbox" class="sport-check" value="Tenis" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#F97316"></span> Tenis
-          </label>
-        </div>
-        <button class="btn-reset" onclick="resetFilters()" style="margin-top:10px">↺ Resetear</button>
-      </div>
-
-      <!-- Marcadores de FC por sesión -->
-      <div class="filter-group" style="padding:0; overflow:hidden;">
-        <div class="filter-label" style="padding:12px 14px 6px">📌 Marcadores de FC</div>
-        <div style="overflow-y:auto; max-height:300px;">
-          <table class="data-table">
-            <thead><tr>
-              <th>Sesión</th>
-              <th>Zona</th>
-              <th>RPE</th>
-            </tr></thead>
-            <tbody id="marker-table-body">
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- Contenido cardio -->
-    <div style="display:flex; flex-direction:column; gap:16px;">
-
-      <!-- Perfil FC -->
-      <div class="card">
-        <div class="card-title">💓 Perfil de Frecuencia Cardíaca (FC promedio y máxima por sesión)</div>
-        <div id="chart-hr-profile" class="chart-container" style="min-height:260px"></div>
-      </div>
-
-      <div class="grid grid-2" style="gap:16px;">
-        <!-- Dona de zonas FC -->
-        <div class="card">
-          <div class="card-title">🎯 Distribución de Zonas FC</div>
-          <div id="chart-zone-donut" class="chart-container" style="min-height:230px"></div>
-          <div class="sci-note">Seiler & Kjerland, SJMSS 2006</div>
-        </div>
-
-        <!-- TRIMP vs tasa kcal -->
-        <div class="card">
-          <div class="card-title">📉 RPE Estimado y Días de Descanso</div>
-          <div id="chart-rpe-bars" class="chart-container" style="min-height:230px"></div>
-          <div class="sci-note">RPE = (FC prom / FC máx) × 10 — Borg, 1998</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     PÁGINA 3: POR DEPORTE
-     ============================================================ -->
-<div id="page-sports" class="page">
-
-  <div class="grid grid-main" style="align-items: start;">
-
-    <!-- Sidebar -->
-    <div class="filter-panel">
-      <div class="filter-group">
-        <div class="filter-label">🏅 Deporte</div>
-        <div class="filter-check">
-          <label><input type="checkbox" class="sport-check" value="Natación" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#06B6D4"></span> Natación
-          </label>
-          <label><input type="checkbox" class="sport-check" value="Caminata" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#10B981"></span> Caminata
-          </label>
-          <label><input type="checkbox" class="sport-check" value="Tenis" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#F97316"></span> Tenis
-          </label>
-        </div>
-        <button class="btn-reset" onclick="resetFilters()" style="margin-top:10px">↺ Resetear</button>
-      </div>
-
-      <!-- Tabla resumen por deporte -->
-      <div class="filter-group" style="padding:0; overflow:hidden;">
-        <div class="filter-label" style="padding:12px 14px 6px">📊 Resumen</div>
-        <table class="data-table">
-          <thead><tr><th>Deporte</th><th>Sesiones</th><th>TRIMP</th></tr></thead>
-          <tbody id="sport-summary-table"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Gráficos por deporte -->
-    <div style="display:flex; flex-direction:column; gap:16px;">
-
-      <div class="grid grid-2" style="gap:16px;">
-        <!-- Natación: SWOLF -->
-        <div class="card">
-          <div class="card-title">🏊 Natación — SWOLF Score (Lätt et al. 2010)</div>
-          <div id="chart-swolf" class="chart-container" style="min-height:230px"></div>
-          <div class="sci-note">SWOLF = seg/largo + brazadas/largo. Menor = mejor técnica.</div>
-        </div>
-
-        <!-- Tenis: pasos y calorías -->
-        <div class="card">
-          <div class="card-title">🎾 Tenis — Pasos Totales vs kcal Activas</div>
-          <div id="chart-tennis" class="chart-container" style="min-height:230px"></div>
-        </div>
-      </div>
-
-      <div class="grid grid-2" style="gap:16px;">
-        <!-- Caminata: economía -->
-        <div class="card">
-          <div class="card-title">🚶 Caminata — Economía de Movimiento (pasos/km)</div>
-          <div id="chart-walk-economy" class="chart-container" style="min-height:220px"></div>
-          <div class="sci-note">Sparrow & Newell, 1998. Referencia eficiente: ~1400 p/km</div>
-        </div>
-
-        <!-- Radar comparativo -->
-        <div class="card">
-          <div class="card-title">🕸 Radar Comparativo por Deporte</div>
-          <div id="chart-radar" class="chart-container" style="min-height:220px"></div>
-          <div class="sci-note">Métricas normalizadas 0–100 para comparación relativa</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     PÁGINA 4: CARGA Y PROGRESIÓN
-     ============================================================ -->
-<div id="page-load" class="page">
-
-  <div class="grid grid-main" style="align-items: start;">
-
-    <!-- Sidebar -->
-    <div class="filter-panel">
-      <div class="filter-group">
-        <div class="filter-label">🏅 Deporte</div>
-        <div class="filter-check">
-          <label><input type="checkbox" class="sport-check" value="Natación" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#06B6D4"></span> Natación
-          </label>
-          <label><input type="checkbox" class="sport-check" value="Caminata" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#10B981"></span> Caminata
-          </label>
-          <label><input type="checkbox" class="sport-check" value="Tenis" checked onchange="applyFilters()">
-            <span class="filter-sport-dot" style="background:#F97316"></span> Tenis
-          </label>
-        </div>
-        <button class="btn-reset" onclick="resetFilters()" style="margin-top:10px">↺ Resetear</button>
-      </div>
-
-      <!-- Referencias científicas -->
-      <div class="filter-group">
-        <div class="filter-label">🔬 Referencias Científicas</div>
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <div style="font-size:0.75rem; padding:6px 0; border-bottom:1px solid var(--border);">
-            <div style="color:var(--cyan); font-weight:600;">TRIMP</div>
-            <div style="color:var(--muted)">Bannister EW, 1991</div>
-          </div>
-          <div style="font-size:0.75rem; padding:6px 0; border-bottom:1px solid var(--border);">
-            <div style="color:var(--cyan); font-weight:600;">Zonas FC</div>
-            <div style="color:var(--muted)">Seiler & Kjerland, SJMSS 2006</div>
-          </div>
-          <div style="font-size:0.75rem; padding:6px 0; border-bottom:1px solid var(--border);">
-            <div style="color:var(--cyan); font-weight:600;">SWOLF</div>
-            <div style="color:var(--muted)">Lätt E et al., JSS 2010</div>
-          </div>
-          <div style="font-size:0.75rem; padding:6px 0; border-bottom:1px solid var(--border);">
-            <div style="color:var(--cyan); font-weight:600;">Econ. Movimiento</div>
-            <div style="color:var(--muted)">Sparrow & Newell, 1998</div>
-          </div>
-          <div style="font-size:0.75rem; padding:6px 0; border-bottom:1px solid var(--border);">
-            <div style="color:var(--cyan); font-weight:600;">RPE</div>
-            <div style="color:var(--muted)">Borg G, 1998</div>
-          </div>
-          <div style="font-size:0.75rem; padding:6px 0;">
-            <div style="color:var(--cyan); font-weight:600;">Carga Crónica</div>
-            <div style="color:var(--muted)">Gabbett TJ, BJSM 2016</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Gráficos de carga -->
-    <div style="display:flex; flex-direction:column; gap:16px;">
-
-      <!-- Carga acumulada -->
-      <div class="card">
-        <div class="card-title">📈 Carga Acumulada de Entrenamiento — TRIMP Progresivo</div>
-        <div id="chart-load-area" class="chart-container" style="min-height:240px"></div>
-        <div class="sci-note">Gabbett TJ. The training-injury prevention paradox. Br J Sports Med. 2016;50(4):198-199.</div>
-      </div>
-
-      <div class="grid grid-2" style="gap:16px;">
-        <!-- Velocidad por sesión -->
-        <div class="card">
-          <div class="card-title">💨 Velocidad Promedio por Sesión</div>
-          <div id="chart-speed" class="chart-container" style="min-height:200px"></div>
-          <div class="sci-note">Natación: m/h · Caminata y Tenis: km/h</div>
-        </div>
-
-        <!-- Energía por sesión -->
-        <div class="card">
-          <div class="card-title">⚡ Tasa de Gasto Calórico (kcal/min)</div>
-          <div id="chart-energy-rate" class="chart-container" style="min-height:200px"></div>
-        </div>
-      </div>
-
-      <!-- Tabla completa de sesiones -->
-      <div class="card">
-        <div class="card-title">📋 Registro Completo de Sesiones</div>
-        <div style="overflow-x:auto;">
-          <table class="data-table" id="full-data-table">
-            <thead><tr>
-              <th>Sesión</th>
-              <th>Deporte</th>
-              <th>Duración</th>
-              <th>kcal Act.</th>
-              <th>FC Prom</th>
-              <th>FC Máx</th>
-              <th>Zona FC</th>
-              <th>TRIMP</th>
-              <th>Esfuerzo</th>
-              <th>RPE Est.</th>
-              <th>Dist.</th>
-              <th>Descanso</th>
-              <th>Marcador</th>
-            </tr></thead>
-            <tbody id="full-table-body"></tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     LÓGICA DE GRÁFICOS EN JAVASCRIPT
-     ============================================================ -->
-<script>
-
-// ── Helpers ──────────────────────────────────────────────────
-// Formatea número con separador de miles
-const fmt = n => n == null ? "—" : n.toLocaleString("es-CL", {maximumFractionDigits: 1});
-
-// Color de badge HTML
-function badgeHtml(badge) {
-  const cls = badge === "Intenso" ? "badge-intenso"
-            : badge === "Moderado" ? "badge-moderado" : "badge-suave";
-  return `<span class="badge ${cls}">${badge}</span>`;
-}
-
-// ── GRÁFICO 1: TRIMP por sesión (barras coloreadas por zona FC) ──
-chartRenderers["chart-trimp-bars"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-trimp-bars");
-
-  const barColors = d.map(w => ZONE_COLORS[w.hr_zone] || "#A1A1AA");
-
-  const trace1 = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.trimp),
-    type: "bar",
-    name: "TRIMP Sesión",
-    marker: { color: barColors, opacity: 0.85,
-               line: { color: "rgba(255,255,255,0.08)", width: 1 } },
-    text: d.map(w =>
-      `<b>${w.session_label}</b><br>🏅 ${w.sport}<br>⚡ TRIMP: ${w.trimp}<br>⏱ ${w.dur_hms}<br>❤️ FC: ${w.hr_avg} lpm<br>🎯 Zona: ${w.hr_zone}<br>🏷 ${w.perf_badge}`
-    ),
-    hoverinfo: "text"
-  };
-
-  // Línea TRIMP acumulado en eje secundario
-  const trace2 = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.trimp_acum),
-    type: "scatter", mode: "lines+markers",
-    name: "Acumulado",
-    yaxis: "y2",
-    line: { color: "#8B5CF6", width: 2, dash: "dot" },
-    marker: { color: "#8B5CF6", size: 6 },
-    hoverinfo: "none"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    yaxis2: { overlaying: "y", side: "right", showgrid: false,
-               title: { text: "Acumulado", font: { size: 9 } },
-               tickfont: { size: 9, color: "#8B5CF6" } },
-    shapes: [{ type: "line", x0: 0, x1: 1, xref: "paper",
-                y0: 100, y1: 100, yref: "y",
-                line: { color: "#EF4444", dash: "dash", width: 1 } }],
-    annotations: [{ text: "Umbral Intenso (100)", x: 1, xref: "paper",
-                     y: 100, yref: "y", xanchor: "right", yanchor: "bottom",
-                     showarrow: false, font: { size: 9, color: "#EF4444" } }],
-    margin: { t: 30, r: 60, b: 50, l: 50 }
-  });
-
-  Plotly.newPlot("chart-trimp-bars", [trace1, trace2], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 2: Scatter Duración vs Esfuerzo ─────────────────
-chartRenderers["chart-scatter-main"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-scatter-main");
-
-  const traces = [];
-  ["Natación","Caminata","Tenis"].forEach(sport => {
-    const s = d.filter(w => w.sport === sport);
-    if (!s.length) return;
-    traces.push({
-      x: s.map(w => w.dur_min),
-      y: s.map(w => w.effort_pct),
-      mode: "markers",
-      type: "scatter",
-      name: sport,
-      marker: {
-        color: SPORT_COLORS[sport], size: s.map(w => 8 + (w.active_kcal || 0) / 80),
-        opacity: 0.85, line: { color: "rgba(255,255,255,0.2)", width: 1 }
-      },
-      text: s.map(w =>
-        `<b>${w.session_label}</b><br>⏱ ${w.dur_hms}<br>💪 Esfuerzo: ${w.effort_pct}%<br>🔥 ${w.active_kcal} kcal<br>⚡ TRIMP: ${w.trimp}`
-      ),
-      hoverinfo: "text"
-    });
-  });
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    shapes: [{ type: "line", x0: 0, x1: 1, xref: "paper",
-                y0: 75, y1: 75, yref: "y",
-                line: { color: "#F59E0B", dash: "dash", width: 1 } }],
-    xaxis: Object.assign({}, BASE_LAYOUT.xaxis, {
-      title: { text: "Duración (min)", font: { size: 10 } }
-    }),
-    yaxis: Object.assign({}, BASE_LAYOUT.yaxis, {
-      title: { text: "Índice Esfuerzo (%)", font: { size: 10 } },
-      range: [50, 102]
-    })
-  });
-
-  Plotly.newPlot("chart-scatter-main", traces, layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 3: Donut distribución deportes ───────────────────
-chartRenderers["chart-sport-donut"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-sport-donut");
-
-  const counts = {};
-  d.forEach(w => counts[w.sport] = (counts[w.sport] || 0) + 1);
-  const sports = Object.keys(counts);
-  const vals   = sports.map(s => counts[s]);
-  const colors = sports.map(s => SPORT_COLORS[s] || "#A1A1AA");
-
-  const trace = {
-    labels: sports, values: vals, type: "pie", hole: 0.6,
-    marker: { colors, line: { color: "#09090B", width: 2 } },
-    textinfo: "none",
-    hovertemplate: "<b>%{label}</b><br>%{value} sesiones (%{percent})<extra></extra>",
-    direction: "clockwise"
-  };
-
-  const totalSessions = d.length;
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    annotations: [{
-      text: `<b>${totalSessions}</b><br>sesiones`,
-      x: 0.5, y: 0.5, xref: "paper", yref: "paper",
-      showarrow: false,
-      font: { size: 14, color: "#FAFAFA", family: "Space Grotesk" }
-    }],
-    legend: { bgcolor: "rgba(0,0,0,0)", x: 0.85, y: 0.5, font: { size: 11 } },
-    margin: { t: 20, r: 80, b: 20, l: 20 }
-  });
-
-  Plotly.newPlot("chart-sport-donut", [trace], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 4: Energía acumulada por deporte ─────────────────
-chartRenderers["chart-energy-sport"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-energy-sport");
-
-  const sumByS = {};
-  d.forEach(w => {
-    if (!sumByS[w.sport]) sumByS[w.sport] = { active: 0, basal: 0 };
-    sumByS[w.sport].active += w.active_kcal || 0;
-    sumByS[w.sport].basal  += (w.total_kcal - w.active_kcal) || 0;
-  });
-
-  const sports = Object.keys(sumByS);
-
-  const t1 = {
-    x: sports, y: sports.map(s => Math.round(sumByS[s].active)),
-    type: "bar", name: "kcal Activa",
-    marker: { color: sports.map(s => SPORT_COLORS[s]), opacity: 0.9 },
-    text: sports.map(s => Math.round(sumByS[s].active) + " kcal"),
-    textposition: "inside", textfont: { size: 11, color: "white" },
-    hoverinfo: "text+name"
-  };
-
-  const t2 = {
-    x: sports, y: sports.map(s => Math.round(sumByS[s].basal)),
-    type: "bar", name: "kcal Basal (estim.)",
-    marker: { color: sports.map(s => SPORT_COLORS[s] + "44"), opacity: 0.6 },
-    text: sports.map(s => Math.round(sumByS[s].basal) + " kcal"),
-    textposition: "inside", textfont: { size: 9, color: "#A1A1AA" },
-    hoverinfo: "text+name"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    barmode: "stack",
-    xaxis: Object.assign({}, BASE_LAYOUT.xaxis, { tickfont: { size: 11, color: "#FAFAFA" } }),
-    yaxis: Object.assign({}, BASE_LAYOUT.yaxis, {
-      title: { text: "kcal (período completo)", font: { size: 10 } }
-    })
-  });
-
-  Plotly.newPlot("chart-energy-sport", [t1, t2], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 5: Perfil de FC (min-avg-max) ───────────────────
-chartRenderers["chart-hr-profile"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-hr-profile");
-
-  const xs = d.map(w => w.session_label);
-
-  const tArea = {
-    x: [...xs, ...xs.slice().reverse()],
-    y: [...d.map(w => w.hr_max), ...d.map(_ => 60).reverse()],
-    type: "scatter", mode: "none", fill: "toself",
-    fillcolor: "rgba(239,68,68,0.08)", name: "Rango FC", hoverinfo: "none"
-  };
-
-  const tMax = {
-    x: xs, y: d.map(w => w.hr_max),
-    type: "scatter", mode: "lines+markers", name: "FC Máxima",
-    line: { color: "#EF4444", width: 2 },
-    marker: { color: "#EF4444", size: 7, symbol: "triangle-up" },
-    text: d.map(w => `FC Máx: ${w.hr_max} lpm · ${w.session_label}`),
-    hoverinfo: "text"
-  };
-
-  const tAvg = {
-    x: xs, y: d.map(w => w.hr_avg),
-    type: "scatter", mode: "lines+markers", name: "FC Promedio",
-    line: { color: "#06B6D4", width: 2.5 },
-    marker: { color: "#06B6D4", size: 8, symbol: "circle" },
-    text: d.map(w => `FC Prom: ${w.hr_avg} lpm · Zona: ${w.hr_zone} · ${w.session_label}`),
-    hoverinfo: "text"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    shapes: [{ type: "line", x0: 0, x1: 1, xref: "paper",
-                y0: 60, y1: 60, yref: "y",
-                line: { color: "#10B981", dash: "dot", width: 1 } }],
-    annotations: [{ text: "FC Reposo ~60 lpm", x: 1, xref: "paper",
-                     y: 60, yref: "y", xanchor: "right", yanchor: "bottom",
-                     showarrow: false, font: { size: 9, color: "#10B981" } }],
-    yaxis: Object.assign({}, BASE_LAYOUT.yaxis, {
-      title: { text: "FC (lpm)", font: { size: 10 } }, range: [50, 150]
-    }),
-    margin: { t: 30, r: 20, b: 50, l: 55 }
-  });
-
-  Plotly.newPlot("chart-hr-profile", [tArea, tMax, tAvg], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 6: Donut zonas FC ────────────────────────────────
-chartRenderers["chart-zone-donut"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-zone-donut");
-
-  const zCounts = {};
-  d.forEach(w => zCounts[w.hr_zone] = (zCounts[w.hr_zone] || 0) + 1);
-  const zones  = ["Z1 Recuperación","Z2 Aeróbico","Z3 Umbral","Z4 Anaeróbico"]
-                  .filter(z => zCounts[z]);
-  const colors = zones.map(z => ZONE_COLORS[z]);
-  const vals   = zones.map(z => zCounts[z]);
-
-  const trace = {
-    labels: zones, values: vals, type: "pie", hole: 0.6,
-    marker: { colors, line: { color: "#09090B", width: 2 } },
-    textinfo: "none",
-    hovertemplate: "<b>%{label}</b><br>%{value} sesión(es) (%{percent})<extra></extra>",
-    direction: "clockwise"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    annotations: [{
-      text: `<b>${d.length}</b><br>ses.`,
-      x: 0.5, y: 0.5, xref: "paper", yref: "paper",
-      showarrow: false, font: { size: 13, color: "#FAFAFA", family: "Space Grotesk" }
-    }],
-    legend: { bgcolor: "rgba(0,0,0,0)", x: 0.85, y: 0.5, font: { size: 10 } },
-    margin: { t: 10, r: 100, b: 10, l: 10 }
-  });
-
-  Plotly.newPlot("chart-zone-donut", [trace], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 7: RPE estimado + días descanso ──────────────────
-chartRenderers["chart-rpe-bars"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-rpe-bars");
-
-  const rpeColors = d.map(w =>
-    w.rpe_est >= 8 ? "#EF4444" : w.rpe_est >= 6 ? "#F59E0B" : "#10B981"
-  );
-
-  const t1 = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.rpe_est),
-    type: "bar", name: "RPE Estimado",
-    marker: { color: rpeColors, opacity: 0.85,
-               line: { color: "rgba(255,255,255,0.05)", width: 1 } },
-    text: d.map(w =>
-      `<b>${w.session_label}</b><br>RPE: ${w.rpe_est}/10<br>Descanso previo: ${w.dias_descanso ?? "—"} d<br>Estado: ${w.estado_rec}`
-    ),
-    hoverinfo: "text"
-  };
-
-  const t2 = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.dias_descanso ?? 0),
-    type: "scatter", mode: "markers",
-    name: "Días Descanso",
-    yaxis: "y2",
-    marker: { color: "#8B5CF6", size: 9, symbol: "diamond",
-               line: { color: "white", width: 1 } },
-    hoverinfo: "none"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    shapes: [{ type: "line", x0: 0, x1: 1, xref: "paper",
-                y0: 7, y1: 7, yref: "y",
-                line: { color: "#F59E0B", dash: "dash", width: 1 } }],
-    yaxis:  Object.assign({}, BASE_LAYOUT.yaxis, { range: [0, 11],
-              title: { text: "RPE (0–10)", font: { size: 10 } } }),
-    yaxis2: { overlaying: "y", side: "right", showgrid: false,
-               range: [0, 8],
-               title: { text: "Días descanso", font: { size: 9, color: "#8B5CF6" } },
-               tickfont: { size: 9, color: "#8B5CF6" } },
-    margin: { t: 30, r: 60, b: 50, l: 50 }
-  });
-
-  Plotly.newPlot("chart-rpe-bars", [t1, t2], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 8: SWOLF (natación) ──────────────────────────────
-chartRenderers["chart-swolf"] = function() {
-  const d = getFiltered().filter(w => w.sport === "Natación" && w.swolf != null);
-  if (!d.length) return Plotly.purge("chart-swolf");
-
-  const t1 = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.swolf),
-    type: "bar", name: "SWOLF Score",
-    marker: { color: "#06B6D4", opacity: 0.85 },
-    text: d.map(w =>
-      `<b>${w.session_label}</b><br>🏊 ${w.dist_original} m<br>🔄 ${w.swim_strokes} brazadas<br>📊 SWOLF: ${w.swolf}<br>📏 ${w.stroke_eff} m/brazada`
-    ),
-    hoverinfo: "text"
-  };
-
-  const t2 = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.stroke_eff),
-    type: "scatter", mode: "markers+lines",
-    name: "m/brazada",
-    yaxis: "y2",
-    marker: { color: "#8B5CF6", size: 10, symbol: "star" },
-    line: { color: "#8B5CF6", width: 2, dash: "dot" },
-    hoverinfo: "none"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    yaxis:  { gridcolor: "#27272A", zeroline: false, autorange: "reversed",
-               title: { text: "SWOLF (menor = mejor)", font: { size: 10 } },
-               tickfont: { size: 10 } },
-    yaxis2: { overlaying: "y", side: "right", showgrid: false,
-               title: { text: "m/brazada", font: { size: 9, color: "#8B5CF6" } },
-               tickfont: { size: 9, color: "#8B5CF6" } },
-    margin: { t: 30, r: 60, b: 50, l: 70 }
-  });
-
-  Plotly.newPlot("chart-swolf", [t1, t2], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 9: Tenis — pasos vs calorías ────────────────────
-chartRenderers["chart-tennis"] = function() {
-  const d = getFiltered().filter(w => w.sport === "Tenis");
-  if (!d.length) return Plotly.purge("chart-tennis");
-
-  const t1 = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.step_count),
-    type: "bar", name: "Pasos Totales",
-    marker: { color: "#F97316", opacity: 0.85 },
-    text: d.map(w =>
-      `<b>${w.session_label}</b><br>👟 Pasos: ${(w.step_count||0).toLocaleString()}<br>🔥 ${w.active_kcal} kcal<br>⏱ ${w.dur_hms}`
-    ),
-    hoverinfo: "text"
-  };
-
-  const t2 = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.active_kcal),
-    type: "scatter", mode: "markers+lines",
-    name: "kcal Activas",
-    yaxis: "y2",
-    marker: { color: "#EF4444", size: 10 },
-    line: { color: "#EF4444", width: 2 },
-    hoverinfo: "none"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    yaxis:  { gridcolor: "#27272A", zeroline: false,
-               title: { text: "Pasos Totales", font: { size: 10 } } },
-    yaxis2: { overlaying: "y", side: "right", showgrid: false,
-               title: { text: "kcal Activas", font: { size: 9, color: "#EF4444" } },
-               tickfont: { size: 9, color: "#EF4444" } },
-    margin: { t: 30, r: 60, b: 50, l: 70 }
-  });
-
-  Plotly.newPlot("chart-tennis", [t1, t2], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 10: Economía de movimiento (caminata) ────────────
-chartRenderers["chart-walk-economy"] = function() {
-  const d = getFiltered().filter(w => w.sport === "Caminata" && w.step_economy != null);
-
-  const plotEl = document.getElementById("chart-walk-economy");
-  if (!d.length) {
-    plotEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:200px;color:var(--dim);font-size:0.85rem;">Sin sesiones de caminata seleccionadas</div>`;
-    return;
-  }
-
-  // Gauge de economía de movimiento (solo 1 sesión de caminata disponible)
-  const val = d[0].step_economy;
-  const trace = {
-    type: "indicator",
-    mode: "gauge+number+delta",
-    value: val,
-    delta: { reference: 1400, valueformat: ".0f",
-              font: { size: 11, color: "#A1A1AA" } },
-    title: { text: `Pasos/km · ${d[0].session_label} · ${d[0].dist_km} km · ${(d[0].step_count||0).toLocaleString()} pasos`,
-              font: { size: 11, color: "#FAFAFA" } },
-    number: { suffix: " p/km", font: { size: 22, color: "#10B981", family: "Space Grotesk" } },
-    gauge: {
-      axis: { range: [1000, 2000], tickfont: { size: 9 }, tickcolor: "#3F3F46" },
-      bar:  { color: "#10B981", thickness: 0.25 },
-      bgcolor: "#18181B",
-      borderwidth: 0,
-      steps: [
-        { range: [1000,1300], color: "rgba(16,185,129,0.15)" },
-        { range: [1300,1600], color: "rgba(245,158,11,0.1)" },
-        { range: [1600,2000], color: "rgba(239,68,68,0.1)" }
-      ],
-      threshold: {
-        line: { color: "#06B6D4", width: 2 }, thickness: 0.75, value: 1400
-      }
-    }
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    margin: { t: 45, r: 25, b: 20, l: 25 }
-  });
-
-  Plotly.newPlot("chart-walk-economy", [trace], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 11: Radar comparativo por deporte ────────────────
-chartRenderers["chart-radar"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-radar");
-
-  // Agrupar y sumar métricas por deporte
-  const byS = {};
-  d.forEach(w => {
-    if (!byS[w.sport]) byS[w.sport] = { n:0, trimp:0, kcal:0, dur:0, hr:0 };
-    byS[w.sport].n    += 1;
-    byS[w.sport].trimp += w.trimp || 0;
-    byS[w.sport].kcal  += w.active_kcal || 0;
-    byS[w.sport].dur   += w.dur_min || 0;
-    byS[w.sport].hr    += w.hr_avg || 0;
-  });
-
-  // Normalizar a escala 0–100 para comparación relativa
-  const sports  = Object.keys(byS);
-  const metrics = ["n","trimp","kcal","dur","hr"];
-  const maxes   = {};
-  metrics.forEach(m => {
-    maxes[m] = Math.max(...sports.map(s => byS[s][m])) || 1;
-  });
-
-  const cats = ["Frecuencia","Carga TRIMP","Calorías","Duración","FC Intensidad"];
-
-  const traces = sports.map(sport => {
-    const vals = [
-      byS[sport].n    / maxes.n    * 100,
-      byS[sport].trimp/ maxes.trimp* 100,
-      byS[sport].kcal / maxes.kcal * 100,
-      byS[sport].dur  / maxes.dur  * 100,
-      byS[sport].hr   / maxes.hr   * 100
-    ];
-    return {
-      type: "scatterpolar", fill: "toself",
-      r:     [...vals, vals[0]],
-      theta: [...cats, cats[0]],
-      name:  sport,
-      line:  { color: SPORT_COLORS[sport], width: 2 },
-      fillcolor: SPORT_COLORS[sport] + "22",
-      marker:    { color: SPORT_COLORS[sport], size: 6 }
-    };
-  });
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    polar: {
-      bgcolor: "#18181B",
-      radialaxis: {
-        visible: true, range: [0, 105],
-        tickfont: { size: 8, color: "#52525B" },
-        gridcolor: "#3F3F46", linecolor: "#3F3F46"
-      },
-      angularaxis: { tickfont: { size: 10 }, linecolor: "#3F3F46", gridcolor: "#3F3F46" }
-    },
-    legend: { bgcolor: "rgba(0,0,0,0)", font: { size: 10 }, x: 0.85, y: 0.9 },
-    margin: { t: 30, r: 70, b: 30, l: 70 }
-  });
-
-  Plotly.newPlot("chart-radar", traces, layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 12: Carga acumulada (área) ──────────────────────
-chartRenderers["chart-load-area"] = function() {
-  const d = getFiltered();
-  if (!d.length) return Plotly.purge("chart-load-area");
-
-  const tArea = {
-    x: d.map(w => w.fecha),
-    y: d.map(w => w.trimp_acum),
-    type: "scatter", mode: "lines",
-    fill: "tozeroy", fillcolor: "rgba(139,92,246,0.12)",
-    line: { color: "#8B5CF6", width: 2.5 },
-    name: "TRIMP Acumulado", hoverinfo: "none"
-  };
-
-  const tPoints = {
-    x: d.map(w => w.fecha),
-    y: d.map(w => w.trimp_acum),
-    type: "scatter", mode: "markers+text",
-    name: "Sesión",
-    marker: { color: d.map(w => SPORT_COLORS[w.sport]), size: 10,
-               line: { color: "white", width: 1.5 } },
-    text:          d.map(w => `+${w.trimp}`),
-    textposition:  "top center",
-    textfont:      { size: 9, color: "#52525B" },
-    hovertext: d.map(w =>
-      `<b>${w.session_label}</b><br>🏅 ${w.sport}<br>⚡ +${w.trimp} TRIMP<br>📈 Acumulado: ${w.trimp_acum}<br>😴 Descanso: ${w.dias_descanso ?? "—"} d`
-    ),
-    hoverinfo: "text", showlegend: false
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    xaxis: Object.assign({}, BASE_LAYOUT.xaxis, { type: "date" }),
-    yaxis: Object.assign({}, BASE_LAYOUT.yaxis, {
-      title: { text: "TRIMP Acumulado", font: { size: 10 } }
-    })
-  });
-
-  Plotly.newPlot("chart-load-area", [tArea, tPoints], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 13: Velocidad por sesión ────────────────────────
-chartRenderers["chart-speed"] = function() {
-  const d = getFiltered().filter(w => w.avg_speed != null);
-  if (!d.length) return Plotly.purge("chart-speed");
-
-  const trace = {
-    y: d.map(w => w.session_label),
-    x: d.map(w => w.avg_speed),
-    type: "bar", orientation: "h",
-    marker: { color: d.map(w => SPORT_COLORS[w.sport]), opacity: 0.85 },
-    text: d.map(w =>
-      `<b>${w.session_label}</b><br>💨 ${w.avg_speed} ${w.sport==="Natación"?"m/h":"km/h"}`
-    ),
-    hoverinfo: "text"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    xaxis: Object.assign({}, BASE_LAYOUT.xaxis, {
-      title: { text: "Velocidad (m/h o km/h)", font: { size: 10 } }
-    }),
-    yaxis: Object.assign({}, BASE_LAYOUT.yaxis, { tickfont: { size: 9 } }),
-    margin: { t: 20, r: 20, b: 50, l: 120 }
-  });
-
-  Plotly.newPlot("chart-speed", [trace], layout, PLOTLY_CONFIG);
-};
-
-// ── GRÁFICO 14: Tasa de gasto calórico ──────────────────────
-chartRenderers["chart-energy-rate"] = function() {
-  const d = getFiltered().filter(w => w.energy_rate != null);
-  if (!d.length) return Plotly.purge("chart-energy-rate");
-
-  const colors = d.map(w => SPORT_COLORS[w.sport]);
-  const trace = {
-    x: d.map(w => w.session_label),
-    y: d.map(w => w.energy_rate),
-    type: "bar",
-    marker: { color: colors, opacity: 0.85 },
-    text: d.map(w =>
-      `<b>${w.session_label}</b><br>⚡ ${w.energy_rate} kcal/min<br>🔥 ${w.active_kcal} kcal total`
-    ),
-    hoverinfo: "text",
-    name: "kcal/min"
-  };
-
-  const layout = Object.assign({}, BASE_LAYOUT, {
-    yaxis: Object.assign({}, BASE_LAYOUT.yaxis, {
-      title: { text: "kcal/min", font: { size: 10 } }
-    })
-  });
-
-  Plotly.newPlot("chart-energy-rate", [trace], layout, PLOTLY_CONFIG);
-};
-
-// ── Tabla de marcadores de FC (página Cardio) ───────────────
-function updateMarkerTable() {
-  const d = getFiltered();
-  const tbody = document.getElementById("marker-table-body");
-  if (!tbody) return;
-  tbody.innerHTML = d.map(w => {
-    const zColor = ZONE_COLORS[w.hr_zone] || "#A1A1AA";
-    const badge  = badgeHtml(w.perf_badge);
-    return `<tr>
-      <td style="font-weight:600;color:#FAFAFA">${w.session_label}</td>
-      <td style="color:${zColor};font-size:0.75rem;font-weight:600">${w.hr_zone}</td>
-      <td>${w.rpe_est}/10 ${badge}</td>
-    </tr>`;
-  }).join("");
-}
-
-// ── Tabla resumen por deporte (página Por Deporte) ───────────
-function updateSportSummary() {
-  const d = getFiltered();
-  const byS = {};
-  d.forEach(w => {
-    if (!byS[w.sport]) byS[w.sport] = { n: 0, trimp: 0 };
-    byS[w.sport].n     += 1;
-    byS[w.sport].trimp += w.trimp || 0;
-  });
-
-  const tbody = document.getElementById("sport-summary-table");
-  if (!tbody) return;
-  tbody.innerHTML = Object.keys(byS).map(s => {
-    const c = SPORT_COLORS[s] || "#A1A1AA";
-    return `<tr>
-      <td style="color:${c};font-weight:600">${s}</td>
-      <td>${byS[s].n}</td>
-      <td>${Math.round(byS[s].trimp)}</td>
-    </tr>`;
-  }).join("");
-}
-
-// ── Tabla completa de datos (página Carga) ───────────────────
-function updateDataTable() {
-  const d = getFiltered();
-  const tbody = document.getElementById("full-table-body");
-  if (!tbody) return;
-
-  tbody.innerHTML = d.map(w => {
-    const zColor = ZONE_COLORS[w.hr_zone] || "#A1A1AA";
-    const dist   = w.dist_original != null
-      ? `${w.dist_original} ${w.dist_unit} (${w.dist_km != null ? w.dist_km + " km" : "—"})`
-      : "—";
-    return `<tr>
-      <td style="font-weight:600;white-space:nowrap">${w.session_label}</td>
-      <td style="color:${SPORT_COLORS[w.sport]};font-weight:600">${w.sport}</td>
-      <td>${w.dur_hms}</td>
-      <td>${w.active_kcal}</td>
-      <td>${w.hr_avg}</td>
-      <td>${w.hr_max}</td>
-      <td style="color:${zColor};font-weight:600;font-size:0.75rem">${w.hr_zone}</td>
-      <td><b>${w.trimp}</b></td>
-      <td>${w.effort_pct}%</td>
-      <td>${w.rpe_est}/10</td>
-      <td style="font-size:0.78rem">${dist}</td>
-      <td>${w.dias_descanso != null ? w.dias_descanso + " d" : "—"}</td>
-      <td>${badgeHtml(w.perf_badge)}</td>
-    </tr>`;
-  }).join("");
-
-  updateMarkerTable();
-  updateSportSummary();
-}
-
-// ── Renderizado inicial al cargar la página ──────────────────
-window.addEventListener("DOMContentLoaded", () => {
-  // Renderizar todos los gráficos de la página activa (Overview)
-  Object.keys(chartRenderers).forEach(id => {
-    if (document.getElementById(id)) chartRenderers[id]();
-  });
-  // Poblar tablas
-  updateDataTable();
-});
-
-</script>
-
 </body>
 </html>
