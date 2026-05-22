@@ -149,3 +149,56 @@ h3{font-size:1.12rem;line-height:1.25}
   .card-grid,.steps,.pricing-grid,.metric-grid{grid-template-columns:1fr}
   .preview-card__top{flex-direction:column}
 }
+
+/* === Calibración páginas institucionales: BI deportivo + síntesis visual === */
+.page-hero{padding:76px 0 58px;border-bottom:1px solid rgba(255,255,255,.06)}
+.page-hero--compact{padding-top:66px;padding-bottom:56px}
+.page-hero__grid{display:grid;grid-template-columns:1.02fr .98fr;gap:28px;align-items:center}
+.page-hero h1{font-size:clamp(2.1rem,4.2vw,4.2rem);line-height:1.04;letter-spacing:-.045em;margin:0}
+.page-hero .lead{margin-top:18px;max-width:760px}
+.page-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.content-box{border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
+.content-box--featured{background:linear-gradient(180deg,rgba(34,211,238,.08),rgba(255,255,255,.03));border-color:rgba(34,211,238,.22)}
+.content-box h2{margin-bottom:12px}
+.content-box p{margin-bottom:0}
+.eyebrow{color:#9EDCFF;font-size:.84rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.compact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.image-text-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:28px;align-items:center}
+.image-text-grid--reverse{grid-template-columns:1.08fr .92fr}
+.visual-card{min-height:360px;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:#111C33;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.visual-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,18,32,.04),rgba(11,18,32,.88))}
+.visual-card__overlay{position:absolute;z-index:2;left:24px;right:24px;bottom:24px}
+.visual-card__overlay span{display:inline-flex;margin-bottom:10px;color:#BDF8FF;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.09em}
+.visual-card__overlay strong{display:block;font-size:1.6rem;line-height:1.12;letter-spacing:-.03em}
+.visual-card--team{background:url('https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1300&q=80') center/cover}
+.visual-card--dashboard{background:
+  linear-gradient(135deg,rgba(34,211,238,.12),rgba(96,165,250,.08)),
+  url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1300&q=80') center/cover}
+.visual-card--track{background:url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1300&q=80') center/cover}
+.visual-card--analysis{background:
+  linear-gradient(135deg,rgba(34,211,238,.08),rgba(96,165,250,.08)),
+  url('https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1300&q=80') center/cover}
+.visual-card--court{background:url('https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=1300&q=80') center/cover}
+.visual-card--swim{background:url('https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1300&q=80') center/cover}
+.mini-list{display:grid;gap:12px;margin-top:24px}
+.mini-list div{display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:18px;padding:14px}
+.mini-list strong{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.18);color:#BDF8FF}
+.mini-list span{color:var(--muted);font-weight:750}
+.tag-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.tag-row span{border:1px solid rgba(34,211,238,.22);background:rgba(34,211,238,.08);color:#D9FAFF;border-radius:999px;padding:9px 12px;font-weight:800}
+.values-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.values-grid--compact .value-card{min-height:150px}
+.value-card{border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.value-card p{margin-bottom:0;color:var(--muted)}
+.nav a.active{color:var(--text);background:rgba(255,255,255,.06);border-radius:12px}
+
+@media (max-width: 1100px){
+  .page-hero__grid,.compact-grid,.image-text-grid,.image-text-grid--reverse{grid-template-columns:1fr}
+  .values-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .visual-card{min-height:300px}
+}
+@media (max-width: 760px){
+  .values-grid{grid-template-columns:1fr}
+  .page-hero{padding-top:44px}
+  .visual-card{min-height:260px}
+}
