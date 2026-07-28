@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Performance Labs es una empresa de Inteligencia Deportiva que integra Business Intelligence, productos SaaS y formación especializada para clubes, academias, ligas, centros y organizaciones deportivas." />
+  <title>Performance Labs | Inteligencia Deportiva: BI, SaaS y Academia</title>
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[]; // Crea una mochila de eventos para medición.
+      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'}); // Marca cuándo comienza a cargar GTM.
+      var f=d.getElementsByTagName(s)[0], // Busca el primer script de la página.
+          j=d.createElement(s), // Crea el script de GTM.
+          dl=l!='dataLayer'?'&l='+l:''; // Usa dataLayer por defecto o uno personalizado.
+      j.async=true; // Carga GTM sin bloquear la página.
+      j.src='https://www.googletagmanager.com/gtm.js?id=GTM-KS28BPPV'+dl; // Carga el contenedor real de GTM.
+      f.parentNode.insertBefore(j,f); // Inserta GTM antes del primer script encontrado.
+    })(window,document,'script','dataLayer','GTM-KS28BPPV'); // Ejecuta GTM con tu ID real.
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <style>
+    :root{
+      --bg:#07101f;
+      --bg2:#0b1424;
+      --card:#111a2b;
+      --card2:#0d2130;
+      --line:rgba(174,194,226,.18);
+      --line2:rgba(174,194,226,.3);
+      --text:#f4f7ff;
+      --muted:#b8cae9;
+      --muted2:#91a7ca;
+      --cyan:#31c8ee;
+      --blue:#5aaeff;
+      --green:#67f5c8;
+      --darkCyan:rgba(49,200,238,.12);
+      --shadow:0 24px 80px rgba(0,0,0,.34);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% -5%, rgba(49,200,238,.11), transparent 32%),
+        radial-gradient(circle at 80% 4%, rgba(90,174,255,.09), transparent 34%),
+        var(--bg);
+      color:var(--text);
+      letter-spacing:.01em;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .container{width:min(var(--max), calc(100% - 44px));margin:0 auto}
+
+    .site-header{
+      position:sticky;top:0;z-index:30;
+      background:rgba(7,16,31,.92);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-wrap{
+      width:min(var(--max), calc(100% - 44px));
+      min-height:128px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:430px 1fr;
+      align-items:start;
+      gap:24px;
+      padding:28px 0 18px;
+    }
+    .brand{display:flex;align-items:flex-start;gap:14px}
+    .logo{
+      width:44px;height:44px;border-radius:13px;
+      display:grid;place-items:center;
+      color:#06101c;font-weight:950;
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
+      box-shadow:0 16px 42px rgba(49,200,238,.22)
+    }
+    .brand-title{display:block;font-weight:950;font-size:16px;line-height:1.1;margin-bottom:8px}
+    .brand-subtitle{display:block;color:var(--muted);font-size:15px;line-height:1.6;max-width:390px}
+    .nav-side{display:flex;flex-direction:column;align-items:flex-start;gap:28px}
+    .nav-links{display:flex;align-items:center;gap:34px;color:var(--muted);font-weight:850;font-size:15px}
+    .nav-links a{padding:10px 12px;border-radius:10px;transition:.2s ease}
+    .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(255,255,255,.055)}
+    .top-cta{border:1px solid var(--line2);border-radius:13px;padding:14px 20px;font-weight:900;background:rgba(255,255,255,.025)}
+
+    .section{border-bottom:1px solid var(--line)}
+    .hero{padding:86px 0 70px}
+    .hero-grid{display:grid;grid-template-columns:1.06fr .88fr;gap:68px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;border:1px solid rgba(49,200,238,.34);background:var(--darkCyan);padding:10px 18px;border-radius:999px;font-weight:950;font-size:14px;margin-bottom:26px}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(42px,5.05vw,72px);line-height:1.08;letter-spacing:-.055em;margin-bottom:24px;font-weight:950;max-width:760px}
+    h2{font-size:clamp(34px,4vw,52px);line-height:1.16;letter-spacing:-.045em;font-weight:950;margin-bottom:24px;max-width:990px}
+    h3{font-size:18px;font-weight:950;margin-bottom:10px}
+    p{color:var(--muted);font-size:17px;line-height:1.72}
+    .lead{max-width:760px;margin-bottom:34px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:26px}
+    .primary-button,.secondary-button{display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 27px;border-radius:13px;font-weight:950;transition:.18s ease}
+    .primary-button{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#06101c;box-shadow:0 20px 50px rgba(49,200,238,.22)}
+    .primary-button:hover{transform:translateY(-1px);box-shadow:0 24px 60px rgba(49,200,238,.28)}
+    .secondary-button{background:rgba(255,255,255,.025);border:1px solid var(--line2);color:var(--text)}
+    .secondary-button:hover{border-color:rgba(49,200,238,.58);background:rgba(49,200,238,.08)}
+
+    .bi-card{
+      border:1px solid var(--line2);
+      border-radius:26px;
+      background:linear-gradient(180deg,rgba(17,26,43,.9),rgba(9,20,34,.94));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .bi-image{
+      min-height:230px;
+      background:
+        linear-gradient(180deg,rgba(7,16,31,.1),rgba(7,16,31,.82)),
+        url('https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80') center/cover;
+    }
+    .bi-card-body{padding:28px}
+    .card-kicker{color:#88dcff;font-size:13px;font-weight:950;letter-spacing:.28em;text-transform:uppercase;margin-bottom:10px}
+    .bi-card h2{font-size:clamp(26px,2.6vw,40px);line-height:1.16;margin-bottom:18px}
+    .metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+    .metric{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);padding:16px}
+    .metric strong{display:block;font-size:28px;letter-spacing:-.04em}
+    .metric span{display:block;color:var(--muted2);font-size:13px;margin-top:4px}
+
+    .center-line{text-align:center;color:var(--muted);font-size:16px;font-weight:850;line-height:2.3;padding:0 0 78px}
+    .proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
+    .proof{border:1px solid rgba(49,200,238,.28);background:rgba(6,35,55,.55);border-radius:14px;padding:18px;font-weight:950}
+
+    .problem,.enable,.fit,.steps,.diagnosis,.faq{padding:88px 0 80px}
+    .problem-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+    .small-card{border:1px solid var(--line2);background:rgba(17,26,43,.75);border-radius:20px;padding:25px;min-height:165px}
+    .small-card p{font-size:16px;margin-bottom:0}
+
+    .image-band{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:34px}
+    .photo-card{min-height:240px;border-radius:22px;border:1px solid var(--line2);overflow:hidden;position:relative;background:#111a2b;box-shadow:var(--shadow)}
+    .photo-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(7,16,31,.88))}
+    .photo-card.one{background:url('https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80') center/cover}
+    .photo-card.two{background:url('./assets/sports-indicators.svg') center/cover no-repeat}
+    .photo-card.three{background:url('https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=900&q=80') center/cover}
+    .photo-label{position:absolute;z-index:2;left:22px;right:22px;bottom:22px;font-weight:950;font-size:18px}
+
+    .two-col{display:grid;grid-template-columns:.9fr 1.05fr;gap:68px;align-items:start}
+    .number-list{display:grid;gap:28px}
+    .number-item{display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:start}
+    .number-box{width:58px;height:58px;border-radius:14px;display:grid;place-items:center;background:rgba(49,200,238,.11);border:1px solid rgba(49,200,238,.25);font-weight:950}
+    .number-item p{font-size:16px;margin-bottom:0}
+    .benefit-stack{display:grid;gap:18px}
+    .benefit-card{border:1px solid var(--line2);border-radius:20px;background:rgba(17,26,43,.78);padding:27px}
+    .benefit-card.highlight{border-color:rgba(49,200,238,.35);background:rgba(6,35,55,.54)}
+    .benefit-card p{font-size:16px;margin-bottom:0}
+    .notice{margin:44px auto 0;border:1px solid rgba(49,200,238,.32);background:rgba(6,35,55,.55);border-radius:16px;font-size:17px;line-height:1.6;padding:20px 22px}
+
+    .fit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+    .fit-box{border:1px solid var(--line2);background:rgba(17,26,43,.72);border-radius:18px;color:var(--muted);font-size:16px;line-height:1.7;padding:24px;min-height:96px}
+    .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px;margin-top:32px}
+    .step-card{border:1px solid var(--line2);background:rgba(17,26,43,.75);border-radius:21px;padding:22px;min-height:235px}
+    .step-num{width:45px;height:45px;border-radius:13px;display:grid;place-items:center;background:rgba(49,200,238,.14);border:1px solid rgba(49,200,238,.3);font-weight:950;margin-bottom:22px}
+    .step-card p{font-size:16px;margin-bottom:0}
+
+    .diagnosis-grid{display:grid;grid-template-columns:.95fr .95fr;gap:40px;align-items:start}
+    .accordion-list{display:grid;gap:13px;margin-top:28px}
+    .accordion-row{border:1px solid var(--line2);background:rgba(17,26,43,.72);border-radius:14px;padding:18px 20px;font-weight:950}
+    .offer-card{border:1px solid var(--line2);border-radius:24px;background:rgba(13,23,40,.78);min-height:378px;padding:32px}
+    .offer-card h2{font-size:clamp(34px,3.45vw,48px);line-height:1.08;letter-spacing:-.045em}
+    .offer-card .primary-button{width:100%}
+    .faq-list{display:grid;gap:13px;margin-top:28px}
+    details{border:1px solid var(--line2);border-radius:16px;background:rgba(17,26,43,.72);padding:18px 20px}
+    summary{cursor:pointer;font-weight:950;list-style-position:inside}
+    details p{font-size:16px;margin:14px 0 0 22px}
+    .final-cta{padding:68px 0 58px;background:rgba(13,23,40,.42)}
+    .final-cta h2{font-size:clamp(34px,3.6vw,52px);line-height:1.14;letter-spacing:-.045em;margin-bottom:20px;font-weight:950;max-width:1120px}
+    .site-footer{background:#07101f;padding:28px 0 24px}
+    .footer-grid{display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .footer-links{display:flex;gap:24px;color:var(--muted);font-weight:850}
+
+    @media (max-width:980px){
+      .nav-wrap,.hero-grid,.two-col,.diagnosis-grid{grid-template-columns:1fr}
+      .nav-wrap{min-height:auto}
+      .problem-cards,.fit-grid,.steps-grid,.proof-grid,.image-band{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:680px){
+      .nav-links,.footer-grid,.footer-links{flex-wrap:wrap}
+      .problem-cards,.fit-grid,.steps-grid,.proof-grid,.image-band,.metric-row{grid-template-columns:1fr}
+      .hero{padding-top:48px}
+      .container,.nav-wrap{width:min(100% - 28px,var(--max))}
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KS28BPPV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" aria-label="Performance Labs">
+        <span class="logo">PL</span>
+        <span>
+          <span class="brand-title">Performance Labs</span>
+          <span class="brand-subtitle">Inteligencia Deportiva: Business Intelligence, productos SaaS y formación especializada</span>
+        </span>
+      </a>
+      <div class="nav-side">
+        <nav class="nav-links" aria-label="Navegación principal">
+          <a class="active" href="index.html">Inicio</a>
+          <a href="quienes-somos.html">¿Quiénes somos?</a>
+          <a href="mision-vision.html">Misión y visión</a>
+          <a href="valores-sellos.html">Valores y sellos</a>
+        </nav>
+        <a class="top-cta" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Diagnóstico sin costo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Performance Labs · Inteligencia Deportiva</span>
+          <h1>Datos, tecnología y formación para transformar la gestión deportiva.</h1>
+          <p class="lead">Integramos Business Intelligence, productos SaaS y formación especializada para que clubes, academias, ligas, centros y organizaciones deportivas puedan decidir con evidencia, digitalizar su operación y desarrollar capacidades internas.</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Solicitar diagnóstico</a>
+            <a class="secondary-button" href="demo/" target="_blank" rel="noopener noreferrer">Ver demo</a>
+          </div>
+        </div>
+        <aside class="bi-card">
+          <div class="bi-image"></div>
+          <div class="bi-card-body">
+            <div class="card-kicker">Tres líneas, una visión</div>
+            <h2>Un ecosistema de inteligencia deportiva para crecer mejor</h2>
+            <p>Convertimos datos en decisiones, necesidades operativas en plataformas digitales y conocimiento técnico en formación aplicada al deporte.</p>
+            <div class="metric-row">
+              <div class="metric"><strong>BI</strong><span>Analítica y dashboards</span></div>
+              <div class="metric"><strong>SaaS</strong><span>Plataformas deportivas</span></div>
+              <div class="metric"><strong>EDU</strong><span>Academia especializada</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="container center-line">
+      Business Intelligence para decidir &nbsp; • &nbsp; Productos SaaS para operar y escalar &nbsp; • &nbsp; Academia para desarrollar capacidades &nbsp; •<br>
+      Inteligencia Deportiva aplicada de principio a fin
+    </div>
+
+    <section class="section problem">
+      <div class="container">
+        <h2>La transformación deportiva ocurre cuando los datos, la tecnología y las capacidades trabajan en conjunto.</h2>
+        <div class="problem-cards">
+          <article class="small-card"><h3>Decisiones sin inteligencia</h3><p>Los datos existen, pero permanecen dispersos entre planillas, sistemas, sensores y observaciones, sin una lectura integrada para decidir.</p></article>
+          <article class="small-card"><h3>Operación poco digitalizada</h3><p>Entrenamientos, escalerillas, ligas, reservas y seguimiento suelen depender de procesos manuales que dificultan crecer y entregar una mejor experiencia.</p></article>
+          <article class="small-card"><h3>Capacidades por desarrollar</h3><p>Sin formación en BI deportiva, los equipos dependen de terceros y pierden oportunidades de instalar una cultura de gestión basada en evidencia.</p></article>
+        </div>
+        <div class="image-band">
+          <div class="photo-card one"><div class="photo-label">Business Intelligence y analítica deportiva</div></div>
+          <div class="photo-card two"><div class="photo-label">Productos SaaS para entrenamiento, escalerillas y ligas</div></div>
+          <div class="photo-card three"><div class="photo-label">Academia de Business Intelligence deportiva</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section enable">
+      <div class="container">
+        <h2>Tres líneas de servicio para construir inteligencia deportiva</h2>
+        <p class="section-lead">Acompañamos a cada organización desde el análisis de sus datos hasta la digitalización de sus procesos y la formación de sus equipos.</p>
+        <div class="two-col">
+          <div>
+            <h3 style="margin:0 0 24px;font-size:18px;font-weight:950;">Nuestras tres aristas</h3>
+            <div class="number-list">
+              <div class="number-item"><div class="number-box">01</div><div><h3>Business Intelligence</h3><p>Dashboards, indicadores, reportería automatizada y analítica para rendimiento, gestión, retención y toma de decisiones.</p></div></div>
+              <div class="number-item"><div class="number-box">02</div><div><h3>Productos SaaS</h3><p>Plataformas digitales para gestionar entrenamientos, escalerillas, ligas, seguimiento y experiencias deportivas escalables.</p></div></div>
+              <div class="number-item"><div class="number-box">03</div><div><h3>Academia</h3><p>Formación aplicada en BI deportiva para desarrollar autonomía analítica en profesionales, clubes y organizaciones.</p></div></div>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 24px;font-size:18px;font-weight:950;">Cómo fortalecemos tu organización deportiva</h3>
+            <div class="benefit-stack">
+              <article class="benefit-card"><h3>Decisiones con evidencia</h3><p>Integramos información relevante para entregar una lectura clara del rendimiento, la operación y las oportunidades de mejora.</p></article>
+              <article class="benefit-card"><h3>Procesos digitalizados</h3><p>Transformamos tareas manuales en experiencias digitales simples para deportistas, coaches, administradores y comunidades.</p></article>
+              <article class="benefit-card"><h3>Soluciones escalables</h3><p>Diseñamos productos que pueden crecer desde un primer MVP hasta plataformas capaces de sostener nuevas disciplinas y servicios.</p></article>
+              <article class="benefit-card"><h3>Autonomía analítica</h3><p>Formamos equipos capaces de comprender indicadores, construir reportes y convertir información en acciones concretas.</p></article>
+              <article class="benefit-card highlight"><h3>Inteligencia deportiva integral</h3><p>Conectamos datos, software y conocimiento para que la organización pueda decidir, operar, aprender y crecer con una misma visión.</p></article>
+            </div>
+          </div>
+        </div>
+        <div class="notice">Performance Labs integra consultoría BI, desarrollo SaaS y formación para convertir la información deportiva en una capacidad estratégica sostenible.</div>
+      </div>
+    </section>
+
+    <section class="section fit">
+      <div class="container">
+        <h2>Organizaciones que pueden potenciarse con Performance Labs</h2>
+        <p>Trabajamos con actores deportivos que buscan profesionalizar su gestión, digitalizar servicios o desarrollar capacidades analíticas.</p>
+        <div class="fit-grid">
+          <div class="fit-box">Clubes, academias y centros que necesitan dashboards e indicadores para gestionar con evidencia</div>
+          <div class="fit-box">Ligas, asociaciones y comunidades que requieren plataformas para organizar competencias y participantes</div>
+          <div class="fit-box">Entrenadores y organizaciones que quieren digitalizar planes, sesiones, asistencia y seguimiento</div>
+          <div class="fit-box">Equipos directivos que buscan automatizar reportería y fortalecer la toma de decisiones</div>
+          <div class="fit-box">Profesionales del deporte que quieren aprender Power BI, analítica y visualización aplicada</div>
+          <div class="fit-box">Proyectos deportivos que necesitan validar una solución digital antes de escalar su inversión</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section steps">
+      <div class="container">
+        <h2>Cómo funciona</h2>
+        <p class="section-lead" style="margin-bottom:0;">Una ruta flexible para identificar la combinación adecuada de BI, software y formación.</p>
+        <div class="steps-grid">
+          <article class="step-card"><div class="step-num">1</div><h3>Entendemos el desafío</h3><p>Levantamos tus objetivos, usuarios, datos, procesos y oportunidades prioritarias dentro de la organización deportiva.</p></article>
+          <article class="step-card"><div class="step-num">2</div><h3>Diseñamos la hoja de ruta</h3><p>Definimos si el mejor punto de partida es una solución BI, un producto SaaS, una formación o una combinación de ellas.</p></article>
+          <article class="step-card"><div class="step-num">3</div><h3>Implementamos valor</h3><p>Construimos una primera solución concreta, medible y centrada en las necesidades reales de sus usuarios.</p></article>
+          <article class="step-card"><div class="step-num">4</div><h3>Medimos y escalamos</h3><p>Evaluamos resultados, incorporamos aprendizajes y proyectamos nuevas funcionalidades, indicadores o capacidades.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="diagnostico" class="section diagnosis">
+      <div class="container diagnosis-grid">
+        <div>
+          <h2>Qué incluye el diagnóstico de inteligencia deportiva</h2>
+          <p class="section-lead" style="margin-bottom:0;">Una primera lectura para definir dónde el BI, el software o la formación pueden generar mayor impacto.</p>
+          <div class="accordion-list">
+            <div class="accordion-row">Levantamiento de objetivos, usuarios y desafíos deportivos</div>
+            <div class="accordion-row">Revisión de datos, sistemas y procesos disponibles</div>
+            <div class="accordion-row">Identificación de oportunidades de Business Intelligence</div>
+            <div class="accordion-row">Evaluación de necesidades para productos SaaS</div>
+            <div class="accordion-row">Detección de brechas de formación y autonomía analítica</div>
+            <div class="accordion-row">Hoja de ruta priorizada y recomendación de siguiente paso</div>
+          </div>
+        </div>
+        <aside class="offer-card">
+          <div class="card-kicker">Punto de partida</div>
+          <h2>Define tu hoja de ruta sin costo inicial</h2>
+          <p>Identifica qué combinación de analítica, plataforma digital y formación puede aportar más valor a tu organización deportiva.</p>
+          <a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Evaluar mi centro</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="container">
+        <h2>Preguntas frecuentes</h2>
+        <p class="section-lead" style="margin-bottom:0;">Respuestas directas sobre nuestras tres líneas de inteligencia deportiva.</p>
+        <div class="faq-list">
+          <details><summary>¿Necesitamos tener datos ordenados para empezar?</summary><p>No. Podemos partir desde planillas, sistemas existentes o procesos manuales y definir una ruta gradual de mejora.</p></details>
+          <details><summary>¿Performance Labs desarrolla plataformas completas?</summary><p>Sí. Diseñamos productos SaaS deportivos, desde un MVP validable hasta soluciones escalables para entrenamiento, escalerillas, ligas y seguimiento.</p></details>
+          <details><summary>¿La Academia está dirigida solo a analistas?</summary><p>No. La formación puede adaptarse a entrenadores, gestores, directivos, estudiantes y equipos que necesiten aplicar BI al contexto deportivo.</p></details>
+          <details><summary>¿Podemos contratar solo una línea de servicio?</summary><p>Sí. Cada organización puede comenzar por BI, SaaS o Academia y luego integrar las demás líneas cuando exista una necesidad concreta.</p></details>
+          <details><summary>¿Qué pasa después del formulario?</summary><p>Revisamos la información y coordinamos una conversación para entender el desafío y recomendar el punto de partida más conveniente.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container">
+        <h2>Construye una organización deportiva que decide con datos, opera con tecnología y crece con conocimiento.</h2>
+        <p>Performance Labs conecta Business Intelligence, productos SaaS y formación en una propuesta integral de Inteligencia Deportiva.</p>
+        <a class="primary-button" href="https://forms.gle/euswJzYcN6MjkFT76" target="_blank" rel="noopener noreferrer">Agendar una primera conversación</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <a class="brand" href="index.html" aria-label="Performance Labs">
+        <span class="logo">PL</span>
+        <span><span class="brand-title">Performance Labs</span><span class="brand-subtitle">Business Intelligence, productos SaaS y Academia de Inteligencia Deportiva</span></span>
+      </a>
+      <nav class="footer-links" aria-label="Navegación del pie de página">
+        <a href="index.html">Inicio</a>
+        <a href="quienes-somos.html">¿Quiénes somos?</a>
+        <a href="mision-vision.html">Misión y visión</a>
+        <a href="valores-sellos.html">Valores y sellos</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
